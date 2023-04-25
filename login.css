@@ -78,12 +78,12 @@ body
     font-family: sans-serif;
 }
 
-.submit-button
+.login-button
 {
     text-align: center;
 }
 
-.submit-button button
+#login-button
 {
  padding: 13px 30px;   
  background-color:rgb(174, 85, 115);
