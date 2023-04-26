@@ -104,7 +104,7 @@ font-size: 1rem;
     color: brown;
 }
 
-.submit-button
+#submit-button
 {
     text-align: center;
 }
@@ -115,8 +115,9 @@ font-size: 1rem;
     justify-content: space-between;
 }
 
-.submit-button button
+#submit-button button
 {
+    margin: 60px 30px 30px 30px;
  padding: 13px 30px;   
  background-color:rgb(174, 85, 115);
  outline: none;
