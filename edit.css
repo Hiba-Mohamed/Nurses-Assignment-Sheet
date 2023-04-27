@@ -23,9 +23,41 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-#current-shift
+#day-night
 {
-    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.day-button, .night-button
+{
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 20px 50px 20px 50px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+  
+.day-button
+{
+    background-color: peru; /* blue color for day shift */
+}
+  
+.night-button
+{
+    background-color: rgb(128, 33, 33); /* dark color for night shift */
+}
+  
+.day-button:active, .night-button:active
+{
+    transform: translateY(1px); /* Add slight shadow effect on click */
+}
+
+#shift-text
+{
+    padding: 20px;
     color: brown;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -65,8 +97,8 @@
 
 .card
 {
- flex-basis: calc(33.33% - 10px); /* Subtracting the margin to fit 3 items per row */
-  margin: 5px; 
+    flex-basis: calc(33.33% - 10px); /* Subtracting the margin to fit 3 items per row */
+    margin: 5px; 
 }
 
 .psingle-input
@@ -77,15 +109,15 @@
 
 .psingle-input input
 {
-text-align: center;
-width: 100%;
-padding: 14px 10px;
-border: 1px solid rgb(0, 0, 0, 0.352);
-outline: none;
-background-color: transparent;
-font-size: 15px;
-font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    padding: 14px 10px;
+    border: 1px solid rgb(0, 0, 0, 0.352);
+    outline: none;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 1rem;
 }
 
 .break-code
@@ -118,14 +150,14 @@ font-size: 1rem;
 #submit-button button
 {
     margin: 60px 30px 30px 30px;
- padding: 13px 30px;   
- background-color:rgb(174, 85, 115);
- outline: none;
- border: none;
- color: white;
- font-family: sans-serif;
- font-size: 16px;
- cursor: pointer;
+    padding: 13px 30px;   
+    background-color:rgb(174, 85, 115);
+    outline: none;
+    border: none;
+    color: white;
+    font-family: sans-serif;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 #page-bottom
