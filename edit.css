@@ -120,7 +120,7 @@
     font-size: 1rem;
 }
 
-.break-code
+.side-by-side
 {
     display: flex;
     justify-content: space-around;
