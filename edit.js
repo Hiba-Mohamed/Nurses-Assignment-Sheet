@@ -20,6 +20,8 @@ dayButton.addEventListener('click', function()
   shiftText.textContent = "Day Shift";
   dayButton.style.display = "none";
   nightButton.style.display = "none";
+  localStorage.setItem('Shift', "Day Shift");
+  
 });
 
 nightButton.addEventListener('click', function() 
@@ -27,6 +29,7 @@ nightButton.addEventListener('click', function()
   shiftText.textContent = "Night Shift";
   dayButton.style.display = "none";
   nightButton.style.display = "none";
+  localStorage.setItem('Shift', "Night Shift");
 });
 
 
