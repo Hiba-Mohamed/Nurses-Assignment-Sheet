@@ -21,7 +21,6 @@ dayButton.addEventListener('click', function()
   dayButton.style.display = "none";
   nightButton.style.display = "none";
   localStorage.setItem('Shift', "Day Shift");
-  
 });
 
 nightButton.addEventListener('click', function() 

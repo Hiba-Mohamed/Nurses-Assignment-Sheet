@@ -32,10 +32,19 @@ body
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+#shift-text
+{
+    padding-top: 20px;
+    color: brown;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .all-cards
 {
-    padding: 5%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 .display-card
@@ -45,44 +54,67 @@ body
     align-items: center;
     background:rgb(255 255 255/30%);
     border-radius: 10px;
-    padding: 50px 40px;
     backdrop-filter: blur(5px);
     font-size: large;
 }
 
+#nurse-info 
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+#nurse-name
+{
+    text-align: center;
+    font-size: 1.5rem;
+}
 
 .side-by-side
 {
     display: flex;
-    justify-content: space-around
+    justify-content: space-around;
+    
 }
 
 .side-by-side p 
 {
     padding: 10px;
 }
+
+p
+{
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    border-color: transparent;
+}
+
 .P1
 {
     display: flex;
-    justify-content: space-around
+    justify-content: space-between;
 }
 
 .P2
 {
     display: flex;
-    justify-content: space-around
+    justify-content: space-between;
 }
 
 .P3
 {
     display: flex;
-    justify-content: space-around
+    justify-content: space-between;
 }
 
 .P4
 {
     display: flex;
-    justify-content: space-around
+    justify-content: space-between;
 }
 
 p
@@ -90,3 +122,12 @@ p
     text-align: center;
 }
 
+#extra-duties 
+{
+    color: brown;
+}
+
+#fire-code 
+{
+    color: brown;
+}
