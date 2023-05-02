@@ -161,6 +161,69 @@ function nurse (name, break_Time, break_relief, fire_code, extra_duties, rooms, 
 }
 
 
+const nurse_name = document.getElementById('nurse-name');
+const nurse_break = document.getElementById('nurse-break');
+const break_relief = document.getElementById('break-relief');
+const extra_duties = document.getElementById('extra-duties');
+const fire_code = document.getElementById('fire-code');
+
+const room1 = document.getElementById('room1');
+const patient1 = document.getElementById('patient1');
+const room2 = document.getElementById('room2');
+const patient2 = document.getElementById('patient2');
+const room3 = document.getElementById('room3');
+const patient3 = document.getElementById('patient3');
+const room4 = document.getElementById('room4');
+const patient4 = document.getElementById('patient4');
+
+
+
+// Generates a new nurse object based on the data passed in... also provides methods for handling registration of nurses
+const generateNurse = (event) =>
+{
+  //prevents page refresh on submit
+  event.preventDefault();
+
+  const new_nurse = {
+    name: nurse_name.value,
+    break_time: nurse_break.value,
+    break_relief: break_relief.value,
+    extra_duties: extra_duties.value ?? 'N/A',
+    fire_code: fire_code.value,
+    patients: [
+      {
+        patient_name: patient1.value,
+        room: room1.value
+      },
+      {
+        patient_name: patient2.value,
+        room: room2.value
+      },
+      {
+        patient_name: patient3.value,
+        room: room3.value
+      },
+      {
+        patient_name: patient4.value,
+        room: room4.value
+      },
+    ]
+  }
+
+  console.log(new_nurse);
+
+  // return {
+  //   new_nurse,
+  //   review_info: () => {
+  //     console.log(new_nurse)
+  //   },
+  //   register: () => {
+  //     localStorage.setItem(new_nurse.name, JSON.stringify(new_nurse))
+  //   }
+  // } 
+}
+
+
 
 // connecting the input from the form to the constructor function 
 
