@@ -1,0 +1,453 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body
+{
+    background-image:url(https://media.istockphoto.com/id/1332617403/photo/light-pink-and-purple-watercolor-background.jpg?b=1&s=612x612&w=0&k=20&c=bpmCidK7HRS-ClcZoHzX90X6uyLi8Eq3nSwujE_HOSo=);
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#log-in {
+    display: block;
+  }
+ 
+  /* #view-page */
+  #edit-sheet, #log-in, #create-account {
+    display: none;
+  }
+
+  #logo-login
+{
+    width: 15%;
+    padding: 3%;
+}
+
+#form-top
+{
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 
+{
+    font-size: 2.5rem;
+}
+
+.login-card {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-around;
+    background: rgb(255 255 255 / 30%);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    padding: 5% 5%;
+  }
+
+  h2
+  {
+    font-size: 2rem;
+    padding: 5%;
+  }
+
+.login-input input
+{
+    width: 300px;
+    padding: 14px 10px;
+    border: 1px solid rgb(0, 0, 0, 0.352);
+    border-radius: 3px;
+    outline: none;
+    background-color: transparent;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+.login-button
+{
+    text-align: center;
+}
+
+#login-button {
+    padding: 12px 10px;   
+    border: 3px solid rgb(187, 63, 104);
+    border-radius: 20px ;
+    background-color: transparent;
+    outline: none;
+    color:rgb(187, 63, 104);
+    font-family: sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10%;
+  }
+
+  #login-button:hover
+  {
+    cursor: pointer;
+    background-color: rgb(187, 63, 104);
+    color: white;
+  }
+
+.account-have
+{
+    font-size: 14px;
+    margin-top: 10px;
+    display: flex;
+    justify-content:space-between;
+    flex-direction: row;
+}
+
+.account-have a
+{
+    display: flex;
+    color: rgb(34,34,34);
+    text-decoration: none;
+    font-family: sans-serif;
+    padding: 20px 20px 0 20px;
+}
+
+/* create an account page */
+#logo-create
+{
+    width: 15%;
+    padding: 3%;
+}
+
+ .top-title
+{
+  padding-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-text
+{
+  display: flex;
+  justify-content: center;
+  padding: 7%;
+}
+
+.create-card 
+{
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  background: rgb(255 255 255 / 30%);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  padding: 5% 5%;
+}
+
+h2
+{
+  font-size: 2rem;
+  padding: 5%;
+}
+
+.create-input input
+{
+  width: 300px;
+  padding: 14px 10px;
+  border: 1px solid rgb(0, 0, 0, 0.352);
+  border-radius: 3px;
+  outline: none;
+  background-color: transparent;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-family: sans-serif;
+}
+
+#create-button button 
+{
+  padding: 12px 10px;   
+  border: 3px solid rgb(187, 63, 104);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(187, 63, 104);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+}
+
+#create-button button:hover
+{
+  cursor: pointer;
+  background-color: rgb(187, 63, 104);
+  color: white;
+}
+
+/* editing page */
+
+.info-card
+{
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  background: rgb(255 255 255 / 30%);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  padding: 5% 5%;
+}
+
+.edit-input input
+{
+    width: 300px;
+    padding: 14px 10px;
+    border: 1px solid rgb(0, 0, 0, 0.352);
+    border-radius: 3px;
+    outline: none;
+    background-color: transparent;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+#edit-button
+{
+    text-align: center;
+}
+
+#edit-button {
+    padding: 12px 10px;   
+    border: 3px solid rgb(187, 63, 104);
+    border-radius: 20px ;
+    background-color: transparent;
+    outline: none;
+    color:rgb(187, 63, 104);
+    font-family: sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10%;
+  }
+
+  #edit-button:hover
+  {
+    cursor: pointer;
+    background-color: rgb(187, 63, 104);
+    color: white;
+  }
+
+  #current-date
+{
+    padding-top: 20px;
+    color: brown;
+    text-align: center;
+}
+
+#day-night
+{
+    display: flex;
+    justify-content: center;
+}
+
+.day-button, .night-button
+{
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 20px 50px 20px 50px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+}
+  
+.day-button
+{
+    background-color: peru; /* blue color for day shift */
+}
+  
+.night-button
+{
+    background-color: rgb(128, 33, 33); /* dark color for night shift */
+}
+  
+.day-button:active, .night-button:active
+{
+    transform: translateY(1px); /* Add slight shadow effect on click */
+}
+
+#shift-text
+{
+    padding: 20px;
+    color: brown;
+    text-align: center;
+}
+
+.page-top
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.side-by-side 
+{
+    display: flex;
+    justify-content: space-around;
+}
+
+.card
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: large;
+}
+
+.card form 
+{ 
+    background:rgb(255 255 255/30%);
+    backdrop-filter: blur(5px);
+}
+
+#all-cards form  .edit-input input
+{
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    text-align: center;
+    font-size: 1.1rem;
+    border-color: transparent;
+}
+
+
+.psingle-input
+{
+  display: flex;
+  justify-content: space-around;
+}
+
+.psingle-input input
+{
+    text-align: center;
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+/* viewing page */
+#date-view
+{
+    padding-top: 20px;
+    color: brown;
+    text-align: center;
+  }
+
+.room-patient
+{
+  display: flex;
+  justify-content: space-around;
+}
+
+.display-card
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: large;
+    background:rgb(255 255 255/30%);
+    backdrop-filter: blur(5px);
+}
+
+
+#nurse-info 
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+#nurse-name
+{
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.side-by-side
+{
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.side-by-side p 
+{
+    padding: 10px;
+}
+
+p
+{
+    width: 100%;
+    outline: none;
+    background-color: transparent;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    font-size: 1.2rem;
+    border-color: transparent;
+}
+
+.P1
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.P2
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.P3
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.P4
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+p
+{
+    text-align: center;
+}
+
+#extra-duties 
+{
+    color: brown;
+}
+
+#fire-code 
+{
+    color: brown;
+}

@@ -1,13 +1,101 @@
-// current date function
-function displayFullDate() 
+const loginBtn = document.getElementById("login-button");
+loginBtn.onclick = (e) =>
 {
-   const calendar_text = document.getElementById("current-date");
-  var now      = new Date();
-  var options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  var fullDate = now.toLocaleDateString('en-US', options);
-  calendar_text.innerHTML = fullDate;
+    e.preventDefault();
+    // catch the value which is type use login page
+    const emailAddress = document.getElementById("email").value;
+    const passWord = document.getElementById("pass").value;
+
+// getting the value in localstorage which stores user in registration form
+    const emailstored = localStorage.getItem("Email");
+    const passstored = localStorage.getItem("Password");
+
+    if(emailAddress == "" || passWord == "")
+      {
+        swal("All fields must be filled", "error");
+      }
+    else 
+      {
+         if (emailAddress == emailstored && passWord == passstored )
+           {
+            swal("", "Login successful", "success");
+           }
+           else
+           {
+            swal("", "Please check if the Email address and password are correct", "error");
+           }
+      }
 }
-displayFullDate();
+
+// creating an account
+
+const create_direct = document.getElementById("create-direct");
+
+create_direct.onclick = (e) =>
+{
+    const login_page = document.getElementById("log-in");
+    const create_page = document.getElementById("create-account");
+    login_page.style.display = 'none';
+    create_page.style.display = 'block';
+}
+
+const submit_button = document.getElementById("create-btn");
+submit_button.addEventListener('click', function(e)
+{
+    e.preventDefault();
+    // all input data receive these variables
+    const fname = document.getElementById("fname").value;
+    const lname = document.getElementById("lname").value;
+    const email = document.getElementById("email").value;
+    const pass  = document.getElementById("pass").value;
+    const cpass = document.getElementById("cpass").value;
+
+    // storing this data in web browser store
+    localStorage.setItem('FirstName', fname);
+    localStorage.setItem('LastName', lname);
+    localStorage.setItem('Email', email);
+    localStorage.setItem('Password', pass);
+    localStorage.setItem('Cpassword', cpass);
+
+    // setting conditions
+    if(fname == "" || lname == "" || email == "" || pass == "" || cpass == "")     {
+        swal("Opps..!", "All input fields must be filled", "error");
+     }
+     else
+     {
+        if(pass !== cpass) 
+        {
+            swal("Opps..!", "The passwords you entered are not matching", "error");
+        }
+        else
+        {
+            swal("Registration successful!", "You created a new account!", "success");
+        }
+     }
+});
+
+
+// directing to login page from creating an account page
+
+const login_direct = document.getElementById("login-direct");
+login_direct.onclick = (e) =>
+{
+    const login_page = document.getElementById("log-in");
+    const create_page = document.getElementById("create-account");
+    login_page.style.display = 'block';
+    create_page.style.display = 'none';
+}
+
+// editing page
+
+// current date function
+
+  const calendar_text = document.getElementById("current-date");
+  let now      = new Date();
+  let options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  let fullDate = now.toLocaleDateString('en-US', options);
+  calendar_text.innerHTML = fullDate;
+
 
 
 // adding Day vs Night shift under the date
@@ -20,7 +108,6 @@ dayButton.addEventListener('click', function()
   shiftText.textContent = "Day Shift";
   dayButton.style.display = "none";
   nightButton.style.display = "none";
-  localStorage.setItem('Shift', "Day Shift");
 });
 
 nightButton.addEventListener('click', function() 
@@ -28,8 +115,26 @@ nightButton.addEventListener('click', function()
   shiftText.textContent = "Night Shift";
   dayButton.style.display = "none";
   nightButton.style.display = "none";
-  localStorage.setItem('Shift', "Night Shift");
 });
+
+
+
+// view page
+
+function displayFullDate() 
+{
+   const calendar_text = document.getElementById("date-view");
+  var now      = new Date();
+  var options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var fullDate = now.toLocaleDateString('en-US', options);
+  calendar_text.innerHTML = fullDate;
+}
+displayFullDate();
+
+const shift_text = document.getElementById("shift-text");
+const day_night = localStorage.getItem('Shift');
+const shift_display = shift_text.innerHTML = day_night;
+
 
 
 // creating a constructor function for storing the inputs added
