@@ -19,8 +19,9 @@ body
     display: block;
   }
  
-  /* #view-page */
-  #edit-sheet, #log-in, #create-account {
+  
+  /* #edit-sheet,   */
+  #view-page, #log-in, #create-account  {
     display: none;
   }
 
@@ -224,6 +225,16 @@ h2
     margin-bottom: 10px;
     font-size: 15px;
     font-family: sans-serif;
+}
+
+#nurse-break, #extra-duties, #fire-code
+{
+    text-align: center;
+    width: 100%;
+    border-color: transparent;
+    outline: none;
+    background-color: transparent;
+    font-size: 1rem;
 }
 
 #edit-button
