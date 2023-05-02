@@ -3,8 +3,8 @@ loginBtn.onclick = (e) =>
 {
     e.preventDefault();
     // catch the value which is type use login page
-    const emailAddress = document.getElementById("email").value;
-    const passWord = document.getElementById("pass").value;
+    const emailAddress = document.getElementById("email-login").value;
+    const passWord = document.getElementById("pass-login").value;
 
 // getting the value in localstorage which stores user in registration form
     const emailstored = localStorage.getItem("Email");
@@ -139,59 +139,25 @@ const shift_display = shift_text.innerHTML = day_night;
 
 // creating a constructor function for storing the inputs added
 // by the user
-function nurse (name, break_Time, break_relief, code, duties, rooms, patients)
+function nurse (name, break_Time, break_relief, fire_code, extra_duties, rooms, patients)
   {
-    this.name       = name;
-    this.break_Time = break_Time;
-    this.break_relief    = break_relief;
-    this.code       = code;
-    this.duties     = duties;
-    this.rooms      = rooms;
-    this.patients   = patients
+    this.name         = name;
+    this.break_Time   = ["First", "Second", "Third"];
+    this.break_relief = break_relief;
+    this.fire_code    = ["R","A","C","E"];
+    this.extra_duties = ["In-charge", "Shift Count", "Safety Round", "Crash Cart"];
+    this.rooms        = rooms;
+    this.patients     = patients
+
+    return {
+          nurse_info,
+          review_info: () => {
+            console.log(nurse_info)
+          },
+          register: () => {
+            localStorage.setItem(nurse_info.name, JSON.stringify(nurse_info))
+          }
   }
-
-  const form_button = document.getElementById("submit-button");
-form_button.onclick = (e) => 
-{
-    e.preventDefault();
-    // all input data receive these variables
-    const nurse_name    = document.getElementById("nurse-name").value;
-    const nurse_break   = document.getElementById("nurse-break").value;
-    const break_relief  = document.getElementById("break-relief").value;
-    const extra_duties  = document.getElementById("extra-duties").value;
-    const fire_code     = document.getElementById("fire-code").value;
-    const room1         = document.getElementById("room1").value;
-    const patient1      = document.getElementById("patient1").value;
-    const room2         = document.getElementById("room2").value;
-    const patient2      = document.getElementById("patient2").value;
-    const room3         = document.getElementById("room3").value;
-    const patient3      = document.getElementById("patient3").value;
-    const room4         = document.getElementById("room4").value;
-    const patient4      = document.getElementById("patient4").value;
-
-    // storing this data in web browser store
-    localStorage.setItem('Nurse name', nurse_name);
-    localStorage.setItem('Nurse break', nurse_break);
-    localStorage.setItem('Nurse relief', break_relief);
-    localStorage.setItem('Extra duties', extra_duties);
-    localStorage.setItem('Fire code', fire_code);
-    localStorage.setItem('Room 1', room1);
-    localStorage.setItem('Patient 1', patient1);
-    localStorage.setItem('Room 2', room2);
-    localStorage.setItem('Patient 2', patient2);
-    localStorage.setItem('Room 3', room3);
-    localStorage.setItem('Patient 3', patient3);
-    localStorage.setItem('Room 4', room4);
-    localStorage.setItem('Patient 4', patient4);
-
-    window.location.href = "view.html"
-
-}
-
-for (let i = 0; i < localStorage.length; i++) {
-  const key = localStorage.key(i);
-  const value = localStorage.getItem(key);
-  console.log(`${key}: ${value}`);
 }
 
 
