@@ -20,8 +20,9 @@ body
   }
  
   
-  /* #edit-sheet,   */
-  #view-page, #log-in, #create-account  {
+  /* #edit-sheet,   */  
+  /* #view-page, */
+ #log-in, #create-account  {
     display: none;
   }
 
@@ -462,3 +463,46 @@ p
 {
     color: brown;
 }
+
+#add-nurse{
+    padding: 12px 16px;   
+    border: 3px solid rgb(187, 63, 104);
+    border-radius: 20px ;
+    background-color: transparent;
+    outline: none;
+    color:rgb(187, 63, 104);
+    font-family: sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+
+  #add-nurse:hover
+  {
+    cursor: pointer;
+    background-color: rgb(187, 63, 104);
+    color: white;
+  }
+
+.add-card
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    
+   
+}
+
+  .add-pic
+  {
+    width: 50px;
+    height:50px;
+    margin: 5px;
+    align-self: center;
+  }
