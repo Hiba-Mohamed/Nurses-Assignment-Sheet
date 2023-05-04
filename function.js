@@ -225,27 +225,50 @@ const generateNurse = (event) => {
 
   };
 
-  // Retrieve nurse data from local storage
-  const nurseData = localStorage.getItem(new_nurse.name);
-  if (nurseData) {
-    const nurse = JSON.parse(nurseData);
-
-    // Update view section with nurse data
-    name_view.textContent = nurse.name;
-    break_view.textContent = nurse.break_time;
-    relief_view.textContent = nurse.break_relief;
-    duties_view.textContent = nurse.extra_duties;
-    code_view.textContent = nurse.fire_code;
-    patient1_view.textContent = nurse.patients[0].patient_name;
-    room1_view.textContent = nurse.patients[0].room;
-    patient2_view.textContent = nurse.patients[1].patient_name;
-    room2_view.textContent = nurse.patients[1].room;
-    patient3_view.textContent = nurse.patients[2].patient_name;
-    room3_view.textContent = nurse.patients[2].room;
-    patient4_view.textContent = nurse.patients[3].patient_name;
-    room4_view.textContent = nurse.patients[3].room;
-  }
-
   console.log(new_nurse);
+
+    // Retrieve nurse data from local storage
+    const nurseData = localStorage.getItem(new_nurse.name);
+    if (nurseData) {
+      const nurse = JSON.parse(nurseData);
+    }
+  
+  // Update view section with nurse data
+const  updateView = () =>
+{
+  const name_view  = document.getElementById('name-view');
+  const break_view  = document.getElementById('break-view');
+  const relief_view = document.getElementById('relief-view');
+  const duties_view = document.getElementById('duties-view');
+  const code_view   = document.getElementById('code-view');
+  
+  const room1_view    = document.getElementById('rm1');
+  const patient1_view  = document.getElementById('pt1');
+  const room2_view     = document.getElementById('rm2');
+  const patient2_view  = document.getElementById('pt2');
+  const room3_view     = document.getElementById('rm3');
+  const patient3_view  = document.getElementById('pt3');
+  const room4_view     = document.getElementById('rm4');
+  const patient4_view  = document.getElementById('pt4');
+ 
+
+name_view.textContent = localStorage.getItem('name');
+break_view.textContent = nurse.break_time;
+relief_view.textContent = nurse.break_relief;
+duties_view.textContent = nurse.extra_duties;
+code_view.textContent = nurse.fire_code;
+patient1_view.textContent = nurse.patients[0].patient_name;
+room1_view.textContent = nurse.patients[0].room;
+patient2_view.textContent = nurse.patients[1].patient_name;
+room2_view.textContent = nurse.patients[1].room;
+patient3_view.textContent = nurse.patients[2].patient_name;
+room3_view.textContent = nurse.patients[2].room;
+patient4_view.textContent = nurse.patients[3].patient_name;
+room4_view.textContent = nurse.patients[3].room;
+}
+updateView();
+
 };
+ 
+
 
