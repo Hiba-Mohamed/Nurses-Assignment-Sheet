@@ -249,3 +249,119 @@ const generateNurse = (event) => {
   console.log(new_nurse);
 };
 
+
+
+
+// Suggested CRUD Functions (all using nurse's name as a key)
+
+// Retrieve array of nurses from LocalStorage (assuming they are stored as 'all_nurses')
+// Takes no arguments and returns an array of Nurse Objects or undefined
+const getAllNursesFromLS = () =>
+{
+  let current_nurses = JSON.parse(localStorage.getItem('all_nurses'))
+
+  // if no data exists, force our return to be undefined for better error handling
+  if (!current_nurses) {
+    console.log('No Data Available in Local Storage');
+    return undefined;
+  }
+
+  // otherwise, return the retrieved data as an array
+  return current_nurses
+};
+
+// Handle the writing of our nurse array back into localStorage
+// for persistence when we are done operating on it
+// Takes an array of Nurse Objects to write and has no return
+const writeAllNursesToLS = (nurse_array) =>
+{
+  // Guard clause to protect against bad input
+  if (!nurse_array) return console.warn('Please provide a valid Nurse Array as input');
+
+  try{
+    localStorage.setItem('all_nurses', JSON.stringify(nurse_array))
+  }
+  catch (error) {
+    console.warn('There was an error writing the supplied data in Local Storage, please refresh your browser and try again')
+  }
+}
+
+
+// Create a nurse within the array of nurse info OR update the nurse if it already exists
+// NOTE: We can't have 2 nurses with the same name
+// Takes a new Nurse Object and has no return
+const createNurseLS = (nurse_object) =>
+{
+  // Guard clause to protect against bad input
+  if (!nurse_object) return console.warn('Please provide a valid Nurse Object as input');
+
+  // Get nurses from storage or undefined if none are defined yet
+  const current_nurses = getAllNursesFromLS();
+
+  // If the nurse array doesn't exist in storage, write our data as the first index of a new array
+  if (!current_nurses) {
+    writeAllNursesToLS([nurse_object])
+  }
+
+  else {
+    // Set a new variable to track the index of the nurse if we match it in LS data
+    let nurse_index;
+
+    // either gets the current values of the nurse's object if they already exist
+    // or returns 'undefined' if the nurse isn't in LS data
+    const existing_nurse = current_nurses.find(
+      (nurse, index) => {
+        if (nurse.name === nurse_object.name) {
+          nurse_index = index;
+          return nurse
+        }
+      }
+    )
+
+    if (existing_nurse) {
+      // Merge the new data over the old data in case we don't update all fields
+      // This should update anything new but preserve anything we didn't touch
+      const merged_nurse = Object.assign(existing_nurse, nurse_object)
+
+      // Overwrite the array index containing the original Nurse Data
+      current_nurses[nurse_index] = merged_nurse
+      writeAllNursesToLS(current_nurses);
+    }
+  }
+}
+
+
+// Delete a nurse from the array if it exists
+// takes a name (string) as input, has no return value
+const deleteNurseLS = (nurse_name) =>
+{
+  // Guard clause to protect against bad input
+  if (!nurse_name) return console.warn('Please provide a valid Nurse\'s name to delete');
+
+  // Get nurses from storage or undefined if none are defined yet
+  const current_nurses = getAllNursesFromLS();
+
+  // If the nurse array doesn't exist in storage, return an error
+  if (!current_nurses) return console.log('Looks like there are no nurses in Local Storage')
+
+  // either gets the current values of the nurse's object if they already exist
+  // or returns 'undefined' if the nurse isn't in LS data
+  const nurse_to_delete = current_nurses.find(
+    (nurse, index) => {
+      if (nurse.name === nurse_object.name) {
+        nurse_index = index;
+        return nurse
+      }
+    }
+  )
+
+  if (nurse_to_delete) {
+    // remove the index containing the nurse to delete
+    delete current_nurses[nurse_index];
+
+    // write the updated array to LS
+    writeAllNursesToLS(current_nurses);
+  }
+  else return console.log('Looks like that nurse doesn\'t exist, please check the spelling and try again')
+}
+
