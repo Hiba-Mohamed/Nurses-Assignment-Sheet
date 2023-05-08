@@ -123,7 +123,7 @@ nightButton.addEventListener('click', function()
 
 function displayFullDate() 
 {
-   const calendar_text = document.getElementById("date-view");
+   const calendar_text = document.getElementById("current-date");
   var now      = new Date();
   var options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   var fullDate = now.toLocaleDateString('en-US', options);
@@ -134,6 +134,241 @@ displayFullDate();
 const shift_text = document.getElementById("shift-text");
 const day_night = localStorage.getItem('Shift');
 const shift_display = shift_text.innerHTML = day_night;
+
+document.getElementById("update").style.display = "none";
+
+function validateForm() {
+    var name = document.getElementById("nurse-name").value;
+    var break_time = document.getElementById("nurse-break").value;
+    var break_relief = document.getElementById("break-relief").value;
+    var extra_duties = document.getElementById("extra-duties").value;
+    var fire_code = document.getElementById("fire-code").value;
+    var room1 = document.getElementById("room1").value;
+    var patient1 = document.getElementById("patient1").value;
+    var room2 = document.getElementById("room2").value;
+    var patient2 = document.getElementById("patient2").value;
+    var room3 = document.getElementById("room3").value;
+    var patient3 = document.getElementById("patient3").value;
+    var room4 = document.getElementById("room4").value;
+    var patient4 = document.getElementById("patient4").value;
+
+
+
+
+    if (name == "") {
+        alert("Nurse's name is required");
+        return false;
+    }
+    if (break_time == "") {
+        alert("Break time is required");
+        return false;
+    }
+    else if (fire_code == "") {
+        alert("Fire code is required");
+        return false;
+    }
+
+    if (break_relief == "") {
+        alert("Break relief is required");
+        return false;
+    }
+
+    return true;
+
+}
+
+function showData() {
+    var nurseList;
+    if (localStorage.getItem("nurseList") == null) {
+        nurseList = [];
+    }
+    else {
+        nurseList = JSON.parse(localStorage.getItem("nurseList"));
+    }
+    var html = "";
+    nurseList.forEach(function (element, index) {
+        html += '<div class="nurse-info">' +
+            '<p>' + element.name + '</p>' +
+            '<p>' + element.break_time + '</p>' +
+            '<p>' + element.break_relief + '</p>' +
+            '<p>' + element.extra_duties + '</p>' +
+            '<p>' + element.fire_code + '</p>' +
+            '<p>' + element.room1 + '</p>' +
+            '<p>' + element.patient1 + '</p>' +
+            '<p>' + element.room2 + '</p>' +
+            '<p>' + element.patient2 + '</p>' +
+            '<p>' + element.room3 + '</p>' +
+            '<p>' + element.patient3 + '</p>' +
+            '<p>' + element.room4 + '</p>' +
+            '<p>' + element.patient4 + '</p>' +
+            '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
+            '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
+            '</div>';
+    });
+
+    document.querySelector(".nurse-info").innerHTML = html;
+}
+
+// loads all data when document or page loaded
+document.onload = showData();
+
+// function to add data to local storage
+
+function addData() {
+    // if form is validated
+    if (validateForm() == true) {
+        var name = document.getElementById("nurse-name").value;
+        var break_time = document.getElementById("nurse-break").value;
+        var break_relief = document.getElementById("break-relief").value;
+        var extra_duties = document.getElementById("extra-duties").value;
+        var fire_code = document.getElementById("fire-code").value;
+        var room1 = document.getElementById("room1").value;
+        var patient1 = document.getElementById("patient1").value;
+        var room2 = document.getElementById("room2").value;
+        var patient2 = document.getElementById("patient2").value;
+        var room3 = document.getElementById("room3").value;
+        var patient3 = document.getElementById("patient3").value;
+        var room4 = document.getElementById("room4").value;
+        var patient4 = document.getElementById("patient4").value;
+
+        var nurseList;
+        if (localStorage.getItem("nurseList") == null) {
+            nurseList = [];
+        }
+        else {
+            nurseList = JSON.parse(localStorage.getItem("nurseList"));
+        }
+
+        nurseList.push
+            (
+                {
+                    name,
+                    break_time,
+                    break_relief,
+                    extra_duties,
+                    fire_code,
+                    room1,
+                    patient1,
+                    room2,
+                    patient2,
+                    room3,
+                    patient3,
+                    room4,
+                    patient4,
+                }
+            );
+        localStorage.setItem("nurseList", JSON.stringify(nurseList));
+        showData();
+
+        document.getElementById("nurse-name").value = "";
+        document.getElementById("nurse-break").value = "";
+        document.getElementById("break-relief").value = "";
+        document.getElementById("extra-duties").value = "";
+        document.getElementById("fire-code").value = "";
+        document.getElementById("room1").value = "";
+        document.getElementById("patient1").value = "";
+        document.getElementById("room2").value = "";
+        document.getElementById("patient2").value = "";
+        document.getElementById("room3").value = "";
+        document.getElementById("patient3").value = "";
+        document.getElementById("room4").value = "";
+        document.getElementById("patient4").value = "";
+
+    }
+
+}
+
+// function to delete Data from local storage
+
+function deleteData(index) {
+    var nurseList;
+    if (localStorage.getItem("nurseList") == null) {
+        nurseList = [];
+    }
+    else {
+        nurseList = JSON.parse(localStorage.getItem("nurseList"));
+    }
+
+    nurseList.splice(index, 1);
+    localStorage.setItem("nurseList", JSON.stringify(nurseList));
+    showData();
+}
+
+// function to update/edit date in local storage
+
+function updateData(index) {
+    // submit button will hide and update button will show for updating of data in local storage
+    document.getElementById("submit").style.display = "none";
+    document.getElementById("update").style.display = "block";
+
+    var nurseList;
+    if (localStorage.getItem("nurseList") == null) {
+        nurseList = [];
+    }
+    else {
+        nurseList = JSON.parse(localStorage.getItem("nurseList"));
+    }
+
+    document.getElementById("nurse-name").value = nurseList[index].name;
+    document.getElementById("nurse-break").value = nurseList[index].break_time;
+    document.getElementById("break-relief").value = nurseList[index].break_relief;
+    document.getElementById("extra-duties").value = nurseList[index].extra_duties;
+    document.getElementById("fire-code").value = nurseList[index].fire_code;
+    document.getElementById("room1").value = nurseList[index].room1;
+    document.getElementById("patient1").value = nurseList[index].patient1;
+    document.getElementById("room2").value = nurseList[index].room2;
+    document.getElementById("patient2").value = nurseList[index].patient2;
+    document.getElementById("room3").value = nurseList[index].room3;
+    document.getElementById("patient3").value = nurseList[index].patient3;
+    document.getElementById("room4").value = nurseList[index].room4;
+    document.getElementById("patient4").value = nurseList[index].patient4;
+
+
+    document.querySelector("#update").onclick = function () {
+        if (validateForm() == true) {
+            nurseList[index].name = document.getElementById("nurse-name").value;
+            nurseList[index].break_time = document.getElementById("nurse-break").value;
+            nurseList[index].break_relief = document.getElementById("break-relief").value;
+            nurseList[index].extra_duties = document.getElementById("extra-duties").value;
+            nurseList[index].fire_code = document.getElementById("fire-code").value;
+            nurseList[index].room1 = document.getElementById("room1").value;
+            nurseList[index].patient1 = document.getElementById("patient1").value;
+            nurseList[index].room2 = document.getElementById("room2").value;
+            nurseList[index].patient2 = document.getElementById("patient2").value;
+            nurseList[index].room3 = document.getElementById("room3").value;
+            nurseList[index].patient3 = document.getElementById("patient3").value;
+            nurseList[index].room4 = document.getElementById("room4").value;
+            nurseList[index].patient4 = document.getElementById("patient4").value;
+
+            localStorage.setItem("nurseList", JSON.stringify(nurseList));
+
+            showData();
+
+            document.getElementById("nurse-name").value = "";
+            document.getElementById("nurse-break").value = "";
+            document.getElementById("break-relief").value = "";
+            document.getElementById("extra-duties").value = "";
+            document.getElementById("fire-code").value = "";
+            document.getElementById("room1").value = "";
+            document.getElementById("patient1").value = "";
+            document.getElementById("room2").value = "";
+            document.getElementById("patient2").value = "";
+            document.getElementById("room3").value = "";
+            document.getElementById("patient3").value = "";
+            document.getElementById("room4").value = "";
+            document.getElementById("patient4").value = "";
+
+            //  update button will hide and submit button shows 
+
+            document.getElementById("submit").style.display = "block";
+            document.getElementById("update").style.display = "none";
+        }
+
+
+    }
+
+
+}
 
 
 
@@ -160,231 +395,233 @@ const shift_display = shift_text.innerHTML = day_night;
 //           }
 // }
 
-const submit_edt  = document.getElementById('edit-button');
-const nurse_name   = document.getElementById('nurse-name');
-const nurse_break  = document.getElementById('nurse-break');
-const break_relief = document.getElementById('break-relief');
-const extra_duties = document.getElementById('extra-duties');
-const fire_code    = document.getElementById('fire-code');
+// const submit_edt  = document.getElementById('edit-button');
+// const nurse_name   = document.getElementById('nurse-name');
+// const nurse_break  = document.getElementById('nurse-break');
+// const break_relief = document.getElementById('break-relief');
+// const extra_duties = document.getElementById('extra-duties');
+// const fire_code    = document.getElementById('fire-code');
 
-const room1    = document.getElementById('room1');
-const patient1 = document.getElementById('patient1');
-const room2    = document.getElementById('room2');
-const patient2 = document.getElementById('patient2');
-const room3    = document.getElementById('room3');
-const patient3 = document.getElementById('patient3');
-const room4    = document.getElementById('room4');
-const patient4 = document.getElementById('patient4');
+// const room1    = document.getElementById('room1');
+// const patient1 = document.getElementById('patient1');
+// const room2    = document.getElementById('room2');
+// const patient2 = document.getElementById('patient2');
+// const room3    = document.getElementById('room3');
+// const patient3 = document.getElementById('patient3');
+// const room4    = document.getElementById('room4');
+// const patient4 = document.getElementById('patient4');
 
 
 
-// Generates a new nurse object based on the data passed in... also provides methods for handling registration of nurses
+// // Generates a new nurse object based on the data passed in... also provides methods for handling registration of nurses
 
-const generateNurse = (event) => {
-  //prevents page refresh on submit
-  event.preventDefault();
+// const generateNurse = (event) => {
+//   //prevents page refresh on submit
+//   event.preventDefault();
 
-  const new_nurse = {
-    name: nurse_name.value,
-    break_time: nurse_break.value,
-    break_relief: break_relief.value,
-    extra_duties: extra_duties.value ?? 'N/A',
-    fire_code: fire_code.value,
-    patients: [
-      {
-        patient_name: patient1.value,
-        room: room1.value
-      },
-      {
-        patient_name: patient2.value,
-        room: room2.value
-      },
-      {
-        patient_name: patient3.value,
-        room: room3.value
-      },
-      {
-        patient_name: patient4.value,
-        room: room4.value
-      }
-    ],
-    register: () => {
-      localStorage.setItem(new_nurse.name, JSON.stringify(new_nurse))
-    },
+//   const new_nurse = {
+//     name: nurse_name.value,
+//     break_time: nurse_break.value,
+//     break_relief: break_relief.value,
+//     extra_duties: extra_duties.value ?? 'N/A',
+//     fire_code: fire_code.value,
+//     patients: [
+//       {
+//         patient_name: patient1.value,
+//         room: room1.value
+//       },
+//       {
+//         patient_name: patient2.value,
+//         room: room2.value
+//       },
+//       {
+//         patient_name: patient3.value,
+//         room: room3.value
+//       },
+//       {
+//         patient_name: patient4.value,
+//         room: room4.value
+//       }
+//     ],
+//     register: () => {
+//       localStorage.setItem(new_nurse.name, JSON.stringify(new_nurse))
+//     },
 
-    submit_edt:onclick = (e) =>
-    {
-      e.preventDefault();
-        const edit_page = document.getElementById("edit-sheet");
-        const view_page = document.getElementById("view-page");
-        edit_page.style.display = 'none';
-        view_page.style.display = 'block';
-    },
+//     submit_edt:onclick = (e) =>
+//     {
+//       e.preventDefault();
+//         const edit_page = document.getElementById("edit-sheet");
+//         const view_page = document.getElementById("view-page");
+//         edit_page.style.display = 'none';
+//         view_page.style.display = 'block';
+//     },
     
 
 
-  };
+//   };
 
-  console.log(new_nurse);
 
-    // Retrieve nurse data from local storage
-    const nurseData = localStorage.getItem(new_nurse.name);
-    if (nurseData) {
-      const nurse = JSON.parse(nurseData);
-    }
   
-  // Update view section with nurse data
-const  updateView = () =>
-{
-  const name_view  = document.getElementById('name-view');
-  const break_view  = document.getElementById('break-view');
-  const relief_view = document.getElementById('relief-view');
-  const duties_view = document.getElementById('duties-view');
-  const code_view   = document.getElementById('code-view');
+// //   console.log(new_nurse);
+
+// //     // Retrieve nurse data from local storage
+// //     const nurseData = localStorage.getItem(new_nurse.name);
+// //     if (nurseData) {
+// //       const nurse = JSON.parse(nurseData);
+// //     }
   
-  const room1_view    = document.getElementById('rm1');
-  const patient1_view  = document.getElementById('pt1');
-  const room2_view     = document.getElementById('rm2');
-  const patient2_view  = document.getElementById('pt2');
-  const room3_view     = document.getElementById('rm3');
-  const patient3_view  = document.getElementById('pt3');
-  const room4_view     = document.getElementById('rm4');
-  const patient4_view  = document.getElementById('pt4');
+// //   // Update view section with nurse data
+// // const  updateView = () =>
+// // {
+// //   const name_view  = document.getElementById('name-view');
+// //   const break_view  = document.getElementById('break-view');
+// //   const relief_view = document.getElementById('relief-view');
+// //   const duties_view = document.getElementById('duties-view');
+// //   const code_view   = document.getElementById('code-view');
+  
+// //   const room1_view    = document.getElementById('rm1');
+// //   const patient1_view  = document.getElementById('pt1');
+// //   const room2_view     = document.getElementById('rm2');
+// //   const patient2_view  = document.getElementById('pt2');
+// //   const room3_view     = document.getElementById('rm3');
+// //   const patient3_view  = document.getElementById('pt3');
+// //   const room4_view     = document.getElementById('rm4');
+// //   const patient4_view  = document.getElementById('pt4');
  
 
-name_view.textContent = localStorage.getItem('name');
-break_view.textContent = nurse.break_time;
-relief_view.textContent = nurse.break_relief;
-duties_view.textContent = nurse.extra_duties;
-code_view.textContent = nurse.fire_code;
-patient1_view.textContent = nurse.patients[0].patient_name;
-room1_view.textContent = nurse.patients[0].room;
-patient2_view.textContent = nurse.patients[1].patient_name;
-room2_view.textContent = nurse.patients[1].room;
-patient3_view.textContent = nurse.patients[2].patient_name;
-room3_view.textContent = nurse.patients[2].room;
-patient4_view.textContent = nurse.patients[3].patient_name;
-room4_view.textContent = nurse.patients[3].room;
-}
-updateView();
+// // name_view.textContent = localStorage.getItem('name');
+// // break_view.textContent = nurse.break_time;
+// // relief_view.textContent = nurse.break_relief;
+// // duties_view.textContent = nurse.extra_duties;
+// // code_view.textContent = nurse.fire_code;
+// // patient1_view.textContent = nurse.patients[0].patient_name;
+// // room1_view.textContent = nurse.patients[0].room;
+// // patient2_view.textContent = nurse.patients[1].patient_name;
+// // room2_view.textContent = nurse.patients[1].room;
+// // patient3_view.textContent = nurse.patients[2].patient_name;
+// // room3_view.textContent = nurse.patients[2].room;
+// // patient4_view.textContent = nurse.patients[3].patient_name;
+// // room4_view.textContent = nurse.patients[3].room;
+// // }
+// // updateView();
 
-};
+// // };
  
 
 
 
 
 
-// Suggested CRUD Functions (all using nurse's name as a key)
+// // // Suggested CRUD Functions (all using nurse's name as a key)
 
-// Retrieve array of nurses from LocalStorage (assuming they are stored as 'all_nurses')
-// Takes no arguments and returns an array of Nurse Objects or undefined
-const getAllNursesFromLS = () =>
-{
-  let current_nurses = JSON.parse(localStorage.getItem('all_nurses'))
+// // // Retrieve array of nurses from LocalStorage (assuming they are stored as 'all_nurses')
+// // // Takes no arguments and returns an array of Nurse Objects or undefined
+// // const getAllNursesFromLS = () =>
+// // {
+// //   let current_nurses = JSON.parse(localStorage.getItem('all_nurses'))
 
-  // if no data exists, force our return to be undefined for better error handling
-  if (!current_nurses) {
-    console.log('No Data Available in Local Storage');
-    return undefined;
-  }
+// //   // if no data exists, force our return to be undefined for better error handling
+// //   if (!current_nurses) {
+// //     console.log('No Data Available in Local Storage');
+// //     return undefined;
+// //   }
 
-  // otherwise, return the retrieved data as an array
-  return current_nurses
-};
+// //   // otherwise, return the retrieved data as an array
+// //   return current_nurses
+// // };
 
-// Handle the writing of our nurse array back into localStorage
-// for persistence when we are done operating on it
-// Takes an array of Nurse Objects to write and has no return
-const writeAllNursesToLS = (nurse_array) =>
-{
-  // Guard clause to protect against bad input
-  if (!nurse_array) return console.warn('Please provide a valid Nurse Array as input');
+// // // Handle the writing of our nurse array back into localStorage
+// // // for persistence when we are done operating on it
+// // // Takes an array of Nurse Objects to write and has no return
+// // const writeAllNursesToLS = (nurse_array) =>
+// // {
+// //   // Guard clause to protect against bad input
+// //   if (!nurse_array) return console.warn('Please provide a valid Nurse Array as input');
 
-  try{
-    localStorage.setItem('all_nurses', JSON.stringify(nurse_array))
-  }
-  catch (error) {
-    console.warn('There was an error writing the supplied data in Local Storage, please refresh your browser and try again')
-  }
-}
-
-
-// Create a nurse within the array of nurse info OR update the nurse if it already exists
-// NOTE: We can't have 2 nurses with the same name
-// Takes a new Nurse Object and has no return
-const createNurseLS = (nurse_object) =>
-{
-  // Guard clause to protect against bad input
-  if (!nurse_object) return console.warn('Please provide a valid Nurse Object as input');
-
-  // Get nurses from storage or undefined if none are defined yet
-  const current_nurses = getAllNursesFromLS();
-
-  // If the nurse array doesn't exist in storage, write our data as the first index of a new array
-  if (!current_nurses) {
-    writeAllNursesToLS([nurse_object])
-  }
-
-  else {
-    // Set a new variable to track the index of the nurse if we match it in LS data
-    let nurse_index;
-
-    // either gets the current values of the nurse's object if they already exist
-    // or returns 'undefined' if the nurse isn't in LS data
-    const existing_nurse = current_nurses.find(
-      (nurse, index) => {
-        if (nurse.name === nurse_object.name) {
-          nurse_index = index;
-          return nurse
-        }
-      }
-    )
-
-    if (existing_nurse) {
-      // Merge the new data over the old data in case we don't update all fields
-      // This should update anything new but preserve anything we didn't touch
-      const merged_nurse = Object.assign(existing_nurse, nurse_object)
-
-      // Overwrite the array index containing the original Nurse Data
-      current_nurses[nurse_index] = merged_nurse
-      writeAllNursesToLS(current_nurses);
-    }
-  }
-}
+// //   try{
+// //     localStorage.setItem('all_nurses', JSON.stringify(nurse_array))
+// //   }
+// //   catch (error) {
+// //     console.warn('There was an error writing the supplied data in Local Storage, please refresh your browser and try again')
+// //   }
+// // }
 
 
-// Delete a nurse from the array if it exists
-// takes a name (string) as input, has no return value
-const deleteNurseLS = (nurse_name) =>
-{
-  // Guard clause to protect against bad input
-  if (!nurse_name) return console.warn('Please provide a valid Nurse\'s name to delete');
+// // // Create a nurse within the array of nurse info OR update the nurse if it already exists
+// // // NOTE: We can't have 2 nurses with the same name
+// // // Takes a new Nurse Object and has no return
+// // const createNurseLS = (nurse_object) =>
+// // {
+// //   // Guard clause to protect against bad input
+// //   if (!nurse_object) return console.warn('Please provide a valid Nurse Object as input');
 
-  // Get nurses from storage or undefined if none are defined yet
-  const current_nurses = getAllNursesFromLS();
+// //   // Get nurses from storage or undefined if none are defined yet
+// //   const current_nurses = getAllNursesFromLS();
 
-  // If the nurse array doesn't exist in storage, return an error
-  if (!current_nurses) return console.log('Looks like there are no nurses in Local Storage')
+// //   // If the nurse array doesn't exist in storage, write our data as the first index of a new array
+// //   if (!current_nurses) {
+// //     writeAllNursesToLS([nurse_object])
+// //   }
 
-  // either gets the current values of the nurse's object if they already exist
-  // or returns 'undefined' if the nurse isn't in LS data
-  const nurse_to_delete = current_nurses.find(
-    (nurse, index) => {
-      if (nurse.name === nurse_object.name) {
-        nurse_index = index;
-        return nurse
-      }
-    }
-  )
+// //   else {
+// //     // Set a new variable to track the index of the nurse if we match it in LS data
+// //     let nurse_index;
 
-  if (nurse_to_delete) {
-    // remove the index containing the nurse to delete
-    delete current_nurses[nurse_index];
+// //     // either gets the current values of the nurse's object if they already exist
+// //     // or returns 'undefined' if the nurse isn't in LS data
+// //     const existing_nurse = current_nurses.find(
+// //       (nurse, index) => {
+// //         if (nurse.name === nurse_object.name) {
+// //           nurse_index = index;
+// //           return nurse
+// //         }
+// //       }
+// //     )
 
-    // write the updated array to LS
-    writeAllNursesToLS(current_nurses);
-  }
-  else return console.log('Looks like that nurse doesn\'t exist, please check the spelling and try again')
-}
+// //     if (existing_nurse) {
+// //       // Merge the new data over the old data in case we don't update all fields
+// //       // This should update anything new but preserve anything we didn't touch
+// //       const merged_nurse = Object.assign(existing_nurse, nurse_object)
+
+// //       // Overwrite the array index containing the original Nurse Data
+// //       current_nurses[nurse_index] = merged_nurse
+// //       writeAllNursesToLS(current_nurses);
+// //     }
+// //   }
+// // }
+
+
+// // // Delete a nurse from the array if it exists
+// // // takes a name (string) as input, has no return value
+// // const deleteNurseLS = (nurse_name) =>
+// // {
+// //   // Guard clause to protect against bad input
+// //   if (!nurse_name) return console.warn('Please provide a valid Nurse\'s name to delete');
+
+// //   // Get nurses from storage or undefined if none are defined yet
+// //   const current_nurses = getAllNursesFromLS();
+
+// //   // If the nurse array doesn't exist in storage, return an error
+// //   if (!current_nurses) return console.log('Looks like there are no nurses in Local Storage')
+
+// //   // either gets the current values of the nurse's object if they already exist
+// //   // or returns 'undefined' if the nurse isn't in LS data
+// //   const nurse_to_delete = current_nurses.find(
+// //     (nurse, index) => {
+// //       if (nurse.name === nurse_object.name) {
+// //         nurse_index = index;
+// //         return nurse
+// //       }
+// //     }
+// //   )
+
+// //   if (nurse_to_delete) {
+// //     // remove the index containing the nurse to delete
+// //     delete current_nurses[nurse_index];
+
+// //     // write the updated array to LS
+// //     writeAllNursesToLS(current_nurses);
+// //   }
+// //   else return console.log('Looks like that nurse doesn\'t exist, please check the spelling and try again')
+// // }
 

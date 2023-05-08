@@ -90,7 +90,7 @@
     </section>
 
     <!-- edting the sheet page -->
-    <section id="edit-sheet">
+    <!-- <section id="edit-sheet">
         <div id="page-top">
             <div>
                 <h1 id="current-date"></h1>
@@ -100,10 +100,104 @@
                 <button class="day-button">Day Shift</button>
                 <button class="night-button">Night Shift</button>
             </div>
+        </div> -->
+
+        <!-- add required to rooms and patients in card1 -->
+        <!-- <div id="all-cards">
+
+            <div class="card card1">
+                <form class="info-card" action="">
+                    <div class="edit-input">
+                        <input type="text" id="nurse-name" placeholder="Nurse's name">
+                    </div>
+                    <div class="side-by-side">
+                        <div class="edit-input">
+                            <label for="nurse-break">Break:</label>
+
+                            <select id="nurse-break">
+                                <option value="1">First</option>
+                                <option value="2">Second</option>
+                                <option value="3">Third</option>
+                            </select>
+                        </div>
+                        <div class="edit-input">
+                            <input type="text" id="break-relief" placeholder="Break relief">
+                        </div>
+                    </div>
+                    <div class="side-by-side">
+                        <div class="edit-input">
+                            <label for="extra duties">Extra Duties:</label>
+
+                            <select id="extra-duties">
+                                <option value="In-charge">In-charge</option>
+                                <option value="Shift Count">Shift Count</option>
+                                <option value="Safety Round">Safety Round</option>
+                                <option value="Crash Cart">Crash Cart</option>
+                                <option value="none"></option>
+                            </select>
+                        </div>
+                        <div class="edit-input">
+                            <label for="fire code">Fire Code:</label>
+
+                            <select id="fire-code">
+                              <option value="R">R</option>
+                              <option value="A">A</option>
+                              <option value="C">C</option>
+                              <option value="E">E</option>
+                            </select>                        </div>
+                    </div> -->
+
+                    <!-- <form action=""> -->
+                        <!-- <div id="all-patients">
+                            <div class="psingle-input">
+                                <input type="text" id="room1" placeholder="Room">
+                                <input type="text" id="patient1" placeholder="Patient">
+                            </div>
+                            <div class="psingle-input">
+                                <input type="text" id="room2" placeholder="Room">
+                                <input type="text" id="patient2" placeholder="Patient">
+                            </div>
+                            <div class="psingle-input">
+                                <input type="text" id="room3" placeholder="Room">
+                                <input type="text" id="patient3" placeholder="Patient">
+                            </div>
+                            <div class="psingle-input">
+                                <input type="text" id="room4" placeholder="Room">
+                                <input type="text" id="patient4" placeholder="Patient">
+                            </div>
+                        </div>
+                        <div class="submit"> -->
+                            <!-- <button id="edit-button" type="submit" onclick="generateNurse(event)">Submit</button>
+                        </div> -->
+                    <!-- </form> -->
+                <!-- </form>
+            </div> -->
+        <!-- <div class="add-card"> -->
+            <!-- <a href="https://www.flaticon.com/free-icons/nurse" title="nurse icons">Nurse icons created by Freepik - Flaticon</a> -->
+            
+            <!-- <button id="add-nurse"><img class="add-pic" src="addNurse.png" alt="">Add Nurse</button>
         </div>
+            
+
+        </div>
+        </div>
+    </section> -->
+
+    <!-- Viewing page -->
+     <section id="edit-sheet">
 
         <!-- add required to rooms and patients in card1 -->
         <div id="all-cards">
+            <div id="page-top">
+                <div>
+                    <h1 id="current-date"></h1>
+                </div>
+                <div id="day-night">
+                    <h1 id="shift-text" class="shift-text"></h1>
+                    <button class="day-button">Day Shift</button>
+                    <button class="night-button">Night Shift</button>
+                </div>
+            </div> 
 
             <div class="card card1">
                 <form class="info-card" action="">
@@ -167,80 +261,37 @@
                             </div>
                         </div>
                         <div class="submit">
-                            <button id="edit-button" type="submit" onclick="generateNurse(event)">Submit</button>
+                            <button  id="submit" onclick="addData()">Add nurse</button>
+                            <button id="update" onclick="updateData()">Update</button>
                         </div>
                     <!-- </form> -->
                 </form>
             </div>
-        <div class="add-card">
-            <!-- <a href="https://www.flaticon.com/free-icons/nurse" title="nurse icons">Nurse icons created by Freepik - Flaticon</a> -->
-            
-            <button id="add-nurse"><img class="add-pic" src="addNurse.png" alt="">Add Nurse</button>
-        </div>
             
 
         </div>
         </div>
-    </section>
 
-    <!-- Viewing page -->
-    <section id="view-page">
-        <div id="page-top">
-            <div>
-                <h1 id="date-view"></h1>
-            </div>
-            <div id="day-night">
-                <h1 id="shift-text" class="shift-text">Day/Night shift</h1>
-            </div>
-        </div>
+        <hr>
 
         <div class="all-cards">
             <div class="display-card display1">
                 <div class="nurse-info">
-                    <div id="name-view">
-                        <p>Nurse Name</p>
-                    </div>
-                    <div class="side-by-side">
-                        <div id="break-view">
-                            <p>Nurse Break</p>
-                        </div>
-                        <div id="relief-view">
-                            <p>Break Relief</p>
-                        </div>
-                    </div>
-
-                    <div class="side-by-side">
-                        <div id="duties-view">
-                            <p>Extra Duties</p>
-                        </div>
-                        <div id="code-view">
-                            <p>Fire-code</p>
-                        </div>
-                    </div>
-
-                    <div id="all-patients">
-                        <div class="P1 room-patient">
-                            <p id="rm1">Room1</p>
-                            <p id="pt1">patient1</p>
-                        </div>
-
-                        <div class="P2 room-patient">
-                            <p id="rm2">Room2</p>
-                            <p id="pt2">patient2</p>
-                        </div>
-
-                        <div class="P3 room-patient">
-                            <p id="rm3">Room3</p>
-                            <p id="pt3">patient3</p>
-                        </div>
-
-                        <div class="P4 room-patient">
-                            <p id="rm4">Room4</p>
-                            <p id="pt4">patient4</p>
-                        </div>
-                    </div>
+                    <p>Nurse Name</p>
+                    <p>Nurse Break</p>
+                    <p>Break Relief</p>
+                    <p>Extra Duties</p>
+                    <p>Fire-code</p>
+                    <p>Room1</p>
+                    <p>patient1</p>
+                    <p>Room2</p>
+                    <p>patient2</p>
+                    <p>Room3</p>
+                    <p>patient3</p>
+                    <p>Room4</p>
+                    <p>patient4</p>
                 </div>
-            </div>
+                       
     </section>
 
     <script src="sweetAlert.js"></script>
