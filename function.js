@@ -124,9 +124,9 @@ nightButton.addEventListener('click', function()
 function displayFullDate() 
 {
    const calendar_text = document.getElementById("current-date");
-  var now      = new Date();
-  var options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  var fullDate = now.toLocaleDateString('en-US', options);
+  let now      = new Date();
+  let options  = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  let fullDate = now.toLocaleDateString('en-US', options);
   calendar_text.innerHTML = fullDate;
 }
 displayFullDate();
@@ -151,6 +151,14 @@ function validateForm() {
     var patient3 = document.getElementById("patient3").value;
     var room4 = document.getElementById("room4").value;
     var patient4 = document.getElementById("patient4").value;
+    var room5 = document.getElementById("room5").value;
+    var patient5 = document.getElementById("patient5").value;
+    var room6 = document.getElementById("room6").value;
+    var patient6 = document.getElementById("patient6").value;
+    var room7 = document.getElementById("room7").value;
+    var patient7 = document.getElementById("patient7").value;
+    var room8 = document.getElementById("room8").value;
+    var patient8 = document.getElementById("patient8").value;
 
 
 
@@ -188,23 +196,23 @@ function showData() {
     var html = "";
     nurseList.forEach(function (element, index) {
         html += '<div class="nurse-info">' +
-            '<p>' + element.name + '</p>' +
-            '<p>' + element.break_time + '</p>' +
-            '<p>' + element.break_relief + '</p>' +
-            '<p>' + element.extra_duties + '</p>' +
-            '<p>' + element.fire_code + '</p>' +
-            '<p>' + element.room1 + '</p>' +
-            '<p>' + element.patient1 + '</p>' +
-            '<p>' + element.room2 + '</p>' +
-            '<p>' + element.patient2 + '</p>' +
-            '<p>' + element.room3 + '</p>' +
-            '<p>' + element.patient3 + '</p>' +
-            '<p>' + element.room4 + '</p>' +
-            '<p>' + element.patient4 + '</p>' +
+            '<p><strong>Name:</strong> ' + element.name + '</p>' +
+            '<p><strong>Break:</strong> ' + element.break_time + ' - ' + element.break_relief + '</p>' +
+            '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
+            '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
+            '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' +
+            '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' +
             '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
             '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
             '</div>';
     });
+    
 
     document.querySelector(".nurse-info").innerHTML = html;
 }
@@ -230,6 +238,14 @@ function addData() {
         var patient3 = document.getElementById("patient3").value;
         var room4 = document.getElementById("room4").value;
         var patient4 = document.getElementById("patient4").value;
+        var room5 = document.getElementById("room5").value;
+        var patient5 = document.getElementById("patient5").value;
+        var room6 = document.getElementById("room6").value;
+        var patient6 = document.getElementById("patient6").value;
+        var room7 = document.getElementById("room7").value;
+        var patient7 = document.getElementById("patient7").value;
+        var room8 = document.getElementById("room8").value;
+        var patient8 = document.getElementById("patient8").value;
 
         var nurseList;
         if (localStorage.getItem("nurseList") == null) {
@@ -255,6 +271,14 @@ function addData() {
                     patient3,
                     room4,
                     patient4,
+                    room5,
+                    patient5,
+                    room6,
+                    patient6,
+                    room7,
+                    patient7,
+                    room8,
+                    patient8,
                 }
             );
         localStorage.setItem("nurseList", JSON.stringify(nurseList));
@@ -273,6 +297,14 @@ function addData() {
         document.getElementById("patient3").value = "";
         document.getElementById("room4").value = "";
         document.getElementById("patient4").value = "";
+        document.getElementById("room5").value = "";
+        document.getElementById("patient5").value = "";
+        document.getElementById("room6").value = "";
+        document.getElementById("patient6").value = "";
+        document.getElementById("room7").value = "";
+        document.getElementById("patient7").value = "";
+        document.getElementById("room8").value = "";
+        document.getElementById("patient8").value = "";
 
     }
 
@@ -322,6 +354,14 @@ function updateData(index) {
     document.getElementById("patient3").value = nurseList[index].patient3;
     document.getElementById("room4").value = nurseList[index].room4;
     document.getElementById("patient4").value = nurseList[index].patient4;
+    document.getElementById("room5").value = nurseList[index].room5;
+    document.getElementById("patient5").value = nurseList[index].patient5;
+    document.getElementById("room6").value = nurseList[index].room6;
+    document.getElementById("patient6").value = nurseList[index].patient6;
+    document.getElementById("room7").value = nurseList[index].room7;
+    document.getElementById("patient7").value = nurseList[index].patient7;
+    document.getElementById("room8").value = nurseList[index].room8;
+    document.getElementById("patient8").value = nurseList[index].patient8;
 
 
     document.querySelector("#update").onclick = function () {
@@ -339,6 +379,15 @@ function updateData(index) {
             nurseList[index].patient3 = document.getElementById("patient3").value;
             nurseList[index].room4 = document.getElementById("room4").value;
             nurseList[index].patient4 = document.getElementById("patient4").value;
+            nurseList[index].room5 = document.getElementById("room5").value;
+            nurseList[index].patient5 = document.getElementById("patient5").value;
+            nurseList[index].room6 = document.getElementById("room6").value;
+            nurseList[index].patient6 = document.getElementById("patient6").value;
+            nurseList[index].room7 = document.getElementById("room7").value;
+            nurseList[index].patient7 = document.getElementById("patient7").value;
+            nurseList[index].room8 = document.getElementById("room8").value;
+            nurseList[index].patient8 = document.getElementById("patient8").value;
+            
 
             localStorage.setItem("nurseList", JSON.stringify(nurseList));
 
@@ -357,6 +406,14 @@ function updateData(index) {
             document.getElementById("patient3").value = "";
             document.getElementById("room4").value = "";
             document.getElementById("patient4").value = "";
+            document.getElementById("room5").value = "";
+            document.getElementById("patient5").value = "";
+            document.getElementById("room6").value = "";
+            document.getElementById("patient6").value = "";
+            document.getElementById("room7").value = "";
+            document.getElementById("patient7").value = "";
+            document.getElementById("room8").value = "";
+            document.getElementById("patient8").value = "";
 
             //  update button will hide and submit button shows 
 

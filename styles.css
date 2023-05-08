@@ -506,3 +506,8 @@ p
     margin: 5px;
     align-self: center;
   }
+
+  p 
+  {
+    font-family: 'Outfit', sans-serif;
+  }
