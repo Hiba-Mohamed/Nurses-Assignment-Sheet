@@ -537,19 +537,68 @@ p
     color: white;
   }
 
-  #display-cards
+  /* #display-cards
   {
     display: flex;
-    justify-content: center;
     flex-direction: row;
-    flex-wrap: wrap;
+  } */
+
+  .parent-container
+  {
+    display: flex;
+    flex-direction: row;
   }
 
   .nurse-info
   {
-
-   margin: 0;
-    border: 5px solid rgb(169, 22, 161);
+    /* border: 5px solid rgb(169, 22, 161);
     border-radius: 10px;
-    padding: 20px;
+    padding: 20px; */
   }
+
+.edit-button
+{
+  padding: 12px 16px;   
+  border: 3px solid rgb(63, 127, 187);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(63, 137, 187);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.edit-button:hover
+{
+  cursor: pointer;
+  background-color: rgb(63, 129, 187);
+  color: white;
+}
+.delete-button
+{
+  padding: 12px 16px;   
+  border: 3px solid rgb(187, 63, 63);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(187, 63, 63);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.delete-button:hover
+{
+  cursor: pointer;
+  background-color: rgb(187, 63, 63);
+  color: white;
+}

@@ -131,9 +131,9 @@ function displayFullDate()
 }
 displayFullDate();
 
-const shift_text = document.getElementById("shift-text");
-const day_night = localStorage.getItem('Shift');
-const shift_display = shift_text.innerHTML = day_night;
+// const shift_text = document.getElementById("shift-text");
+// const day_night = localStorage.getItem('Shift');
+// const shift_display = shift_text.innerHTML = day_night;
 
 document.getElementById("update").style.display = "none";
 
