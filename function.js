@@ -197,7 +197,7 @@ function showData() {
     nurseList.forEach(function (element, index) {
         html += '<div class="nurse-info">' +
             '<p><strong>Name:</strong> ' + element.name + '</p>' +
-            '<p><strong>Break:</strong> ' + element.break_time + ' - ' + element.break_relief + '</p>' +
+            '<p><strong>Break:</strong> ' + element.break_time + ' - ' + '<p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
             '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
             '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
             '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' +
