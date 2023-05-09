@@ -193,28 +193,37 @@ function showData() {
     else {
         nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
-    var html = "";
-    nurseList.forEach(function (element, index) {
-        html += '<div class="nurse-info">' +
-            '<p><strong>Name:</strong> ' + element.name + '</p>' +
-            '<p><strong>Break:</strong> ' + element.break_time + ' - ' + '<p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
-            '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
-            '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
-            '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' +
-            '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' +
-            '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
-            '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
-            '</div>';
+    // set ref to card container
+    const display_cards = document.querySelector("#display-cards");
+
+    // iterate through localStorage data to generate cards
+    nurseList.forEach(
+        (element, index) =>
+        {
+            const newDiv = document.createElement('div');
+            newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
+                '<p><strong>Break:</strong> ' + element.break_time + ' - ' + '<p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
+                '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
+                '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
+                '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' +
+                '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' +
+                '<div class=\'button-wrapper\'>' +
+                '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
+                '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
+                '</div>'
+            
+            newDiv.classList.add('nurse-info');
+            display_cards.appendChild(newDiv);
     });
     
 
-    document.querySelector(".nurse-info").innerHTML = html;
+    // document.querySelector(".nurse-info").innerHTML = html;
 }
 
 // loads all data when document or page loaded
@@ -305,7 +314,6 @@ function addData() {
         document.getElementById("patient7").value = "";
         document.getElementById("room8").value = "";
         document.getElementById("patient8").value = "";
-
     }
 
 }
@@ -681,4 +689,3 @@ function updateData(index) {
 // //   }
 // //   else return console.log('Looks like that nurse doesn\'t exist, please check the spelling and try again')
 // // }
-

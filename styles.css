@@ -389,10 +389,24 @@ h2
 }
 
 
-#nurse-info 
+.nurse-info 
 {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */
+    /* justify-content: space-between; */
+    width: 300px;
+    padding: 20px;
+    margin: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: whitesmoke;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.button-wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 #nurse-name
@@ -537,12 +551,12 @@ p
     color: white;
   }
 
-  #display-cards
-  {
-    display: flex;
-    flex-direction: row;
-    
-  }
+#display-cards
+{
+  display: flex;
+  flex-direction: row;
+  
+}
 
   .parent-container
   {
