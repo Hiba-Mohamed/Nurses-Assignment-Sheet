@@ -275,31 +275,55 @@ h2
     justify-content: center;
 }
 
-.day-button, .night-button
-{
-    font-size: 16px;
-    padding: 10px 20px;
-    margin: 20px 50px 20px 50px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #fff;
-}
-  
 .day-button
 {
-    background-color: peru; /* blue color for day shift */
+  padding: 12px 16px;   
+  border: 3px solid rgb(63, 127, 187);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(63, 137, 187);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-  
+.day-button:hover
+{
+  cursor: pointer;
+  background-color: rgb(63, 129, 187);
+  color: white;
+}
+
 .night-button
 {
-    background-color: rgb(128, 33, 33); /* dark color for night shift */
+  padding: 12px 16px;   
+  border: 3px solid rgb(107, 18, 152);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(107, 18, 152);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-  
-.day-button:active, .night-button:active
+.night-button:hover
 {
-    transform: translateY(1px); /* Add slight shadow effect on click */
+  cursor: pointer;
+  background-color: rgb(107, 18, 152);
+  color: white;
 }
+
+
 
 #shift-text
 {
@@ -478,29 +502,29 @@ p
 }
 
 #submit{
-    padding: 12px 16px;   
-    border: 3px solid rgb(142, 137, 60);
-    border-radius: 20px ;
-    background-color: transparent;
-    outline: none;
-    color:rgb(142, 137, 60);
-    font-family: sans-serif;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 10%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-  }
+  width: 100%;
+  padding: 12px 16px;   
+  border: 3px solid rgb(214, 195, 159);
+  border-radius: 20px ;
+  background-color: transparent;
+  outline: none;
+  color:rgb(214, 195, 159);
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
 
-  #submit:hover
-  {
-    cursor: pointer;
-    background-color: rgb(142, 137, 60);
-    color: white;
-  }
+#submit:hover
+{
+  cursor: pointer;
+  background-color: rgb(214, 195, 159);
+  color: white;
+}
 
 .add-card
 {
@@ -616,6 +640,11 @@ hr
   border: 7px solid rgba(187, 63, 63, 0.254);
   border-radius: 5px;
 }
+.finalize
+{
+ display: flex;
+ justify-content: flex-end;
+}
 
 #submit-all-btn
 {
@@ -630,7 +659,10 @@ hr
   cursor: pointer;
   margin: 10%;
   text-align: center;
+  display: flex;
+  justify-self: flex-end;
 }
+
 #submit-all-btn:hover
 {
   cursor: pointer;
