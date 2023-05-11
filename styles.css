@@ -398,7 +398,7 @@ h2
     margin: 20px;
     box-sizing: border-box;
     border-radius: 4px;
-    background: whitesmoke;
+    background: white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -540,8 +540,7 @@ p
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    
+    justify-content: center; 
   }
 
   #update:hover
@@ -555,7 +554,7 @@ p
 {
   display: flex;
   flex-direction: row;
-  
+  flex-wrap: wrap; 
 }
 
   .parent-container
@@ -564,12 +563,6 @@ p
     flex-direction: row;
   }
 
-  /* .nurse-info
-  {
-    border: 5px solid rgb(169, 22, 161);
-    border-radius: 10px;
-    padding: 20px;
-  } */
 
 .edit-button
 {
@@ -637,9 +630,6 @@ hr
   cursor: pointer;
   margin: 10%;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 #submit-all-btn:hover
 {
