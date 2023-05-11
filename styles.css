@@ -564,12 +564,12 @@ p
     flex-direction: row;
   }
 
-  .nurse-info
+  /* .nurse-info
   {
-    /* border: 5px solid rgb(169, 22, 161);
+    border: 5px solid rgb(169, 22, 161);
     border-radius: 10px;
-    padding: 20px; */
-  }
+    padding: 20px;
+  } */
 
 .edit-button
 {
@@ -624,7 +624,7 @@ hr
   border-radius: 5px;
 }
 
-#all-done
+#submit-all-btn
 {
   padding: 12px 16px;   
   border: 3px solid rgb(29, 130, 45);
@@ -641,7 +641,7 @@ hr
   flex-direction: column;
   justify-content: center;
 }
-#all-done:hover
+#submit-all-btn:hover
 {
   cursor: pointer;
   background-color:rgb(29, 130, 45);
