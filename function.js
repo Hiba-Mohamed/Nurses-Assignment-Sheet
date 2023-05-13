@@ -184,22 +184,25 @@ const showData = () => {
         (element, index) =>
         {
             const newDiv = document.createElement('div');
+            let room1 = element.room1 && element.room1 !== '' ? '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' : '';
+            let room2 = element.room2 && element.room2 !== '' ? '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' : '';
+            let room3 = element.room3 && element.room3 !== '' ? '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' : '';
+            let room4 = element.room4 && element.room4 !== '' ? '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' : '';
+            let room5 = element.room5 && element.room5 !== '' ? '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' : '';
+            let room6 = element.room6 && element.room6 !== '' ? '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' : '';
+            let room7 = element.room7 && element.room7 !== '' ? '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' : '';
+            let room8 = element.room8 && element.room8 !== '' ? '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' : '';
+            
             newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
                 '<p><strong>Break:</strong> ' + element.break_time + '<p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
                 '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
                 '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
-                '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' +
-                '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' +
+                room1 + room2 + room3 + room4 + room5 + room6 + room7 + room8 +
                 '<div class=\'button-wrapper\'>' +
                 '<button onclick="deleteData('+ index +')" class="delete-button">Delete</button>' +
                 '<button onclick="updateData('+ index +')" class="edit-button">Edit</button>' +
-                '</div>'
+                '</div>';
+                
             
             newDiv.classList.add('nurse-info');
             
