@@ -12,17 +12,17 @@ loginBtn.onclick = (e) =>
 
     if(emailAddress == "" || passWord == "")
       {
-        swal("All fields must be filled", "error");
+        swal("All fields must be filled", " ", "error");
       }
     else 
       {
          if (emailAddress == emailstored && passWord == passstored )
            {
-            swal("", "Login successful", "success");
+            swal("Login successful", "", "success");
            }
            else
            {
-            swal("", "Please check if the Email address and password are correct", "error");
+            swal("Please check if the Email address and password are correct", "", "error");
            }
       }
 }
@@ -59,13 +59,13 @@ submit_button.addEventListener('click', function(e)
 
     // setting conditions
     if(fname == "" || lname == "" || email == "" || pass == "" || cpass == "")     {
-        swal("Opps..!", "All input fields must be filled", "error");
+        swal("All input fields must be filled", "", "error");
      }
      else
      {
         if(pass !== cpass) 
         {
-            swal("Opps..!", "The passwords you entered are not matching", "error");
+            swal("The passwords you entered are not matching", "", "error");
         }
         else
         {
@@ -143,26 +143,26 @@ function validateForm() {
     let break_relief = document.getElementById("break-relief").value;
     let fire_code = document.getElementById("fire-code").value;
 
-    if (name == "") {
-        alert("Nurse's name is required");
-        return false;
+    switch (true) {
+        case (name == ""):
+            // alert("Nurse's name is required");
+            // swal("Please fill in nurse's name"," " , "error");
+            return false;
+        case (break_time == ""):
+            alert("Break time is required");
+            // swal("Please fill nurse's break"," " , "error");
+            return false;
+        case (fire_code == ""):
+            alert("Fire code is required");
+            // swal("Please fill in fire code"," " , "error");
+            return false;
+        case (break_relief == ""):
+            alert("Break relief is required");
+            // swal("Please fill in nurse's relief"," " , "error");
+            return false;
+        default:
+            return true;
     }
-    if (break_time == "") {
-        alert("Break time is required");
-        return false;
-    }
-    else if (fire_code == "") {
-        alert("Fire code is required");
-        return false;
-    }
-
-    if (break_relief == "") {
-        alert("Break relief is required");
-        return false;
-    }
-
-    return true;
-
 }
 
 const showData = () => {
@@ -420,31 +420,51 @@ function updateData(index) {
         
        
     }
-    
+
+}
 
 // view-only display
-
-}const final_submit = () => 
-{
+const final_submit = () => {
     const final_submit_btn = document.getElementById("submit-all-btn");
     const delete_buttons = document.getElementsByClassName("delete-button");
     const edit_buttons = document.getElementsByClassName("edit-button");
     const form_card = document.getElementById("all-cards");
+    const dayButton = document.querySelector('.day-button');
+    const nightButton = document.querySelector('.night-button');
 
+    dayButton.addEventListener('click', () => {
+        dayButton.checked = true;
+        nightButton.checked = false;
+      });
+      
+      nightButton.addEventListener('click', () => {
+        nightButton.checked = true;
+        dayButton.checked = false;
+      });
+  
     final_submit_btn.addEventListener('click',
-        function view_only () {
+  view_only = () => 
+      {
+        if (dayButton.checked || nightButton.checked) {
             for (let i = 0; i < delete_buttons.length; i++) {
                 delete_buttons[i].style.display = "none";
-            }
-            for (let i = 0; i < edit_buttons.length; i++) {
+              }
+              for (let i = 0; i < edit_buttons.length; i++) {
                 edit_buttons[i].style.display = "none";
-            }
-            form_card.style.display = "none";
-            final_submit_btn.style.display = "none";
+              }
+              form_card.style.display = "none";
+              final_submit_btn.style.display = "none";
         }
+        else
+        {
+            swal("Please choose either day or night shift"," " , "error");
+        }
+  
+      }
     )
-}
-final_submit()
+  }
+  
+  final_submit();
 // // adding Day vs Night shift under the date
 // const dayButton = document.querySelector('.day-button');
 // const nightButton = document.querySelector('.night-button');
