@@ -445,6 +445,24 @@ function updateData(index) {
     )
 }
 final_submit()
+// // adding Day vs Night shift under the date
+// const dayButton = document.querySelector('.day-button');
+// const nightButton = document.querySelector('.night-button');
+// const shiftText = document.querySelector('#shift-text');
+
+// dayButton.addEventListener('click', function() 
+// {
+//   shiftText.textContent = "Day Shift";
+//   dayButton.style.display = "none";
+//   nightButton.style.display = "none";
+// });
+
+// nightButton.addEventListener('click', function() 
+// {
+//   shiftText.textContent = "Night Shift";
+//   dayButton.style.display = "none";
+//   nightButton.style.display = "none";
+// });
 
 
 

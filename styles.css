@@ -283,10 +283,10 @@ h2
   background-color: transparent;
   outline: none;
   color:rgb(63, 137, 187);
+  margin: auto;
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
-  margin: 10%;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -310,7 +310,7 @@ h2
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
-  margin: 10%;
+  margin: auto;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -635,6 +635,13 @@ p
   color: white;
 }
 
+#btns-day-night
+{
+display:flex;
+justify-content: space-around;
+
+}
+
 hr
 {
   border: 7px solid rgba(187, 63, 63, 0.254);
@@ -643,7 +650,8 @@ hr
 .finalize
 {
  display: flex;
- justify-content: flex-end;
+ justify-content: center;
+ margin: 0;
 }
 
 #submit-all-btn
@@ -656,8 +664,8 @@ hr
   color:rgb(29, 130, 45);
   font-family: sans-serif;
   font-size: 16px;
+  margin:5% 0 5% 0;
   cursor: pointer;
-  margin: 10%;
   text-align: center;
   display: flex;
   justify-self: flex-end;
@@ -668,4 +676,11 @@ hr
   cursor: pointer;
   background-color:rgb(29, 130, 45);
   color: white;
+}
+
+footer
+{
+  height: 100px;
+  background-color: rgba(187, 63, 63, 0.254);
+
 }
