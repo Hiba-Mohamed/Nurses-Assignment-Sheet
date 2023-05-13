@@ -176,6 +176,9 @@ const showData = () => {
     // set ref to card container
     const display_cards = document.querySelector("#display-cards");
 
+    // Resets the innerHTML of the display-cards component to remove old data
+    display_cards.innerHTML = '';
+
     // iterate through localStorage data to generate cards
     nurseList.forEach(
         (element, index) =>
@@ -199,6 +202,8 @@ const showData = () => {
                 '</div>'
             
             newDiv.classList.add('nurse-info');
+            
+            // Appends the newly created card into the display-cards innerHTML
             display_cards.appendChild(newDiv);
     });
     
