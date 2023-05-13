@@ -145,7 +145,7 @@ function validateForm() {
 
     switch (true) {
         case (name == ""):
-            // alert("Nurse's name is required");
+            alert("Nurse's name is required");
             // swal("Please fill in nurse's name"," " , "error");
             return false;
         case (break_time == ""):
