@@ -146,19 +146,19 @@ function validateForm() {
     switch (true) {
         case (name == ""):
             alert("Nurse's name is required");
-            // swal("Please fill in nurse's name"," " , "error");
+            // swal("Please fill-in nurse's name"," " , "error");
             return false;
         case (break_time == ""):
             alert("Break time is required");
-            // swal("Please fill nurse's break"," " , "error");
+            // swal("Please fill-in nurse's break"," " , "error");
             return false;
         case (fire_code == ""):
             alert("Fire code is required");
-            // swal("Please fill in fire code"," " , "error");
+            // swal("Please fill-in fire code"," " , "error");
             return false;
         case (break_relief == ""):
             alert("Break relief is required");
-            // swal("Please fill in nurse's relief"," " , "error");
+            // swal("Please fill-in nurse's relief"," " , "error");
             return false;
         default:
             return true;
