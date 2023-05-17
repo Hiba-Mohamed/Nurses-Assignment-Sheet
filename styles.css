@@ -138,7 +138,7 @@ h1
 .create-text
 {
   display: flex;
-  justify-content: center;
+  text-align: center;
   padding: 7%;
 }
 
@@ -265,7 +265,7 @@ h2
   #current-date
 {
     padding-top: 20px;
-    color: brown;
+    color: rgba(187, 63, 129, 0.975);
     text-align: center;
 }
 
@@ -328,7 +328,7 @@ h2
 #shift-text
 {
     padding: 20px;
-    color: brown;
+    color: rgba(187, 63, 129, 0.975);
     text-align: center;
 }
 
@@ -391,7 +391,7 @@ h2
 #date-view
 {
     padding-top: 20px;
-    color: brown;
+    color: rgba(187, 63, 129, 0.975);
     text-align: center;
   }
 
@@ -577,8 +577,10 @@ p
 #display-cards
 {
   display: flex;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap; 
+  align-items: center;
 }
 
   .parent-container
@@ -643,8 +645,7 @@ justify-content: center;
 
 hr
 {
-  border: 7px solid rgba(187, 63, 63, 0.254);
-  border-radius: 5px;
+  border: 7px solid rgba(187, 63, 129, 0.975);
 }
 .finalize
 {
@@ -677,9 +678,13 @@ hr
   color: white;
 }
 
+
 footer
 {
+  position:relative;
+  bottom: 0;
   height: 100px;
-  background-color: rgba(187, 63, 63, 0.254);
+  width:100%;
+  background-color: rgba(187, 63, 129, 0.975);
 
 }
