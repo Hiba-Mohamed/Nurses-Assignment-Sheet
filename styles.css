@@ -674,7 +674,6 @@ hr
   color: white;
 }
 
-
 footer
 {
   position:relative;
@@ -682,5 +681,12 @@ footer
   height: 100px;
   width:100%;
   background-color: rgba(187, 63, 129, 0.975);
+}
 
+.dayvsnight
+{
+display: flex;
+flex-direction: row;
+margin: 2%;
+justify-content: space-between;
 }

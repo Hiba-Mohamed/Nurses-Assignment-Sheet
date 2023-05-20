@@ -195,16 +195,19 @@
                                 <input type="text" id="room8" placeholder="Room">
                                 <input type="text" id="patient8" placeholder="Patient">
                             </div>
+                            <div class="dayvsnight">
+                                <input type="checkbox" id="dayShift" name="shift" value="day">
+                                <label for="dayShift">Day Shift</label><br>
+                                
+                                <input type="checkbox" id="nightShift" name="shift" value="night">
+                                <label for="nightShift">Night Shift</label><br>
+                            </div>
                         </div>
                         <div class="submit">
                             <button  id="submit" onclick="addData()">Add nurse</button>
                             <button id="update" onclick="updateData()">Update</button>
                         </div>
                 </form>
-            </div>
-            <div id="btns-day-night">
-                <button class="day-button">Day Shift</button>
-                <button class="night-button">Night Shift</button>
             </div>
         </div>
 

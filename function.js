@@ -98,26 +98,6 @@ login_direct.onclick = (e) =>
 
 
 
-// adding Day vs Night shift under the date
-const dayButton = document.querySelector('.day-button');
-const nightButton = document.querySelector('.night-button');
-const shiftText = document.querySelector('#shift-text');
-
-dayButton.addEventListener('click', function() 
-{
-  shiftText.textContent = "Day Shift";
-  dayButton.style.display = "none";
-  nightButton.style.display = "none";
-});
-
-nightButton.addEventListener('click', function() 
-{
-  shiftText.textContent = "Night Shift";
-  dayButton.style.display = "none";
-  nightButton.style.display = "none";
-});
-
-
 
 // view page
 
@@ -131,9 +111,6 @@ function displayFullDate()
 }
 displayFullDate();
 
-// const shift_text = document.getElementById("shift-text");
-// const day_night = localStorage.getItem('Shift');
-// const shift_display = shift_text.innerHTML = day_night;
 
 document.getElementById("update").style.display = "none";
 
@@ -445,21 +422,9 @@ const final_submit = () => {
     final_submit_btn.addEventListener('click',
   view_only = () => 
       {
-        if (dayButton.checked || nightButton.checked) {
-            for (let i = 0; i < delete_buttons.length; i++) {
-                delete_buttons[i].style.display = "none";
-              }
-              for (let i = 0; i < edit_buttons.length; i++) {
-                edit_buttons[i].style.display = "none";
-              }
               form_card.style.display = "none";
               final_submit_btn.style.display = "none";
-        }
-        else
-        {
-            swal("Please choose either day or night shift"," " , "error");
-        }
-  
+       
       }
     )
   }
