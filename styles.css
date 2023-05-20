@@ -125,7 +125,6 @@ h1
 
  .top-title
 {
-  padding-top: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,8 +196,8 @@ h2
 
 .info-card
 {
-  width: 50%;
-  margin: auto;
+  width: 40%;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -689,4 +688,25 @@ display: flex;
 flex-direction: row;
 margin: 2%;
 justify-content: space-between;
+}
+
+.card
+{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.dayvsnight-staff
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-title , .night-title
+{
+  width: 100%;
+ text-align:center;
 }
