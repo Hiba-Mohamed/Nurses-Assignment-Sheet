@@ -145,55 +145,60 @@ function validateForm() {
 const showData = () => {
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
-        nurseList = [];
+      nurseList = [];
+    } else {
+      nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
-    else {
-        nurseList = JSON.parse(localStorage.getItem("nurseList"));
-    }
-    // set ref to card container
-    const display_cards = document.querySelector("#display-cards");
-
-    // Resets the innerHTML of the display-cards component to remove old data
-    display_cards.innerHTML = '';
-
+  
+    // set references to card containers
+    const dayCardsContainer = document.querySelector(".day-cards");
+    const nightCardsContainer = document.querySelector(".night-cards");
+  
+    // Resets the innerHTML of the card containers to remove old data
+    dayCardsContainer.innerHTML = '';
+    nightCardsContainer.innerHTML = '';
+  
     // iterate through localStorage data to generate cards
-    nurseList.forEach(
-        (element, index) =>
-        {
-            const newDiv = document.createElement('div');
-            let room1 = element.room1 && element.room1 !== '' ? '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' : '';
-            let room2 = element.room2 && element.room2 !== '' ? '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' : '';
-            let room3 = element.room3 && element.room3 !== '' ? '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' : '';
-            let room4 = element.room4 && element.room4 !== '' ? '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' : '';
-            let room5 = element.room5 && element.room5 !== '' ? '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' : '';
-            let room6 = element.room6 && element.room6 !== '' ? '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' : '';
-            let room7 = element.room7 && element.room7 !== '' ? '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' : '';
-            let room8 = element.room8 && element.room8 !== '' ? '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' : '';
-            
-            newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
-                '<p><strong>Break:</strong> ' + element.break_time + '<p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
-                '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
-                '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
-                room1 + room2 + room3 + room4 + room5 + room6 + room7 + room8 +
-                '<div class=\'button-wrapper\'>' +
-                '<button onclick="deleteData('+ index +')" class="delete-button">Delete</button>' +
-                '<button onclick="updateData('+ index +')" class="edit-button">Edit</button>' +
-                '</div>';
-                
-            
-            newDiv.classList.add('nurse-info');
-            
-            // Appends the newly created card into the display-cards innerHTML
-            display_cards.appendChild(newDiv);
+    nurseList.forEach((element, index) => {
+      const newDiv = document.createElement('div');
+      let room1 = element.room1 && element.room1 !== '' ? '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' : '';
+      let room2 = element.room2 && element.room2 !== '' ? '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' : '';
+      let room3 = element.room3 && element.room3 !== '' ? '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' : '';
+      let room4 = element.room4 && element.room4 !== '' ? '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' : '';
+      let room5 = element.room5 && element.room5 !== '' ? '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' : '';
+      let room6 = element.room6 && element.room6 !== '' ? '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' : '';
+      let room7 = element.room7 && element.room7 !== '' ? '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' : '';
+      let room8 = element.room8 && element.room8 !== '' ? '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' : '';
+  
+      newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
+        '<p><strong>Break:</strong> ' + element.break_time + '</p><p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
+        '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
+        '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
+        room1 + room2 + room3 + room4 + room5 + room6 + room7 + room8 +
+        '<div class=\'button-wrapper\'>' +
+        '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
+        '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
+        '</div>';
+  
+      newDiv.classList.add('nurse-info');
+  
+      // Check the checkboxes for day shift and night shift
+      const dayShiftCheckbox = document.getElementById("dayShift");
+      const nightShiftCheckbox = document.getElementById("nightShift");
+  
+      if (dayShiftCheckbox.checked) {
+        // Append the newly created card to the day shift cards container
+        dayCardsContainer.appendChild(newDiv);
+      } else if (nightShiftCheckbox.checked) {
+        // Append the newly created card to the night shift cards container
+        nightCardsContainer.appendChild(newDiv);
+      }
     });
-    
-
-    // document.querySelector(".nurse-info").innerHTML = html;
-}
-
-// loads all data when document or page loaded
-document.onload = showData();
-
+  };
+  
+  // Load all data when the document or page is loaded
+  window.onload = showData;
+  
 // function to add data to local storage
 
 function addData() {
@@ -406,18 +411,7 @@ const final_submit = () => {
     const delete_buttons = document.getElementsByClassName("delete-button");
     const edit_buttons = document.getElementsByClassName("edit-button");
     const form_card = document.getElementById("all-cards");
-    const dayButton = document.querySelector('.day-button');
-    const nightButton = document.querySelector('.night-button');
 
-    dayButton.addEventListener('click', () => {
-        dayButton.checked = true;
-        nightButton.checked = false;
-      });
-      
-      nightButton.addEventListener('click', () => {
-        nightButton.checked = true;
-        dayButton.checked = false;
-      });
   
     final_submit_btn.addEventListener('click',
   view_only = () => 
