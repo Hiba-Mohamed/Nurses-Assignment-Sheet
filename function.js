@@ -78,7 +78,7 @@ submit_button.addEventListener('click', function(e)
 // directing to login page from creating an account page
 
 const login_direct = document.getElementById("login-direct");
-login_direct.onclick = (e) =>
+login_direct.onclick = () =>
 {
     const login_page = document.getElementById("log-in");
     const create_page = document.getElementById("create-account");
@@ -114,33 +114,34 @@ displayFullDate();
 
 document.getElementById("update").style.display = "none";
 
-function validateForm() {
+const validateForm = (e) => {
+    e.preventDefault();
     let name = document.getElementById("nurse-name").value;
     let break_time = document.getElementById("nurse-break").value;
     let break_relief = document.getElementById("break-relief").value;
     let fire_code = document.getElementById("fire-code").value;
 
     switch (true) {
-        case (name == ""):
+        case (name === ""):
             alert("Nurse's name is required");
             // swal("Please fill-in nurse's name"," " , "error");
             return false;
-        case (break_time == ""):
+        case (break_time === ""):
             alert("Break time is required");
             // swal("Please fill-in nurse's break"," " , "error");
             return false;
-        case (fire_code == ""):
+        case (fire_code === ""):
             alert("Fire code is required");
             // swal("Please fill-in fire code"," " , "error");
             return false;
-        case (break_relief == ""):
+        case (break_relief === ""):
             alert("Break relief is required");
             // swal("Please fill-in nurse's relief"," " , "error");
             return false;
         default:
             return true;
     }
-}
+};
 
 const showData = () => {
     let nurseList;
@@ -201,7 +202,8 @@ const showData = () => {
   
 // function to add data to local storage
 
-function addData() {
+const addData = (e) => {
+    e.preventDefault();
     // if form is validated
     if (validateForm() == true) {
         let name = document.getElementById("nurse-name").value;
