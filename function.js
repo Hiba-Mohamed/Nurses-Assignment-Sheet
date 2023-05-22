@@ -413,19 +413,24 @@ function updateData(index) {
 // view-only display
 const final_submit = () => {
     const final_submit_btn = document.getElementById("submit-all-btn");
-    const delete_buttons = document.getElementsByClassName("delete-button");
-    const edit_buttons = document.getElementsByClassName("edit-button");
-    const form_card = document.getElementById("all-cards");
+    const delete_buttons = document.querySelectorAll("delete-button");
+    const edit_buttons = document.querySelectorAll("edit-button");
+    const form_card = document.getElementsByClassName("info-card")[0];
 
-  
-    final_submit_btn.addEventListener('click',
+    final_submit_btn.addEventListener('click', (event) => {
+        event.preventDefault();
+       view_only();
+    });
+
   view_only = () => 
       {
-              form_card.style.display = "none";
-              final_submit_btn.style.display = "none";
-       
+        form_card.style.display = "none";
+        final_submit_btn.style.display = "none";
+        delete_buttons.style.display = "none";
+        edit_buttons.style.display = "none";
+
       }
-    )
+    
   }
   
   final_submit();
