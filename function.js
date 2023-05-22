@@ -112,10 +112,16 @@ function displayFullDate()
 displayFullDate();
 
 
+const add_nursebtn = document.getElementById("submit");
+add_nursebtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    validateForm();
+    addData();
+});
+
 document.getElementById("update").style.display = "none";
 
-const validateForm = (e) => {
-    e.preventDefault();
+const validateForm = () => {
     let name = document.getElementById("nurse-name").value;
     let break_time = document.getElementById("nurse-break").value;
     let break_relief = document.getElementById("break-relief").value;
@@ -123,20 +129,16 @@ const validateForm = (e) => {
 
     switch (true) {
         case (name === ""):
-            alert("Nurse's name is required");
-            // swal("Please fill-in nurse's name"," " , "error");
+            swal("Please fill-in nurse's name"," " , "error");
             return false;
         case (break_time === ""):
-            alert("Break time is required");
-            // swal("Please fill-in nurse's break"," " , "error");
+            swal("Please fill-in nurse's break"," " , "error");
             return false;
         case (fire_code === ""):
-            alert("Fire code is required");
-            // swal("Please fill-in fire code"," " , "error");
+            swal("Please fill-in fire code"," " , "error");
             return false;
         case (break_relief === ""):
-            alert("Break relief is required");
-            // swal("Please fill-in nurse's relief"," " , "error");
+            swal("Please fill-in nurse's relief"," " , "error");
             return false;
         default:
             return true;
@@ -199,11 +201,12 @@ const showData = () => {
   
   // Load all data when the document or page is loaded
   window.onload = showData;
+
+
   
 // function to add data to local storage
 
-const addData = (e) => {
-    e.preventDefault();
+const addData = () => {
     // if form is validated
     if (validateForm() == true) {
         let name = document.getElementById("nurse-name").value;
