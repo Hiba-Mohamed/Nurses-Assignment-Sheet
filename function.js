@@ -458,3 +458,31 @@ const final_submit = () => {
       buttons[i].style.display = "none";
     }
   }
+
+
+
+
+
+  const sample_nurse_data = {
+    name: 'unique_name',
+    break_relief:'validated_other_nurse_name',
+    patients: [
+      {
+        // Unique name across all Nurse Objects' Patient Data
+        name: 'unique_name',
+        // unique number between0 and 10000
+        room_number: 0
+      }
+    ]
+  }
+
+  // NEW FUNCTION REQUIRED | CLARK 5/23 7 PM now
+  // add a new nurse
+  const validatePatients = (patient_array) =>
+  {
+    // Retreive stored nurse objects
+    // Generate a single array containing all patient data from all nurse objects
+    // Loop through the patient_array passed in from validation data
+      // check if the current index of the new patient data matches any of the other patients
+        // check based on name && room number
+  }
