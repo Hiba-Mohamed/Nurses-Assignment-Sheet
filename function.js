@@ -113,6 +113,7 @@ displayFullDate();
 
 
 const add_nursebtn = document.getElementById("submit");
+
 add_nursebtn.addEventListener('click', (event) => {
     event.preventDefault();
     validateForm();
@@ -202,11 +203,11 @@ const showData = () => {
   // Load all data when the document or page is loaded
   window.onload = showData;
 
-
-  
 // function to add data to local storage
 
 const addData = () => {
+
+  
     // if form is validated
     if (validateForm() == true) {
         let name = document.getElementById("nurse-name").value;
@@ -418,10 +419,10 @@ const final_submit = () => {
     const form_card        = document.querySelector(".info-card");
     const buttons = document.querySelectorAll(".button-wrapper")
 
-    final_submit_btn.addEventListener("click", (event) => {
-      event.preventDefault();
-      view_only();
-    });
+        final_submit_btn.addEventListener("click", (event) => {
+          event.preventDefault();
+          view_only();
+        });
   
     function view_only() {
       form_card.style.display = "none";
@@ -443,6 +444,17 @@ const final_submit = () => {
  
   
   
-  
-  
-  
+  // Working as of 05/23 6:30PM
+  const final_submit1 = () => {
+    const final_submit_btn = document.getElementById("submit-all-btn");
+    const form_card        = document.querySelector(".info-card");
+    const buttons = document.querySelectorAll(".button-wrapper")
+
+    form_card.style.display = "none";
+    final_submit_btn.style.display = "none";
+
+    for (let i = 0; i < buttons.length; i++)
+    {
+      buttons[i].style.display = "none";
+    }
+  }
