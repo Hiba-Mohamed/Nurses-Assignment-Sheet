@@ -413,9 +413,10 @@ function updateData(index) {
 // view-only display
 const final_submit = () => {
     const final_submit_btn = document.getElementById("submit-all-btn");
-    const delete_buttons   = document.querySelectorAll(".delete-button");
-    const edit_buttons     = document.querySelectorAll(".edit-button");
+    // const delete_buttons   = document.querySelectorAll(".delete-button");
+    // const edit_buttons     = document.querySelectorAll(".edit-button");
     const form_card        = document.querySelector(".info-card");
+    const buttons = document.querySelectorAll(".button-wrapper")
 
     final_submit_btn.addEventListener("click", (event) => {
       event.preventDefault();
@@ -425,13 +426,15 @@ const final_submit = () => {
     function view_only() {
       form_card.style.display = "none";
       final_submit_btn.style.display = "none";
-      delete_buttons.forEach((button) => {
-        button.style.display = "none";
-      });
-  
-      edit_buttons.forEach((button) => {
-        button.style.display = "none";
-      });
+    //   for (let i = 0; i < delete_buttons.length; i++) {
+    //     delete_buttons(i).style.display = "none";
+    // }
+    // for (let i = 0; i < edit_buttons.length; i++) {
+    //     edit_buttons(i).style.display = "none";
+    // }
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].style.display = "none";
+  }
     }
     
   };
