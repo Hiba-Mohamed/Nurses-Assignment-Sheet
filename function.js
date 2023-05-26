@@ -200,8 +200,11 @@ const showData = () => {
     });
   };
   
-  // Load all data when the document or page is loaded
-  window.onload = showData;
+  // clear local storage when page loads
+  window.addEventListener('load', function() {
+    // Clear the local storage
+    localStorage.clear();
+    console.log('Local storage has been reset.');});
 
 // function to add data to local storage
 
