@@ -259,24 +259,16 @@ const addData = () => {
                     break_relief,
                     extra_duties,
                     fire_code,
-                    room1,
-                    patient1,
-                    room2,
-                    patient2,
-                    room3,
-                    patient3,
-                    room4,
-                    patient4,
-                    room5,
-                    patient5,
-                    room6,
-                    patient6,
-                    room7,
-                    patient7,
-                    room8,
-                    patient8,
+                    patients: [
+                      {
+                        // Unique name across all Nurse Objects' Patient Data
+                        patient_name: [],
+                        // unique number between0 and 10000
+                        room_number: [],
+                      }]
                 }
             );
+
         localStorage.setItem("nurseList", JSON.stringify(nurseList));
         showData();
 
