@@ -154,6 +154,7 @@ const showData = () => {
       nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
   
+
     // set references to card containers
     const dayCardsContainer = document.querySelector(".day-cards");
     const nightCardsContainer = document.querySelector(".night-cards");
@@ -243,6 +244,13 @@ const addData = () => {
             nurseList = JSON.parse(localStorage.getItem("nurseList"));
         }
 
+   //  validating nurse name to ensure no duplicates
+   if (nurseList.some(nurse => nurse.name === name)) 
+   {
+    swal("Duplicate nurse name detected. Please enter a unique nurse name.", " ", "error");
+     return; // Exit the function if there's a duplicate nurse name
+ }
+ 
         nurseList.push
             (
                 {
