@@ -97,23 +97,26 @@ function displayFullDate() {
 }
 displayFullDate();
 
+// Dynamically rendering patient input in the form 
+
 document.addEventListener('DOMContentLoaded', function() {
-  var addPatientBtn = document.getElementById('add-patient-btn');
-  var allPatientsDiv = document.getElementById('all-patients');
-  var patientCount = 1;
+  const addPatientBtn = document.getElementById('add-patient-btn');
+  const allPatientsDiv = document.getElementById('all-patients');
+  let patientCount = 1;
+  let patients = []; // Array to store patient objects
 
   addPatientBtn.addEventListener('click', function(e) {
     e.preventDefault();
 
-    var patientDiv = document.createElement('div');
+    let patientDiv = document.createElement('div');
     patientDiv.classList.add('psingle-input');
 
-    var roomInput = document.createElement('input');
+    let roomInput = document.createElement('input');
     roomInput.type = 'text';
     roomInput.id = 'room' + (patientCount + 1);
     roomInput.placeholder = 'Room';
 
-    var patientInput = document.createElement('input');
+    let patientInput = document.createElement('input');
     patientInput.type = 'text';
     patientInput.id = 'patient' + (patientCount + 1);
     patientInput.placeholder = 'Patient';
@@ -123,10 +126,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     allPatientsDiv.appendChild(patientDiv);
 
+    // Create patient object and push it to the patients array
+    let patientObject = {
+      patient_name: patientInput.value,
+      room_number: roomInput.value
+    };
+    patients.push(patientObject);
+
     patientCount++;
   });
 });
-
 
 const add_nursebtn = document.getElementById("submit");
 
@@ -181,20 +190,11 @@ const showData = () => {
   // iterate through localStorage data to generate cards
   nurseList.forEach((element, index) => {
     const newDiv = document.createElement('div');
-    let room1 = element.room1 && element.room1 !== '' ? '<p><strong>Room :</strong> ' + element.room1 + ' - ' + element.patient1 + '</p>' : '';
-    let room2 = element.room2 && element.room2 !== '' ? '<p><strong>Room :</strong> ' + element.room2 + ' - ' + element.patient2 + '</p>' : '';
-    let room3 = element.room3 && element.room3 !== '' ? '<p><strong>Room :</strong> ' + element.room3 + ' - ' + element.patient3 + '</p>' : '';
-    let room4 = element.room4 && element.room4 !== '' ? '<p><strong>Room :</strong> ' + element.room4 + ' - ' + element.patient4 + '</p>' : '';
-    let room5 = element.room5 && element.room5 !== '' ? '<p><strong>Room :</strong> ' + element.room5 + ' - ' + element.patient5 + '</p>' : '';
-    let room6 = element.room6 && element.room6 !== '' ? '<p><strong>Room :</strong> ' + element.room6 + ' - ' + element.patient6 + '</p>' : '';
-    let room7 = element.room7 && element.room7 !== '' ? '<p><strong>Room :</strong> ' + element.room7 + ' - ' + element.patient7 + '</p>' : '';
-    let room8 = element.room8 && element.room8 !== '' ? '<p><strong>Room :</strong> ' + element.room8 + ' - ' + element.patient8 + '</p>' : '';
 
     newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
       '<p><strong>Break:</strong> ' + element.break_time + '</p><p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
       '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
       '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
-      room1 + room2 + room3 + room4 + room5 + room6 + room7 + room8 +
       '<div class=\'button-wrapper\'>' +
       '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
       '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
@@ -202,17 +202,26 @@ const showData = () => {
 
     newDiv.classList.add('nurse-info');
 
-    // Check the checkboxes for day shift and night shift
-    const dayShiftCheckbox = document.getElementById("dayShift");
-    const nightShiftCheckbox = document.getElementById("nightShift");
+    dayCardsContainer.appendChild(newDiv);
 
-    if (dayShiftCheckbox.checked) {
-      // Append the newly created card to the day shift cards container
-      dayCardsContainer.appendChild(newDiv);
-    } else if (nightShiftCheckbox.checked) {
-      // Append the newly created card to the night shift cards container
-      nightCardsContainer.appendChild(newDiv);
-    }
+// Get the toggle switch element
+// const toggleSwitch = document.querySelector("switch");
+
+// Add an event listener to the toggle switch
+// toggleSwitch.addEventListener("click", function() 
+// {
+//   if (toggleSwitch.checked) 
+//   {
+//     // Append the newly created card to the night shift cards container
+//     nightCardsContainer.appendChild(newDiv);
+//   } 
+//   else 
+//   {
+//     // Append the newly created card to the day shift cards container
+//     dayCardsContainer.appendChild(newDiv);
+//   }
+// });
+
   });
 };
 
@@ -226,7 +235,6 @@ window.addEventListener('load', function () {
 // function to add data to local storage
 
 const addData = () => {
-
   // if form is validated
   if (validateForm() == true) {
     let name = document.getElementById("nurse-name").value;
@@ -234,28 +242,14 @@ const addData = () => {
     let break_relief = document.getElementById("break-relief").value;
     let extra_duties = document.getElementById("extra-duties").value;
     let fire_code = document.getElementById("fire-code").value;
-    let room1 = document.getElementById("room1").value;
-    let patient1 = document.getElementById("patient1").value;
-    let room2 = document.getElementById("room2").value;
-    let patient2 = document.getElementById("patient2").value;
-    let room3 = document.getElementById("room3").value;
-    let patient3 = document.getElementById("patient3").value;
-    let room4 = document.getElementById("room4").value;
-    let patient4 = document.getElementById("patient4").value;
-    let room5 = document.getElementById("room5").value;
-    let patient5 = document.getElementById("patient5").value;
-    let room6 = document.getElementById("room6").value;
-    let patient6 = document.getElementById("patient6").value;
-    let room7 = document.getElementById("room7").value;
-    let patient7 = document.getElementById("patient7").value;
-    let room8 = document.getElementById("room8").value;
-    let patient8 = document.getElementById("patient8").value;
+    let roomInputs = document.querySelectorAll(".room");
+    let patientInputs = document.querySelectorAll(".patient");
+    let patients = [];
 
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
       nurseList = [];
-    }
-    else {
+    } else {
       nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
 
@@ -264,23 +258,17 @@ const addData = () => {
       swal("Duplicate nurse name detected. Please enter a unique nurse name.", " ", "error");
       return; // Exit the function if there's a duplicate nurse name
     }
-    nurseList.push
-      (
-        {
-          name,
-          break_time,
-          break_relief,
-          extra_duties,
-          fire_code,
-          patients: [
-            {
-              // Unique name across all Nurse Objects' Patient Data
-              patient_name: [],
-              // unique number between0 and 10000
-              room_number: [],
-            }]
-        }
-      );
+
+    nurseList.push({
+      name,
+      break_time,
+      break_relief,
+      extra_duties,
+      fire_code,
+      patients,
+    });
+
+    console.log(patients);
 
     localStorage.setItem("nurseList", JSON.stringify(nurseList));
     showData();
@@ -290,26 +278,12 @@ const addData = () => {
     document.getElementById("break-relief").value = "";
     document.getElementById("extra-duties").value = "";
     document.getElementById("fire-code").value = "";
-    document.getElementById("room1").value = "";
-    document.getElementById("patient1").value = "";
-    document.getElementById("room2").value = "";
-    document.getElementById("patient2").value = "";
-    document.getElementById("room3").value = "";
-    document.getElementById("patient3").value = "";
-    document.getElementById("room4").value = "";
-    document.getElementById("patient4").value = "";
-    document.getElementById("room5").value = "";
-    document.getElementById("patient5").value = "";
-    document.getElementById("room6").value = "";
-    document.getElementById("patient6").value = "";
-    document.getElementById("room7").value = "";
-    document.getElementById("patient7").value = "";
-    document.getElementById("room8").value = "";
-    document.getElementById("patient8").value = "";
+
+    // Clear patient inputs
+    roomInputs.forEach(input => (input.value = ""));
+    patientInputs.forEach(input => (input.value = ""));
   }
-
-}
-
+};
 // function to delete Data from local storage
 
 
@@ -341,28 +315,13 @@ function updateData(index) {
   else {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
+  console.log(nurseList);
 
   document.getElementById("nurse-name").value = nurseList[index].name;
   document.getElementById("nurse-break").value = nurseList[index].break_time;
   document.getElementById("break-relief").value = nurseList[index].break_relief;
   document.getElementById("extra-duties").value = nurseList[index].extra_duties;
   document.getElementById("fire-code").value = nurseList[index].fire_code;
-  document.getElementById("room1").value = nurseList[index].room1;
-  document.getElementById("patient1").value = nurseList[index].patient1;
-  document.getElementById("room2").value = nurseList[index].room2;
-  document.getElementById("patient2").value = nurseList[index].patient2;
-  document.getElementById("room3").value = nurseList[index].room3;
-  document.getElementById("patient3").value = nurseList[index].patient3;
-  document.getElementById("room4").value = nurseList[index].room4;
-  document.getElementById("patient4").value = nurseList[index].patient4;
-  document.getElementById("room5").value = nurseList[index].room5;
-  document.getElementById("patient5").value = nurseList[index].patient5;
-  document.getElementById("room6").value = nurseList[index].room6;
-  document.getElementById("patient6").value = nurseList[index].patient6;
-  document.getElementById("room7").value = nurseList[index].room7;
-  document.getElementById("patient7").value = nurseList[index].patient7;
-  document.getElementById("room8").value = nurseList[index].room8;
-  document.getElementById("patient8").value = nurseList[index].patient8;
 
 
   document.querySelector("#update").onclick = function () {
@@ -372,56 +331,21 @@ function updateData(index) {
       nurseList[index].break_relief = document.getElementById("break-relief").value;
       nurseList[index].extra_duties = document.getElementById("extra-duties").value;
       nurseList[index].fire_code = document.getElementById("fire-code").value;
-      nurseList[index].room1 = document.getElementById("room1").value;
-      nurseList[index].patient1 = document.getElementById("patient1").value;
-      nurseList[index].room2 = document.getElementById("room2").value;
-      nurseList[index].patient2 = document.getElementById("patient2").value;
-      nurseList[index].room3 = document.getElementById("room3").value;
-      nurseList[index].patient3 = document.getElementById("patient3").value;
-      nurseList[index].room4 = document.getElementById("room4").value;
-      nurseList[index].patient4 = document.getElementById("patient4").value;
-      nurseList[index].room5 = document.getElementById("room5").value;
-      nurseList[index].patient5 = document.getElementById("patient5").value;
-      nurseList[index].room6 = document.getElementById("room6").value;
-      nurseList[index].patient6 = document.getElementById("patient6").value;
-      nurseList[index].room7 = document.getElementById("room7").value;
-      nurseList[index].patient7 = document.getElementById("patient7").value;
-      nurseList[index].room8 = document.getElementById("room8").value;
-      nurseList[index].patient8 = document.getElementById("patient8").value;
 
       showData();
       localStorage.setItem("nurseList", JSON.stringify(nurseList));
-
-
 
       document.getElementById("nurse-name").value = "";
       document.getElementById("nurse-break").value = "";
       document.getElementById("break-relief").value = "";
       document.getElementById("extra-duties").value = "";
       document.getElementById("fire-code").value = "";
-      document.getElementById("room1").value = "";
-      document.getElementById("patient1").value = "";
-      document.getElementById("room2").value = "";
-      document.getElementById("patient2").value = "";
-      document.getElementById("room3").value = "";
-      document.getElementById("patient3").value = "";
-      document.getElementById("room4").value = "";
-      document.getElementById("patient4").value = "";
-      document.getElementById("room5").value = "";
-      document.getElementById("patient5").value = "";
-      document.getElementById("room6").value = "";
-      document.getElementById("patient6").value = "";
-      document.getElementById("room7").value = "";
-      document.getElementById("patient7").value = "";
-      document.getElementById("room8").value = "";
-      document.getElementById("patient8").value = "";
-
+      
       //  update button will hide and submit button shows 
 
       document.getElementById("submit").style.display = "block";
       document.getElementById("update").style.display = "none";
     }
-
 
   }
 
