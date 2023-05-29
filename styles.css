@@ -625,7 +625,7 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(187, 63, 129, 0.975);
+  background-color: rgb(214, 195, 159);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -643,11 +643,11 @@ footer {
 }
 
 input:checked+.slider {
-  background-color: rgb(214, 195, 159);
+  background-color: rgba(187, 63, 129, 0.975);
 }
 
 input:focus+.slider {
-  box-shadow: 0 0 1px rgb(214, 195, 159);
+  box-shadow: 0 0 1px rgba(187, 63, 129, 0.975);;
 }
 
 input:checked+.slider:before {
