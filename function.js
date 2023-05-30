@@ -202,6 +202,13 @@ addPatientBtn.addEventListener('click', function(e) {
     room_number: patient_inputs[length - 2].value ?? 404
   };
 
+
+  // I would probably handle the validation of patient data here.  
+  // We can check if the name and room number are the same as any of the existing patients
+  // If they are, the patient is already assigned to another nurse, so we can trigger an alert and prevent
+  // the document from adding new fields until the collision is resolved by the user
+
+
   setPatientsToLS(patientObject);
 
   // Append new input fields into the parent container
@@ -243,9 +250,6 @@ const setPatientsToLS = (new_patient_object) =>
   ) throw Error('Invalid input provided for Patient Object')
 
   const current_patients = getPatientsFromLS();
-
-  // I would probably handle the validation of patient data here. 
-  // We can check if the name and room number are the same as any of the existing patients
 
   current_patients.push(new_patient_object)
 
