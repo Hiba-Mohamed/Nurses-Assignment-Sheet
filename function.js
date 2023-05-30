@@ -99,43 +99,170 @@ displayFullDate();
 
 // Dynamically rendering patient input in the form 
 
-document.addEventListener('DOMContentLoaded', function() {
-  const addPatientBtn = document.getElementById('add-patient-btn');
-  const allPatientsDiv = document.getElementById('all-patients');
-  let patientCount = 1;
-  let patients = []; // Array to store patient objects
 
-  addPatientBtn.addEventListener('click', function(e) {
-    e.preventDefault();
+// document.addEventListener('DOMContentLoaded', function() {
+//   const addPatientBtn = document.getElementById('add-patient-btn');
+//   const allPatientsDiv = document.getElementById('all-patients');
 
-    let patientDiv = document.createElement('div');
-    patientDiv.classList.add('psingle-input');
+  
+//   let patientCount = 1;
+//   let patients = []; // Array to store patient objects
 
-    let roomInput = document.createElement('input');
-    roomInput.type = 'text';
-    roomInput.id = 'room' + (patientCount + 1);
-    roomInput.placeholder = 'Room';
+//   addPatientBtn.addEventListener('click', function(e) {
+//     e.preventDefault();
 
-    let patientInput = document.createElement('input');
-    patientInput.type = 'text';
-    patientInput.id = 'patient' + (patientCount + 1);
-    patientInput.placeholder = 'Patient';
+//     let patientDiv = document.createElement('div');
+//     patientDiv.classList.add('psingle-input');
 
-    patientDiv.appendChild(roomInput);
-    patientDiv.appendChild(patientInput);
+//     let roomInput = document.createElement('input');
+//     roomInput.type = 'text';
+//     roomInput.id = 'room' + (patientCount + 1);
+//     roomInput.placeholder = 'Room';
 
-    allPatientsDiv.appendChild(patientDiv);
+//     let patientInput = document.createElement('input');
+//     patientInput.type = 'text';
+//     patientInput.id = 'patient' + (patientCount + 1);
+//     patientInput.placeholder = 'Patient';
 
-    // Create patient object and push it to the patients array
-    let patientObject = {
-      patient_name: patientInput.value,
-      room_number: roomInput.value
-    };
-    patients.push(patientObject);
+//     patientDiv.appendChild(roomInput);
+//     patientDiv.appendChild(patientInput);
 
-    patientCount++;
-  });
+//     allPatientsDiv.appendChild(patientDiv);
+
+//     // Create patient object and push it to the patients array
+//     let patientObject = {
+//       patient_name: patientInput.value,
+//       room_number: roomInput.value
+//     };
+//     patients.push(patientObject);
+
+//     patientCount++;
+//   });
+// });
+
+
+
+
+
+
+
+// Clark's code for Patient's array
+
+
+// Custom JavaScript event to handle updates to patient list (keeps count in Global Scope)
+const event = new CustomEvent("update_patient_list");
+
+window.addEventListener('DOMContentLoaded', () => {
+  const update_patient_list = new CustomEvent('update_patient_list');
+  document.dispatchEvent(update_patient_list)
+})
+
+// Listen for the custom event to log updates.
+document.addEventListener('update_patient_list', function() {
+  const patient_array = getPatientsFromLS();
+  let patientCount = patient_array.length;
+
+  console.log(`There are ${patientCount} patients`, patient_array)
 });
+
+
+const addPatientBtn = document.getElementById('add-patient-btn');
+const allPatientsDiv = document.getElementById('all-patients');
+
+
+addPatientBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+
+  const current_patients = getPatientsFromLS();
+  const patientCount = current_patients.length ?? 0
+
+  // Handle the required HTML Modifications
+  let patientDiv = document.createElement('div');
+  patientDiv.classList.add('psingle-input');
+
+  let roomInput = document.createElement('input');
+  roomInput.type = 'text';
+  roomInput.id = 'room' + (patientCount + 1);
+  roomInput.placeholder = 'Room';
+
+  let patientInput = document.createElement('input');
+  patientInput.type = 'text';
+  patientInput.id = 'patient' + (patientCount + 1);
+  patientInput.placeholder = 'Patient';
+
+  patientDiv.appendChild(roomInput);
+  patientDiv.appendChild(patientInput);
+
+  // Create patient object and push it to the patients array
+  let patient_inputs = allPatientsDiv.getElementsByTagName('input');
+  const length = patient_inputs.length
+
+  let patientObject = {
+    patient_name: patient_inputs[length - 1].value ?? 'undefined',
+    room_number: patient_inputs[length - 2].value ?? 404
+  };
+
+  setPatientsToLS(patientObject);
+
+  // Append new input fields into the parent container
+  allPatientsDiv.appendChild(patientDiv);
+
+  // Dispatch custom event so we can globally track the patient's list
+  const update_patient_list = new CustomEvent('update_patient_list');
+  addPatientBtn.dispatchEvent(update_patient_list)
+});
+
+
+// Note that the contents of our patient array should look like:
+// {
+//   name: 'Clark',
+//   room_number: 123
+// }
+
+const getPatientsFromLS = () =>
+{
+  // Check local storage for current patients array
+  let current_patients = localStorage.getItem('patientList');
+
+  // if it exists, return the parsed value for use
+  if (current_patients !== null) {
+    current_patients = JSON.parse(current_patients);
+    return current_patients
+  }
+
+  // otherwise, return a new array we can use
+  return []
+}
+
+const setPatientsToLS = (new_patient_object) =>
+{
+  if (
+    !new_patient_object ||
+    !new_patient_object.patient_name ||
+    !new_patient_object.room_number
+  ) throw Error('Invalid input provided for Patient Object')
+
+  const current_patients = getPatientsFromLS();
+
+  // I would probably handle the validation of patient data here. 
+  // We can check if the name and room number are the same as any of the existing patients
+
+  current_patients.push(new_patient_object)
+
+  localStorage.setItem('patientList', JSON.stringify(current_patients))
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 const add_nursebtn = document.getElementById("submit");
 
