@@ -330,13 +330,19 @@ const validateForm = () => {
       return true;
   }
 };
-
 const showData = () => {
   let nurseList;
   if (localStorage.getItem("nurseList") == null) {
     nurseList = [];
   } else {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
+  }
+
+  let patientList;
+  if (localStorage.getItem("patientList") == null) {
+    patientList = [];
+  } else {
+    patientList = JSON.parse(localStorage.getItem("patientList"));
   }
 
   // set references to card containers
@@ -348,23 +354,34 @@ const showData = () => {
   nightCardsContainer.innerHTML = '';
 
   // iterate through localStorage data to generate cards
-  nurseList.forEach((element, index) => {
-    const newDiv = document.createElement('div');
-    let patientInfo = element.room_number && element.room_number !== '' ? '<p><strong>Room :</strong> ' + element.room_number + ' - ' + element.patient_name + '</p>' : '';
+  nurseList.forEach((nurseElement, nurseIndex) => {
+    const nurseDiv = document.createElement('div');
 
-    newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
-      '<p><strong>Break:</strong> ' + element.break_time + '</p><p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
-      '<p><strong>Extra Duties:</strong> <span style="color:red">' + element.extra_duties + '</span></p>' +
-      '<p><strong>Fire Code:</strong> <span style="color:red">' + element.fire_code + '</span></p>' +
+    nurseDiv.innerHTML =
+      '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
+      '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
+      '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
+      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' +
       '<div class=\'button-wrapper\'>' +
-      '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
-      '<button onclick="updateData(' + index + ')" class="edit-button">Edit</button>' +
+      '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
+      '<button onclick="updateData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
       '</div>';
 
-    newDiv.classList.add('nurse-info');
+    nurseDiv.classList.add('nurse-info');
 
-    dayCardsContainer.appendChild(newDiv);
+    const patientCard = document.createElement('div');
+    patientCard.classList.add('patient-info');
 
+    patientList.forEach((patientElement, patientIndex) => {
+      const newDiv = document.createElement('div');
+      let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
+      newDiv.innerHTML = patientInfo;
+      newDiv.classList.add('patient-card');
+      patientCard.appendChild(newDiv);
+    });
+
+    nurseDiv.appendChild(patientCard);
+    dayCardsContainer.appendChild(nurseDiv);
   });
 };
 
