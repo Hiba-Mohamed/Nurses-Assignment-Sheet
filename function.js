@@ -152,13 +152,16 @@ displayFullDate();
 // Custom JavaScript event to handle updates to patient list (keeps count in Global Scope)
 const event = new CustomEvent("update_patient_list");
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => 
+{
+  let patientCount = 0;
   const update_patient_list = new CustomEvent('update_patient_list');
   document.dispatchEvent(update_patient_list)
 })
 
 // Listen for the custom event to log updates.
-document.addEventListener('update_patient_list', function() {
+document.addEventListener('update_patient_list', function() 
+{
   const patient_array = getPatientsFromLS();
   let patientCount = patient_array.length;
 
@@ -203,12 +206,38 @@ addPatientBtn.addEventListener('click', function(e) {
   };
 
 
-  // I would probably handle the validation of patient data here.  
-  // We can check if the name and room number are the same as any of the existing patients
-  // If they are, the patient is already assigned to another nurse, so we can trigger an alert and prevent
-  // the document from adding new fields until the collision is resolved by the user
+  // Function to check for duplicate patient names and room numbers
+  function validatePatients() {
+    const patient_array = getPatientsFromLS();
 
+    const newPatientName = patient_inputs[length - 1].value;
+    const newRoomNumber = patient_inputs[length - 2].value;
 
+    // Check for duplication of patient name in local storage
+    const isDuplicateName = patient_array.some((patient) => patient.patient_name === newPatientName);
+
+    // Check for duplication of room number in local storage
+    const isDuplicateRoomNumber = patient_array.some((patient) => patient.room_number === newRoomNumber);
+
+    if (isDuplicateName) {
+      swal("Patient name already exists. Please enter a unique patient name", " ", "error");
+      return false;
+    }
+
+    if (isDuplicateRoomNumber) {
+      swal("Room number already exists. Please enter a unique room number", " ", "error");
+      return false;
+    }
+
+    return true;
+  }
+  
+  // Validate the patient data
+  if (!validatePatients()) {
+    return; // Stop execution if validation fails
+  }
+
+  // Add the patient to local storage
   setPatientsToLS(patientObject);
 
   // Append new input fields into the parent container
@@ -321,6 +350,7 @@ const showData = () => {
   // iterate through localStorage data to generate cards
   nurseList.forEach((element, index) => {
     const newDiv = document.createElement('div');
+    let patientInfo = element.room_number && element.room_number !== '' ? '<p><strong>Room :</strong> ' + element.room_number + ' - ' + element.patient_name + '</p>' : '';
 
     newDiv.innerHTML = '<p><strong>Name:</strong> ' + element.name + '</p>' +
       '<p><strong>Break:</strong> ' + element.break_time + '</p><p><strong>Relief:</strong> ' + element.break_relief + '</p>' +
@@ -334,24 +364,6 @@ const showData = () => {
     newDiv.classList.add('nurse-info');
 
     dayCardsContainer.appendChild(newDiv);
-
-// Get the toggle switch element
-// const toggleSwitch = document.querySelector("switch");
-
-// Add an event listener to the toggle switch
-// toggleSwitch.addEventListener("click", function() 
-// {
-//   if (toggleSwitch.checked) 
-//   {
-//     // Append the newly created card to the night shift cards container
-//     nightCardsContainer.appendChild(newDiv);
-//   } 
-//   else 
-//   {
-//     // Append the newly created card to the day shift cards container
-//     dayCardsContainer.appendChild(newDiv);
-//   }
-// });
 
   });
 };
