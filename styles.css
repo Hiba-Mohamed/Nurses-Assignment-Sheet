@@ -584,11 +584,16 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
 }
+.shift-buttons
+{
+  display: flex;
+  justify-content:space-evenly
+}
 
 .shiftButton {
   padding: 10px;
-  font-size: 16px;
-  background-color: #f0f0f0;
+  font-size: 30px;
+  background-color:  rgb(248, 241, 227);
   border: none;
   border-radius: 4px;
   color: #333;
@@ -597,14 +602,6 @@ footer {
 }
 
 .shiftButton:hover {
-  background-color: #ddd;
-}
-
-.shiftButton.selected {
-  background-color: #3898f8;
-  color: #fff;
-}
-
-.shiftButton.selected:hover {
-  background-color: #1976d2;
+  background-color: rgb(227, 216, 194);
+  color: white;
 }
