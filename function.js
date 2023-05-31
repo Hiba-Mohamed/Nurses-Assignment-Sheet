@@ -79,13 +79,6 @@ login_direct.onclick = () => {
 
 // current date function
 
-const calendar_text = document.getElementById("current-date");
-let now = new Date();
-let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-let fullDate = now.toLocaleDateString('en-US', options);
-calendar_text.innerHTML = fullDate;
-
-
 // view page
 
 function displayFullDate() {
@@ -96,6 +89,31 @@ function displayFullDate() {
   calendar_text.innerHTML = fullDate;
 }
 displayFullDate();
+
+// choosing a shift type
+let dayShiftButton = document.getElementById('dayShiftButton');
+let nightShiftButton = document.getElementById('nightShiftButton');
+let shiftHeading = document.querySelector('.shift-title');
+
+function dayShift() {
+  dayShiftButton.addEventListener('click',  function(e)
+  {
+    e.preventDefault();
+    dayShiftButton.style.display = 'none';
+    nightShiftButton.style.display = 'none';
+    shiftHeading.innerHTML = "Day Shift"
+  } )
+}
+
+function nightShift() {
+  nightShiftButton.addEventListener('click',  function(e)
+  {
+    e.preventDefault();
+    dayShiftButton.style.display = 'none';
+    nightShiftButton.style.display = 'none';
+    shiftHeading.innerHTML = "Night Shift"
+  } )
+}
 
 // Dynamically rendering patient input in the form 
 

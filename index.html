@@ -109,6 +109,7 @@
         </div> 
 
         <hr>
+
       
         <div id="all-cards">
 
@@ -161,38 +162,27 @@
                         <div class="patient-btn">
                             <button id="add-patient-btn">Add Patient</button>
                         </div>
-
-                            <div class="toggle">
-                                <p>Day</p>
-                                <label class="switch">
-                                    <input type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                                <p>Night</p>
-                            </div>
-                
-                        
+                      
                         <div class="submit">
                             <!-- REMOVED ONCLICK FUNCTION | CLARK 5/23 6:30PM -->
                             <button  id="submit">Add nurse</button>
                             <button id="update" onclick="updateData()">Update</button>
                         </div>
                 </form>
+
+
                 <div class="dayvsnight-staff">
-                        <div class="day-staff">
-                            <h2 class="day-title">Day Shift</h2>
-                            <div class="day-cards">
+                        <div class="shift-staff">
+                            <h2 class="shift-title">Please select a shift type:</h2>
+                            <div class="shift-buttons">
+                                <button class="shiftButton" id="dayShiftButton" onclick="dayShift(event)">Day Shift</button>
+                                <button class="shiftButton" id="nightShiftButton" onclick="nightShift(event)">Night Shift</button>
+                            </div>
+                            
+                            <div class="shift-cards">
         <!-- this is where day shift nurse info cards will be inserted -->
                             </div>
                         </div>
-        
-                        <div class="night-staff">
-                            <h2 class="night-title">Night Shift</h2>
-                            <div class="night-cards">
-        <!-- this is where night shift nurse info cards will be inserted -->
-                            </div>
-                        </div>
-
                 </div>
 
    
