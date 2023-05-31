@@ -422,12 +422,10 @@ const showData = () => {
   }
 
   // set references to card containers
-  const dayCardsContainer = document.querySelector(".day-cards");
-  const nightCardsContainer = document.querySelector(".night-cards");
+  const shiftCardsContainer = document.querySelector(".shift-cards");
 
   // Resets the innerHTML of the card containers to remove old data
-  dayCardsContainer.innerHTML = '';
-  nightCardsContainer.innerHTML = '';
+  shiftCardsContainer.innerHTML = '';
 
   // iterate through localStorage data to generate cards
   nurseList.forEach((nurseElement, nurseIndex) => {
@@ -457,7 +455,7 @@ const showData = () => {
     });
 
     nurseDiv.appendChild(patientCard);
-    dayCardsContainer.appendChild(nurseDiv);
+    shiftCardsContainer.appendChild(nurseDiv);
   });
 };
 
