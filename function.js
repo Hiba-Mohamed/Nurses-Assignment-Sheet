@@ -147,17 +147,19 @@ document.addEventListener('update_patient_list', function() {
   console.log(`There are ${patientCount} patients`, wardPatientsArray);
 });
 
-const addPatientBtn = document.getElementById('add-patient-btn')
+const addPatientBtn = document.getElementById('add-patient-btn');
+const finalizePatientListBtn = document.getElementById('finalize-patient-btn');
 addPatientBtn.addEventListener('click', function handleAddPatientBtn(event)
 {
   event.preventDefault();
   dynamicPatientFields();
 } );
 
-
 function handleFinalizePatientBtn(event)
 {
   event.preventDefault();
+  addPatientBtn.style.display = "none";
+  finalizePatientListBtn.style.display = "none";
   createWardPatientsArray();
 }
 
@@ -195,6 +197,7 @@ function createWardPatientsArray() {
 
   // Retrieve the existing patients from local storage
   let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+  let nursePatientsArray = []; // Initialize the nursePatientsArray
 
   // Check for duplicate patient assignments and add new patients
   for (let i = 0; i < inputDivs.length; i++) {
@@ -228,10 +231,14 @@ function createWardPatientsArray() {
     }
   }
 
+  // Calculate the nursePatientsArray by subtracting the existing patients
+  nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
+
   // Store the updated wardPatientsArray in local storage
   localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
 
   console.log(wardPatientsArray); // Display the updated ward patients array
+  console.log(nursePatientsArray); // Display the newly added patients
 }
   
 
@@ -241,6 +248,19 @@ add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
   validateForm();
   addData();
+  addPatientBtn.style.display = 'block';
+  finalizePatientListBtn.style.display = 'block';
+  let psingleInputs = document.getElementsByClassName('psingle-input');
+
+  // Clear the input fields in each 'psingle-input' div
+  for (let i = 0; i < psingleInputs.length; i++) {
+    let roomInput = psingleInputs[i].querySelector('input[id^="room"]');
+    let patientInput = psingleInputs[i].querySelector('input[id^="patient"]');
+  
+    roomInput.value = '';
+    patientInput.value = '';
+  }
+
   // Stop execution of other updates if this one fails
   // handlePatientUpdate();
 });
@@ -270,6 +290,8 @@ const validateForm = () => {
       return true;
   }
 };
+
+
 const showData = () => {
   let nurseList;
   if (localStorage.getItem("nurseList") == null) {
@@ -307,79 +329,24 @@ const showData = () => {
 
     nurseDiv.classList.add('nurse-info');
 
-    const patientCard = document.createElement('div');
-    patientCard.classList.add('patient-info');
+    // const patientCard = document.createElement('div');
+    // patientCard.classList.add('patient-info');
 
-    patientList.forEach((patientElement, patientIndex) => {
-      const newDiv = document.createElement('div');
-      let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
-      newDiv.innerHTML = patientInfo;
-      newDiv.classList.add('patient-card');
-      patientCard.appendChild(newDiv);
-    });
+    // Retrieve the patient data from local storage for the specific nurse
+    // const nursePatients = nurseElement.patients;
 
-    nurseDiv.appendChild(patientCard);
-    shiftCardsContainer.appendChild(nurseDiv);
+    // nursePatients.forEach((patientElement, patientIndex) => {
+    //   const newDiv = document.createElement('div');
+    //   let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
+    //   newDiv.innerHTML = patientInfo;
+    //   newDiv.classList.add('patient-card');
+    //   patientCard.appendChild(newDiv);
+    // });
+
+    // nurseDiv.appendChild(patientCard);
+    // shiftCardsContainer.appendChild(nurseDiv);
   });
-};
-
-
-// // New callback for handling batch updates to the Patient Array
-// const handlePatientUpdate = () =>
-// {
-//   // extract all patient inputs from globally defined allPatientsDiv elem
-//   let patient_inputs = Array.from(allPatientsDiv.getElementsByTagName('input'));
-//   const length = patient_inputs.length
-
-//   let finalpatientObject = {
-//     patient_name: patient_inputs[length - 1].value ?? 'undefined',
-//     room_number: patient_inputs[length - 2].value ?? 404
-//   };
-
-//   // Prevent the updating of patients if the final patient is not valid
-//   if (!validatePatients(finalpatientObject)) {
-//     swal("Patient is already assigned. Please enter a unique patient name", " ", "error"); 
-//     return;
-//   }
-
-//   // create an array of the values from our inputs (ex. [room_number0, patient_name0, room_number1, patient_name1]) 
-//   const input_values = []
-
-//   for (let i = 0; i < patient_inputs.length; i++) {
-//     console.log(patient_inputs[i].value);
-//     input_values.push(patient_inputs[i].value); 
-//   }
-
-//   const chunkIntoN = (arr) => {
-//     const size = 2;
-//     return Array.from({ length: arr.length / 2 }, (v, i) =>
-//       arr.slice(i * size, i * size + size)
-//     );
-//   }
-
-//   // generate an array that contains the paired data (ex. [ [room_number0, patient_name0], [room_number1, patient_name1] ])
-//   const patient_pairs_array = chunkIntoN(input_values)
-
-
-//   // generate an array that contains our patient objects
-//   const patient_object_array = patient_pairs_array.map(
-//     (patient_pair_entry) => 
-//     {
-//       return {
-//         room_number: patient_pair_entry[0],
-//         patient_name: patient_pair_entry[1]
-//       }
-//     }
-//   )
-
-//   setPatientsToLS(patient_object_array);
-// }
-
-
-
-
-
-
+}
 
 
 
@@ -403,7 +370,6 @@ const addData = () => {
     let fire_code = document.getElementById("fire-code").value;
     let roomInputs = document.querySelectorAll(".room");
     let patientInputs = document.querySelectorAll(".patient");
-    let patients = [];
 
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
@@ -424,10 +390,7 @@ const addData = () => {
       break_relief,
       extra_duties,
       fire_code,
-      patients,
     });
-
-    console.log(patients);
 
     localStorage.setItem("nurseList", JSON.stringify(nurseList));
     showData();
@@ -525,18 +488,7 @@ const final_submit1 = () => {
   }
 }
 
-const sample_nurse_data = {
-  name: 'unique_name',
-  break_relief: 'validated_other_nurse_name',
-  patients: [
-    {
-      // Unique name across all Nurse Objects' Patient Data
-      name: 'unique_name',
-      // unique number between0 and 10000
-      room_number: 0
-    }
-  ]
-}
+
 
 // NEW FUNCTION REQUIRED | CLARK 5/23 7 PM now
 // add a new nurse
