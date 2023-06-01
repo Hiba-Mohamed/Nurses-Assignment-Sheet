@@ -236,6 +236,8 @@ function createWardPatientsArray() {
 
   // Store the updated wardPatientsArray in local storage
   localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+  localStorage.setItem('nursePatientsArray', JSON.stringify(nursePatientsArray));
+
 
   console.log(wardPatientsArray); // Display the updated ward patients array
   console.log(nursePatientsArray); // Display the newly added patients
@@ -300,11 +302,11 @@ const showData = () => {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
 
-  let patientList;
-  if (localStorage.getItem("patientList") == null) {
-    patientList = [];
+  let nursePatientsArray;
+  if (localStorage.getItem("nursePatientsArray") == null) {
+    nursePatientsArray = [];
   } else {
-    patientList = JSON.parse(localStorage.getItem("patientList"));
+    nursePatientsArray = JSON.parse(localStorage.getItem("nursePatientsArray"));
   }
 
   // set references to card containers
@@ -329,22 +331,20 @@ const showData = () => {
 
     nurseDiv.classList.add('nurse-info');
 
-    // const patientCard = document.createElement('div');
-    // patientCard.classList.add('patient-info');
+    const patientCard = document.createElement('div');
+    patientCard.classList.add('patient-info');
 
     // Retrieve the patient data from local storage for the specific nurse
-    // const nursePatients = nurseElement.patients;
+    nursePatientsArray.forEach((patientElement) => {
+      const newDiv = document.createElement('div');
+      let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
+      newDiv.innerHTML = patientInfo;
+      newDiv.classList.add('patient-card');
+      patientCard.appendChild(newDiv);
+    });
 
-    // nursePatients.forEach((patientElement, patientIndex) => {
-    //   const newDiv = document.createElement('div');
-    //   let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
-    //   newDiv.innerHTML = patientInfo;
-    //   newDiv.classList.add('patient-card');
-    //   patientCard.appendChild(newDiv);
-    // });
-
-    // nurseDiv.appendChild(patientCard);
-    // shiftCardsContainer.appendChild(nurseDiv);
+    nurseDiv.appendChild(patientCard);
+    shiftCardsContainer.appendChild(nurseDiv);
   });
 }
 
