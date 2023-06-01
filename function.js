@@ -146,11 +146,11 @@ document.addEventListener('update_patient_list', function() {
 
   console.log(`There are ${patientCount} patients`, wardPatientsArray);
 });
+
 const addPatientBtn = document.getElementById('add-patient-btn')
 addPatientBtn.addEventListener('click', function handleAddPatientBtn(event)
 {
   event.preventDefault();
-  createWardPatientsArray();
   dynamicPatientFields();
 } );
 
@@ -242,7 +242,7 @@ add_nursebtn.addEventListener('click', (event) => {
   validateForm();
   addData();
   // Stop execution of other updates if this one fails
-  handlePatientUpdate();
+  // handlePatientUpdate();
 });
 
 document.getElementById("update").style.display = "none";
@@ -324,56 +324,56 @@ const showData = () => {
 };
 
 
-// New callback for handling batch updates to the Patient Array
-const handlePatientUpdate = () =>
-{
-  // extract all patient inputs from globally defined allPatientsDiv elem
-  let patient_inputs = Array.from(allPatientsDiv.getElementsByTagName('input'));
-  const length = patient_inputs.length
+// // New callback for handling batch updates to the Patient Array
+// const handlePatientUpdate = () =>
+// {
+//   // extract all patient inputs from globally defined allPatientsDiv elem
+//   let patient_inputs = Array.from(allPatientsDiv.getElementsByTagName('input'));
+//   const length = patient_inputs.length
 
-  let finalpatientObject = {
-    patient_name: patient_inputs[length - 1].value ?? 'undefined',
-    room_number: patient_inputs[length - 2].value ?? 404
-  };
+//   let finalpatientObject = {
+//     patient_name: patient_inputs[length - 1].value ?? 'undefined',
+//     room_number: patient_inputs[length - 2].value ?? 404
+//   };
 
-  // Prevent the updating of patients if the final patient is not valid
-  if (!validatePatients(finalpatientObject)) {
-    swal("Patient is already assigned. Please enter a unique patient name", " ", "error"); 
-    return;
-  }
+//   // Prevent the updating of patients if the final patient is not valid
+//   if (!validatePatients(finalpatientObject)) {
+//     swal("Patient is already assigned. Please enter a unique patient name", " ", "error"); 
+//     return;
+//   }
 
-  // create an array of the values from our inputs (ex. [room_number0, patient_name0, room_number1, patient_name1]) 
-  const input_values = []
+//   // create an array of the values from our inputs (ex. [room_number0, patient_name0, room_number1, patient_name1]) 
+//   const input_values = []
 
-  for (let i = 0; i < patient_inputs.length; i++) {
-    console.log(patient_inputs[i].value);
-    input_values.push(patient_inputs[i].value); 
-  }
+//   for (let i = 0; i < patient_inputs.length; i++) {
+//     console.log(patient_inputs[i].value);
+//     input_values.push(patient_inputs[i].value); 
+//   }
 
-  const chunkIntoN = (arr) => {
-    const size = 2;
-    return Array.from({ length: arr.length / 2 }, (v, i) =>
-      arr.slice(i * size, i * size + size)
-    );
-  }
+//   const chunkIntoN = (arr) => {
+//     const size = 2;
+//     return Array.from({ length: arr.length / 2 }, (v, i) =>
+//       arr.slice(i * size, i * size + size)
+//     );
+//   }
 
-  // generate an array that contains the paired data (ex. [ [room_number0, patient_name0], [room_number1, patient_name1] ])
-  const patient_pairs_array = chunkIntoN(input_values)
+//   // generate an array that contains the paired data (ex. [ [room_number0, patient_name0], [room_number1, patient_name1] ])
+//   const patient_pairs_array = chunkIntoN(input_values)
 
 
-  // generate an array that contains our patient objects
-  const patient_object_array = patient_pairs_array.map(
-    (patient_pair_entry) => 
-    {
-      return {
-        room_number: patient_pair_entry[0],
-        patient_name: patient_pair_entry[1]
-      }
-    }
-  )
+//   // generate an array that contains our patient objects
+//   const patient_object_array = patient_pairs_array.map(
+//     (patient_pair_entry) => 
+//     {
+//       return {
+//         room_number: patient_pair_entry[0],
+//         patient_name: patient_pair_entry[1]
+//       }
+//     }
+//   )
 
-  setPatientsToLS(patient_object_array);
-}
+//   setPatientsToLS(patient_object_array);
+// }
 
 
 
