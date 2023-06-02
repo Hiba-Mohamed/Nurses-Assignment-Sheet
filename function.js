@@ -197,7 +197,7 @@ function createWardPatientsArray() {
 
   // Retrieve the existing patients from local storage
   let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-  let nursePatientsArray = []; // Initialize the nursePatientsArray
+  let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
 
   // Check for duplicate patient assignments and add new patients
   for (let i = 0; i < inputDivs.length; i++) {
@@ -232,15 +232,19 @@ function createWardPatientsArray() {
   }
 
   // Calculate the nursePatientsArray by subtracting the existing patients
-  nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
+  let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
 
-  // Store the updated wardPatientsArray in local storage
+  // Push the nursePatientsArray as an object into the nursePatientsObject array
+  nursePatientsObject.push({
+    nursePatientsArray
+  });
+
+  // Store the updated wardPatientsArray and nursePatientsObject in local storage
   localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
-  localStorage.setItem('nursePatientsArray', JSON.stringify(nursePatientsArray));
-
+  localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 
   console.log(wardPatientsArray); // Display the updated ward patients array
-  console.log(nursePatientsArray); // Display the newly added patients
+  console.log(nursePatientsObject); // Display the nurse patients object
 }
   
 
