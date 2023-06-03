@@ -243,8 +243,8 @@ function createWardPatientsArray() {
   localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
   localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 
-  console.log(wardPatientsArray); // Display the updated ward patients array
-  console.log(nursePatientsObject); // Display the nurse patients object
+  console.log("wardPatientsArray: ", wardPatientsArray); // Display the updated ward patients array
+  console.log("nursePatientsObject: ", nursePatientsObject); // Display the nurse patients object
 }
   
 
@@ -453,8 +453,8 @@ function updateData(index) {
     nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
   }
 
-  console.log(nurseList);
-  console.log(nursePatientsObject);
+  console.log("nurseList: ", nurseList);
+  console.log("nursePatientsObject: ", nursePatientsObject);
 
   // Repopulating the form data from local storage
   document.getElementById("nurse-name").value = nurseList[index].name;
