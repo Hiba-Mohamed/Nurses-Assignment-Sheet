@@ -446,8 +446,19 @@ function updateData(index) {
   else {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
-  console.log(nurseList);
 
+  let nursePatientsObject;
+  if (localStorage.getItem("nursePatientsObject") == null) {
+    nursePatientsObject = [];
+  }
+  else {
+    nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
+  }
+
+  console.log(nurseList);
+  console.log(nursePatientsObject);
+  
+// repopulating the form data from local storage
   document.getElementById("nurse-name").value = nurseList[index].name;
   document.getElementById("nurse-break").value = nurseList[index].break_time;
   document.getElementById("break-relief").value = nurseList[index].break_relief;
@@ -455,6 +466,7 @@ function updateData(index) {
   document.getElementById("fire-code").value = nurseList[index].fire_code;
 
 
+  // when the update button is clicked, get the new values and run the validation function, then adjust the  values of the properties of the object using the index number as a refernce
   document.querySelector("#update").onclick = function () {
     if (validateForm() == true) {
       nurseList[index].name = document.getElementById("nurse-name").value;
@@ -463,17 +475,16 @@ function updateData(index) {
       nurseList[index].extra_duties = document.getElementById("extra-duties").value;
       nurseList[index].fire_code = document.getElementById("fire-code").value;
 
+    // then render the data in the html
       showData();
+
+      // then store the data in local storage
       localStorage.setItem("nurseList", JSON.stringify(nurseList));
 
-      document.getElementById("nurse-name").value = "";
-      document.getElementById("nurse-break").value = "";
-      document.getElementById("break-relief").value = "";
-      document.getElementById("extra-duties").value = "";
-      document.getElementById("fire-code").value = "";
+      // then reset the form 
+      document.getElementById('info-card').reset();
       
       //  update button will hide and submit button shows 
-
       document.getElementById("submit").style.display = "block";
       document.getElementById("update").style.display = "none";
     }
