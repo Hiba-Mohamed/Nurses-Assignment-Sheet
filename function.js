@@ -249,28 +249,16 @@ function createWardPatientsArray() {
   
 
 const add_nursebtn = document.getElementById("submit");
-
 add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
-  validateForm();
-  addData();
-  addPatientBtn.style.display = 'block';
-  finalizePatientListBtn.style.display = 'block';
-  let psingleInputs = document.getElementsByClassName('psingle-input');
+  if (validateForm()) {
+    addData();
+    addPatientBtn.style.display = 'block';
+    finalizePatientListBtn.style.display = 'block';
+    document.getElementById('info-card').reset();
 
-  // Clear the input fields in each 'psingle-input' div
-  for (let i = 0; i < psingleInputs.length; i++) {
-    let roomInput = psingleInputs[i].querySelector('input[id^="room"]');
-    let patientInput = psingleInputs[i].querySelector('input[id^="patient"]');
-  
-    roomInput.value = '';
-    patientInput.value = '';
   }
-
-  // Stop execution of other updates if this one fails
-  // handlePatientUpdate();
 });
-
 document.getElementById("update").style.display = "none";
 
 const validateForm = () => {
@@ -399,9 +387,6 @@ const addData = () => {
     document.getElementById("extra-duties").value = "";
     document.getElementById("fire-code").value = "";
 
-    // Clear patient inputs
-    roomInputs.forEach(input => (input.value = ""));
-    patientInputs.forEach(input => (input.value = ""));
   }
 };
 // function to delete Data from local storage
@@ -436,6 +421,18 @@ function deleteData(index) {
 }
 
 // function to update/edit date in local storage
+const updateBtn = document.getElementById('update');
+updateBtn.addEventListener('click', function(event){
+  event.preventDefault();
+  updateData();
+  updateBtn.style.display = 'none';
+  addPatientBtn.style.display = 'block';
+  finalizePatientListBtn.style.display = 'block';
+  add_nursebtn.style.display = 'block';
+  
+  document.getElementById('info-card').reset();
+
+})
 
 function updateData(index) {
   // submit button will hide and update button will show for updating of data in local storage
