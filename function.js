@@ -321,6 +321,10 @@ const showData = () => {
     const nurseDiv = document.createElement('div');
 
     nurseDiv.innerHTML =
+    '<div class=\'button-wrapper\'>' +
+    '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
+    '<button onclick="updateData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+    '</div>'+
       '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
       '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
       '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
@@ -333,14 +337,10 @@ const showData = () => {
 
     // Retrieve the patient data from local storage for the specific nurse
     const nursePatientsArray = nursePatientsObject[nurseIndex].nursePatientsArray;
-    nursePatientsArray.forEach((patientElement, patientIndex) => {
+    nursePatientsArray.forEach((patientElement) => {
       const newDiv = document.createElement('div');
       let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
       newDiv.innerHTML = patientInfo +
-        '<div class=\'button-wrapper\'>' +
-        '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-        '<button onclick="updateData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
-        '</div>';
       newDiv.classList.add('patient-card');
       patientCard.appendChild(newDiv);
     });
