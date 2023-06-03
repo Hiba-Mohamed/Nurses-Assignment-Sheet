@@ -306,12 +306,7 @@ const showData = () => {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
 
-  let nursePatientsArray;
-  if (localStorage.getItem("nursePatientsArray") == null) {
-    nursePatientsArray = [];
-  } else {
-    nursePatientsArray = JSON.parse(localStorage.getItem("nursePatientsArray"));
-  }
+
 
   // set references to card containers
   const shiftCardsContainer = document.querySelector(".shift-cards");
@@ -335,19 +330,19 @@ const showData = () => {
 
     nurseDiv.classList.add('nurse-info');
 
-    const patientCard = document.createElement('div');
-    patientCard.classList.add('patient-info');
+    // const patientCard = document.createElement('div');
+    // patientCard.classList.add('patient-info');
 
     // Retrieve the patient data from local storage for the specific nurse
-    nursePatientsArray.forEach((patientElement) => {
-      const newDiv = document.createElement('div');
-      let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
-      newDiv.innerHTML = patientInfo;
-      newDiv.classList.add('patient-card');
-      patientCard.appendChild(newDiv);
-    });
+    // nursePatientsArray.forEach((patientElement) => {
+    //   const newDiv = document.createElement('div');
+    //   let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
+    //   newDiv.innerHTML = patientInfo;
+    //   newDiv.classList.add('patient-card');
+    //   patientCard.appendChild(newDiv);
+    // });
 
-    nurseDiv.appendChild(patientCard);
+    // nurseDiv.appendChild(patientCard);
     shiftCardsContainer.appendChild(nurseDiv);
   });
 }
@@ -372,8 +367,7 @@ const addData = () => {
     let break_relief = document.getElementById("break-relief").value;
     let extra_duties = document.getElementById("extra-duties").value;
     let fire_code = document.getElementById("fire-code").value;
-    let roomInputs = document.querySelectorAll(".room");
-    let patientInputs = document.querySelectorAll(".patient");
+
 
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
@@ -422,8 +416,22 @@ function deleteData(index) {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
 
+  let nursePatientsObject;
+  if (localStorage.getItem("nursePatientsObject") == null) {
+    nursePatientsObject = [];
+  }
+  else {
+    nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
+  }
+
+
   nurseList.splice(index, 1);
   localStorage.setItem("nurseList", JSON.stringify(nurseList));
+   
+  nursePatientsObject.splice(index, 1);
+  localStorage.setItem("nursePatientsObject", JSON.stringify(nursePatientsObject));
+  
+  // update the html after deleting that data from local storage
   showData();
 }
 
@@ -493,13 +501,3 @@ const final_submit1 = () => {
 }
 
 
-
-// NEW FUNCTION REQUIRED | CLARK 5/23 7 PM now
-// add a new nurse
-// const validatePatients = (patient_array) => {
-  // Retreive stored nurse objects
-  // Generate a single array containing all patient data from all nurse objects
-  // Loop through the patient_array passed in from validation data
-  // check if the current index of the new patient data matches any of the other patients
-  // check based on name && room number
-// }
