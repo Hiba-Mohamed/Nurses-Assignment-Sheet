@@ -442,31 +442,59 @@ function updateData(index) {
   let nurseList;
   if (localStorage.getItem("nurseList") == null) {
     nurseList = [];
-  }
-  else {
+  } else {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
 
   let nursePatientsObject;
   if (localStorage.getItem("nursePatientsObject") == null) {
     nursePatientsObject = [];
-  }
-  else {
+  } else {
     nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
   }
 
   console.log(nurseList);
   console.log(nursePatientsObject);
-  
-// repopulating the form data from local storage
+
+  // Repopulating the form data from local storage
   document.getElementById("nurse-name").value = nurseList[index].name;
   document.getElementById("nurse-break").value = nurseList[index].break_time;
   document.getElementById("break-relief").value = nurseList[index].break_relief;
   document.getElementById("extra-duties").value = nurseList[index].extra_duties;
   document.getElementById("fire-code").value = nurseList[index].fire_code;
 
+  // Repopulating the patient information
+  let nursePatientsArray = nursePatientsObject[index].nursePatientsArray;
+  let patientInputsContainer = document.getElementById("all-patients");
+  patientInputsContainer.innerHTML = ""; // Clear existing patient inputs
 
-  // when the update button is clicked, get the new values and run the validation function, then adjust the  values of the properties of the object using the index number as a refernce
+  // Repopulate patient inputs
+  for (let i = 0; i < nursePatientsArray.length; i++) {
+    let roomNumber = nursePatientsArray[i].room_number;
+    let patientName = nursePatientsArray[i].patient_name;
+
+    let patientInputDiv = document.createElement("div");
+    patientInputDiv.className = "psingle-input";
+
+    let roomInput = document.createElement("input");
+    roomInput.type = "text";
+    roomInput.id = "room" + (i + 1);
+    roomInput.placeholder = "Room";
+    roomInput.value = roomNumber;
+
+    let patientInput = document.createElement("input");
+    patientInput.type = "text";
+    patientInput.id = "patient" + (i + 1);
+    patientInput.placeholder = "Patient";
+    patientInput.value = patientName;
+
+    patientInputDiv.appendChild(roomInput);
+    patientInputDiv.appendChild(patientInput);
+
+    patientInputsContainer.appendChild(patientInputDiv);
+  }
+
+  // When the update button is clicked, get the new values and run the validation function
   document.querySelector("#update").onclick = function () {
     if (validateForm() == true) {
       nurseList[index].name = document.getElementById("nurse-name").value;
@@ -475,22 +503,39 @@ function updateData(index) {
       nurseList[index].extra_duties = document.getElementById("extra-duties").value;
       nurseList[index].fire_code = document.getElementById("fire-code").value;
 
-    // then render the data in the html
+      // Update the patient information in the nursePatientsObject
+      let updatedNursePatientsArray = [];
+      let updatedPatientInputs = document.getElementsByClassName("psingle-input");
+      for (let i = 0; i < updatedPatientInputs.length; i++) {
+        let roomInput = updatedPatientInputs[i].querySelector('input[id^="room"]');
+        let patientInput = updatedPatientInputs[i].querySelector('input[id^="patient"]');
+        let roomNumber = roomInput.value;
+        let patientName = patientInput.value;
+
+        let patientObject = {
+          room_number: roomNumber,
+          patient_name: patientName,
+        };
+        updatedNursePatientsArray.push(patientObject);
+      }
+
+      nursePatientsObject[index].nursePatientsArray = updatedNursePatientsArray;
+
+      // Render the data in the HTML
       showData();
 
-      // then store the data in local storage
+      // Store the data in local storage
       localStorage.setItem("nurseList", JSON.stringify(nurseList));
+      localStorage.setItem("nursePatientsObject", JSON.stringify(nursePatientsObject));
 
-      // then reset the form 
-      document.getElementById('info-card').reset();
-      
-      //  update button will hide and submit button shows 
+      // Reset the form
+      document.getElementById("info-card").reset();
+
+      // Update button will hide and submit button shows
       document.getElementById("submit").style.display = "block";
       document.getElementById("update").style.display = "none";
     }
-
-  }
-
+  };
 }
 
 // view-only display
