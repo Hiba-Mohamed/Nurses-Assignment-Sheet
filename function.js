@@ -294,7 +294,21 @@ const showData = () => {
     nurseList = JSON.parse(localStorage.getItem("nurseList"));
   }
 
+  let nursePatientsObject;
+  if (localStorage.getItem("nursePatientsObject") == null) {
+    nursePatientsObject = [];
+  }
+  else {
+    nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
+  }
 
+  let nursePatientsArray;
+  if (localStorage.getItem("nursePatientsArray") == null) {
+    nursePatientsArray = [];
+  }
+  else {
+    nursePatientsArray = JSON.parse(localStorage.getItem("nursePatientsArray"));
+  }
 
   // set references to card containers
   const shiftCardsContainer = document.querySelector(".shift-cards");
@@ -310,27 +324,27 @@ const showData = () => {
       '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
       '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
       '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
-      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' +
-      '<div class=\'button-wrapper\'>' +
-      '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-      '<button onclick="updateData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
-      '</div>';
+      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' 
 
     nurseDiv.classList.add('nurse-info');
 
-    // const patientCard = document.createElement('div');
-    // patientCard.classList.add('patient-info');
+    const patientCard = document.createElement('div');
+    patientCard.classList.add('patient-info');
 
     // Retrieve the patient data from local storage for the specific nurse
-    // nursePatientsArray.forEach((patientElement) => {
-    //   const newDiv = document.createElement('div');
-    //   let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
-    //   newDiv.innerHTML = patientInfo;
-    //   newDiv.classList.add('patient-card');
-    //   patientCard.appendChild(newDiv);
-    // });
-
-    // nurseDiv.appendChild(patientCard);
+    const nursePatientsArray = nursePatientsObject[nurseIndex].nursePatientsArray;
+    nursePatientsArray.forEach((patientElement, patientIndex) => {
+      const newDiv = document.createElement('div');
+      let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
+      newDiv.innerHTML = patientInfo +
+        '<div class=\'button-wrapper\'>' +
+        '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
+        '<button onclick="updateData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+        '</div>';
+      newDiv.classList.add('patient-card');
+      patientCard.appendChild(newDiv);
+    });
+    nurseDiv.appendChild(patientCard);
     shiftCardsContainer.appendChild(nurseDiv);
   });
 }
