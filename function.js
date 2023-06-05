@@ -696,6 +696,47 @@ function PatientPopulateDeleteEdit(index) {
   localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 }
 
+const showPatientData = () => {
+  // Retrieve the wardPatientsArray from local storage
+  const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+
+  // Get the container element where the patient data will be rendered
+  const shiftCardsContainer = document.querySelector('.shift-cards');
+
+  // Create a table element
+  const table = document.createElement('table');
+  table.classList.add('patient-table');
+
+  // Create the table header
+  const tableHeader = document.createElement('tr');
+  tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
+  table.appendChild(tableHeader);
+
+  // Iterate over each patient in the wardPatientsArray
+  wardPatientsArray.forEach((patient) => {
+    // Create a table row for each patient
+    const tableRow = document.createElement('tr');
+
+    // Create table cells for the room number and patient name
+    const roomCell = document.createElement('td');
+    roomCell.textContent = patient.room_number;
+
+    const patientCell = document.createElement('td');
+    patientCell.textContent = patient.patient_name;
+
+    // Append the table cells to the table row
+    tableRow.appendChild(roomCell);
+    tableRow.appendChild(patientCell);
+
+    // Append the table row to the table
+    table.appendChild(tableRow);
+  });
+
+  // Insert the table below the nurse-info div
+  const nurseInfoDiv = document.querySelector('.nurse-info');
+  nurseInfoDiv.insertAdjacentElement('afterend', table);
+};
+
 // view-only display
 // Working as of 05/23 6:30PM
 const final_submit1 = () => {
