@@ -172,20 +172,12 @@ document.addEventListener('update_patient_list', function() {
 });
 
 const addPatientBtn = document.getElementById('add-patient-btn');
-const finalizePatientListBtn = document.getElementById('finalize-patient-btn');
 addPatientBtn.addEventListener('click', function handleAddPatientBtn(event)
 {
   event.preventDefault();
   dynamicPatientFields();
 } );
 
-function handleFinalizePatientBtn(event)
-{
-  event.preventDefault();
-  addPatientBtn.style.display = "none";
-  finalizePatientListBtn.style.display = "none";
-  createWardPatientsArray();
-}
 
 // a function to handle the html modification for dynamic patient input fields
 function dynamicPatientFields() {
@@ -274,6 +266,7 @@ function createWardPatientsArray() {
 const add_nursebtn = document.getElementById("submit");
 add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
+  createWardPatientsArray();
   if (validateForm()) {
     addData();
     addPatientBtn.style.display = 'block';
