@@ -279,10 +279,8 @@ add_nursebtn.addEventListener('click', (event) => {
     addPatientBtn.style.display = 'block';
     finalizePatientListBtn.style.display = 'block';
     document.getElementById('info-card').reset();
-
   }
 });
-document.getElementById("update").style.display = "none";
 
 const validateForm = () => {
   let name = document.getElementById("nurse-name").value;
@@ -459,19 +457,7 @@ function deleteData(index) {
   showNurseData();
 }
 
-// // function to update/edit date in local storage
-// const updateBtn = document.getElementById('update');
-// updateBtn.addEventListener('click', function(event){
-//   event.preventDefault();
-//   uupdateNurseData();
-//   updateBtn.style.display = 'none';
-//   addPatientBtn.style.display = 'block';
-//   finalizePatientListBtn.style.display = 'block';
-//   add_nursebtn.style.display = 'block';
-  
-//   document.getElementById('info-card').reset();
 
-// })
 
 function uupdateNurseData(index) {
   // submit button will hide and update button will show for updating of data in local storage
@@ -577,19 +563,6 @@ function uupdateNurseData(index) {
   };
 }
 
-
-
-
-const updateBtn = document.getElementById('update');
- updateBtn.addEventListener('click',
- handleNurseUpdate2 = (event) =>
-{
-  event.preventDefault();
-  nurseValidatePushStoreLS();
-  showNurseData();
-});
-
-
  
 
 // This is a function that :  a- repopulate from LS using index
@@ -626,7 +599,10 @@ const NursePopulateDeleteEdit = (index) =>
 //                     d- validate the new nurse info
 //                     e- if valid, push the new object to the same index that was deleted
 //                     f- store in LS
-const nurseValidatePushStoreLS = () =>
+
+
+
+const nurseValidatePushStoreLS = (index) =>
 {
   // running a function to validate the nurse's info in the form
   // if the input is valid, the validate form function will return true and then 
@@ -641,6 +617,8 @@ const nurseValidatePushStoreLS = () =>
 
 // storing the newly edited properties for the object in the local storage
 localStorage.setItem("nurseList", JSON.stringify(nurseList));
+
+showNurseData();
 
 }
 
