@@ -270,7 +270,6 @@ add_nursebtn.addEventListener('click', (event) => {
   if (validateForm()) {
     addData();
     addPatientBtn.style.display = 'block';
-    finalizePatientListBtn.style.display = 'block';
     document.getElementById('info-card').reset();
   }
 });
@@ -647,6 +646,54 @@ const showNurseData = () => {
 
     shiftCardsContainer.appendChild(nurseDiv);
   });
+}
+
+
+function PatientPopulateDeleteEdit(index) {
+  // Retrieve the nursePatientsObject from local storage
+  let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
+
+  // Find the nursePatientsArray at the specified index
+  const nursePatientsArray = nursePatientsObject[index]?.nursePatientsArray || [];
+
+  // Prepopulate the dynamic HTML setup
+  const allPatientsDiv = document.getElementById('all-patients');
+  allPatientsDiv.innerHTML = '';
+
+  nursePatientsArray.forEach((patient, i) => {
+    const patientDiv = document.createElement('div');
+    patientDiv.classList.add('psingle-input');
+
+    const roomInput = document.createElement('input');
+    roomInput.type = 'text';
+    roomInput.id = 'room' + (i + 1);
+    roomInput.placeholder = 'Room';
+    roomInput.value = patient.room_number || '';
+
+    const patientInput = document.createElement('input');
+    patientInput.type = 'text';
+    patientInput.id = 'patient' + (i + 1);
+    patientInput.placeholder = 'Patient';
+    patientInput.value = patient.patient_name || '';
+
+    patientDiv.appendChild(roomInput);
+    patientDiv.appendChild(patientInput);
+    allPatientsDiv.appendChild(patientDiv);
+  });
+
+  // Update the wardPatientsArray
+  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+
+  wardPatientsArray = wardPatientsArray.filter((patient, i) => i !== index);
+
+  // Store the updated wardPatientsArray in local storage
+  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+
+  // Delete the nursePatientsArray from the nursePatientsObject
+  nursePatientsObject.splice(index, 1);
+
+  // Store the updated nursePatientsObject in local storage
+  localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 }
 
 // view-only display
