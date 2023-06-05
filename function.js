@@ -24,91 +24,6 @@
 //                     h- clear the html form
 
 
-// This is a function that :  a- repopulate from LS using index
-//                            b- delete the list with the specific index from local storage
-//                            c- allow the user to update the object
-
-const NursePopulateDeleteEdit = () =>
-{
-
-    // Repopulating the form data from local storage
-    document.getElementById("nurse-name").value = nurseList[index].name;
-    document.getElementById("nurse-break").value = nurseList[index].break_time;
-    document.getElementById("break-relief").value = nurseList[index].break_relief;
-    document.getElementById("extra-duties").value = nurseList[index].extra_duties;
-    document.getElementById("fire-code").value = nurseList[index].fire_code;
-
-    // deleting the object with the index number from local storage in preparation to replace it with the new one
-  
-    let nurseList;
-    if (localStorage.getItem("nurseList") == null) {
-      nurseList = [];
-    }
-    else {
-      nurseList = JSON.parse(localStorage.getItem("nurseList"));
-    }
-  
-
-    nurseList.splice(index, 1);
-    localStorage.setItem("nurseList", JSON.stringify(nurseList));
-}
-
-// /           this is another function that:
-//                     d- validate the new nurse info
-//                     e- if valid, push the new object to the same index that was deleted
-//                     f- store in LS
-const nurseValidatePushStoreLS = () =>
-{
-  // running a function to validate the nurse's info in the form
-  // if the input is valid, the validate form function will return true and then 
-  // the onject with the index number will be updated in the object(nurseList)
-  if (validateForm() == true) {
-    nurseList[index].name = document.getElementById("nurse-name").value;
-    nurseList[index].break_time = document.getElementById("nurse-break").value;
-    nurseList[index].break_relief = document.getElementById("break-relief").value;
-    nurseList[index].extra_duties = document.getElementById("extra-duties").value;
-    nurseList[index].fire_code = document.getElementById("fire-code").value;
-};
-
-// storing the newly edited properties for the object in the local storage
-localStorage.setItem("nurseList", JSON.stringify(nurseList));
-
-}
-
-const showNurseData = () => {
-  let nurseList;
-  if (localStorage.getItem("nurseList") == null) {
-    nurseList = [];
-  } else {
-    nurseList = JSON.parse(localStorage.getItem("nurseList"));
-  }
-
-  // set references to card containers
-  const shiftCardsContainer = document.querySelector(".shift-cards");
-
-  // Resets the innerHTML of the card containers to remove old data
-  shiftCardsContainer.innerHTML = '';
-
-  // iterate through localStorage data to generate cards
-  nurseList.forEach((nurseElement, nurseIndex) => {
-    const nurseDiv = document.createElement('div');
-
-    nurseDiv.innerHTML =
-    '<div class=\'button-wrapper\'>' +
-    '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-    '<button onclick="uupdateNurseData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
-    '</div>'+
-      '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
-      '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
-      '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
-      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' 
-
-    nurseDiv.classList.add('nurse-info');
-
-    shiftCardsContainer.appendChild(nurseDiv);
-  });
-}
-
 
 // update patient data : a- repopulate from LS using index
 //                       b- delete the nursePatientObject with the specific index from local storage
@@ -356,7 +271,6 @@ function createWardPatientsArray() {
   console.log("nursePatientsObject: ", nursePatientsObject); // Display the nurse patients object
 }
   
-
 const add_nursebtn = document.getElementById("submit");
 add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
@@ -432,7 +346,7 @@ const validateForm = () => {
 //     nurseDiv.innerHTML =
 //     '<div class=\'button-wrapper\'>' +
 //     '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-//     '<button onclick="uupdateNurseData(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+//     '<button onclick="handleNurseUpdate(' + nurseIndex + ')" class="edit-button">Edit</button>' +
 //     '</div>'+
 //       '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
 //       '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
@@ -545,19 +459,19 @@ function deleteData(index) {
   showNurseData();
 }
 
-// function to update/edit date in local storage
-const updateBtn = document.getElementById('update');
-updateBtn.addEventListener('click', function(event){
-  event.preventDefault();
-  uupdateNurseData();
-  updateBtn.style.display = 'none';
-  addPatientBtn.style.display = 'block';
-  finalizePatientListBtn.style.display = 'block';
-  add_nursebtn.style.display = 'block';
+// // function to update/edit date in local storage
+// const updateBtn = document.getElementById('update');
+// updateBtn.addEventListener('click', function(event){
+//   event.preventDefault();
+//   uupdateNurseData();
+//   updateBtn.style.display = 'none';
+//   addPatientBtn.style.display = 'block';
+//   finalizePatientListBtn.style.display = 'block';
+//   add_nursebtn.style.display = 'block';
   
-  document.getElementById('info-card').reset();
+//   document.getElementById('info-card').reset();
 
-})
+// })
 
 function uupdateNurseData(index) {
   // submit button will hide and update button will show for updating of data in local storage
@@ -663,6 +577,107 @@ function uupdateNurseData(index) {
   };
 }
 
+
+
+
+const updateBtn = document.getElementById('update');
+ updateBtn.addEventListener('click',
+ handleNurseUpdate2 = (event) =>
+{
+  event.preventDefault();
+  nurseValidatePushStoreLS();
+  showNurseData();
+});
+
+
+ 
+
+// This is a function that :  a- repopulate from LS using index
+//                            b- delete the list with the specific index from local storage
+//                            c- allow the user to update the object
+
+const NursePopulateDeleteEdit = (index) =>
+{
+    
+  let nurseList;
+  if (localStorage.getItem("nurseList") == null) {
+    nurseList = [];
+  }
+  else {
+    nurseList = JSON.parse(localStorage.getItem("nurseList"));
+  }
+
+
+    // Repopulating the form data from local storage
+    document.getElementById("nurse-name").value = nurseList[index].name;
+    document.getElementById("nurse-break").value = nurseList[index].break_time;
+    document.getElementById("break-relief").value = nurseList[index].break_relief;
+    document.getElementById("extra-duties").value = nurseList[index].extra_duties;
+    document.getElementById("fire-code").value = nurseList[index].fire_code;
+
+    // deleting the object with the index number from local storage in preparation to replace it with the new one
+
+
+    nurseList.splice(index, 1);
+    localStorage.setItem("nurseList", JSON.stringify(nurseList));
+}
+
+// /           this is another function that:
+//                     d- validate the new nurse info
+//                     e- if valid, push the new object to the same index that was deleted
+//                     f- store in LS
+const nurseValidatePushStoreLS = () =>
+{
+  // running a function to validate the nurse's info in the form
+  // if the input is valid, the validate form function will return true and then 
+  // the onject with the index number will be updated in the object(nurseList)
+  if (validateForm() == true) {
+    nurseList[index].name = document.getElementById("nurse-name").value;
+    nurseList[index].break_time = document.getElementById("nurse-break").value;
+    nurseList[index].break_relief = document.getElementById("break-relief").value;
+    nurseList[index].extra_duties = document.getElementById("extra-duties").value;
+    nurseList[index].fire_code = document.getElementById("fire-code").value;
+};
+
+// storing the newly edited properties for the object in the local storage
+localStorage.setItem("nurseList", JSON.stringify(nurseList));
+
+}
+
+const showNurseData = () => {
+  let nurseList;
+  if (localStorage.getItem("nurseList") == null) {
+    nurseList = [];
+  } else {
+    nurseList = JSON.parse(localStorage.getItem("nurseList"));
+  }
+
+  // set references to card containers
+  const shiftCardsContainer = document.querySelector(".shift-cards");
+
+  // Resets the innerHTML of the card containers to remove old data
+  shiftCardsContainer.innerHTML = '';
+
+  // iterate through localStorage data to generate cards
+  nurseList.forEach((nurseElement, nurseIndex) => {
+    const nurseDiv = document.createElement('div');
+
+    nurseDiv.innerHTML =
+    '<div class=\'button-wrapper\'>' +
+    '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
+    '<button onclick="NursePopulateDeleteEdit(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+    '</div>'+
+      '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
+      '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
+      '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
+      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' 
+
+    nurseDiv.classList.add('nurse-info');
+
+    shiftCardsContainer.appendChild(nurseDiv);
+  });
+}
+
 // view-only display
 // Working as of 05/23 6:30PM
 const final_submit1 = () => {
@@ -677,5 +692,6 @@ const final_submit1 = () => {
     buttons[i].style.display = "none";
   }
 }
+
 
 
