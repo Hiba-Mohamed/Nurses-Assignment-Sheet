@@ -1,39 +1,3 @@
-// 1- create html elemet mapipulation for dynamic patient input fields
-// 2- with each add button click : 
-//              CREATE ARRAYS:
-//                   a- creating an array of ward patients
-//              VALIDATION:
-//                   a- validate the last entry the user inputs against the ward patient array to ensure deuplication prevention.
-//                   b- prevent the user from being able to enter anymore data until conflict is resolved
-//                   c- create alerts to guide the user into how to resolve the conflict
-//              STORAGE:
-//                   a- storing the array in local storage
-//              RENDERING:
-
-// update nurse data : 
-//                   one function that does:
-//                     a- repopulate from LS using index
-//                     b- delete the list with the specific index from local storage
-//                     c- allow the user to update the object
-//                  another function that:
-//                     d- validate the new nurse info
-//                     e- if valid, push the new object to the same index that was deleted
-//                     f- store in LS
-//                  third function for rendering
-//                     g- render the nurse card
-//                     h- clear the html form
-
-
-
-// update patient data : a- repopulate from LS using index
-//                       b- delete the nursePatientObject with the specific index from local storage
-//                       c- allow the user to update the object
-//                       d- validate the new nursepatientObject info
-//                       e- if valid, push the new object to the same index that was deleted
-//                       f- store in LS
-//                       g- render the patient information
-//                       h- clear the html form
-
 const loginBtn = document.getElementById("login-button");
 loginBtn.onclick = (e) => {
   e.preventDefault();
@@ -271,6 +235,7 @@ add_nursebtn.addEventListener('click', (event) => {
     addData();
     addPatientBtn.style.display = 'block';
     document.getElementById('info-card').reset();
+    showPatientData();
   }
 });
 
@@ -299,75 +264,7 @@ const validateForm = () => {
 };
 
 
-// const showNurseData = () => {
-//   let nurseList;
-//   if (localStorage.getItem("nurseList") == null) {
-//     nurseList = [];
-//   } else {
-//     nurseList = JSON.parse(localStorage.getItem("nurseList"));
-//   }
-
-//   let nursePatientsObject;
-//   if (localStorage.getItem("nursePatientsObject") == null) {
-//     nursePatientsObject = [];
-//   }
-//   else {
-//     nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
-//   }
-
-//   let nursePatientsArray;
-//   if (localStorage.getItem("nursePatientsArray") == null) {
-//     nursePatientsArray = [];
-//   }
-//   else {
-//     nursePatientsArray = JSON.parse(localStorage.getItem("nursePatientsArray"));
-//   }
-
-//   // set references to card containers
-//   const shiftCardsContainer = document.querySelector(".shift-cards");
-
-//   // Resets the innerHTML of the card containers to remove old data
-//   shiftCardsContainer.innerHTML = '';
-
-//   // iterate through localStorage data to generate cards
-//   nurseList.forEach((nurseElement, nurseIndex) => {
-//     const nurseDiv = document.createElement('div');
-
-//     nurseDiv.innerHTML =
-//     '<div class=\'button-wrapper\'>' +
-//     '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-//     '<button onclick="handleNurseUpdate(' + nurseIndex + ')" class="edit-button">Edit</button>' +
-//     '</div>'+
-//       '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
-//       '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
-//       '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
-//       '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' 
-
-//     nurseDiv.classList.add('nurse-info');
-
-//     const patientCard = document.createElement('div');
-//     patientCard.classList.add('patient-info');
-
-//     // Retrieve the patient data from local storage for the specific nurse
-//     const nursePatientsArray = nursePatientsObject[nurseIndex].nursePatientsArray;
-//     nursePatientsArray.forEach((patientElement) => {
-//       const newDiv = document.createElement('div');
-//       let patientInfo = patientElement.room_number && patientElement.room_number !== '' ? '<p><strong>Room :</strong> ' + patientElement.room_number + ' - ' + patientElement.patient_name + '</p>' : '';
-//       newDiv.innerHTML = patientInfo +
-//       newDiv.classList.add('patient-card');
-//       patientCard.appendChild(newDiv);
-//     });
-//     nurseDiv.appendChild(patientCard);
-//     shiftCardsContainer.appendChild(nurseDiv);
-//   });
-// }
-
-
-
-
 // clear local storage when page loads
-
-
 window.addEventListener('load', function () {
   // Clear the local storage
   localStorage.clear();
@@ -635,7 +532,7 @@ const showNurseData = () => {
     nurseDiv.innerHTML =
     '<div class=\'button-wrapper\'>' +
     '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-    '<button onclick="NursePopulateDeleteEdit(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+    '<button onclick="handleEditBtn(' + nurseIndex + ')" class="edit-button">Edit</button>' +
     '</div>'+
       '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
       '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
@@ -656,7 +553,7 @@ function PatientPopulateDeleteEdit(index) {
   // Find the nursePatientsArray at the specified index
   const nursePatientsArray = nursePatientsObject[index]?.nursePatientsArray || [];
 
-  // Prepopulate the dynamic HTML setup
+  // autopopulate the dynamic HTML setup
   const allPatientsDiv = document.getElementById('all-patients');
   allPatientsDiv.innerHTML = '';
 
@@ -681,19 +578,20 @@ function PatientPopulateDeleteEdit(index) {
     allPatientsDiv.appendChild(patientDiv);
   });
 
-  // Update the wardPatientsArray
-  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-
-  wardPatientsArray = wardPatientsArray.filter((patient, i) => i !== index);
-
-  // Store the updated wardPatientsArray in local storage
-  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
-
-  // Delete the nursePatientsArray from the nursePatientsObject
+  // Remove the nursePatientsObject at the specified index
   nursePatientsObject.splice(index, 1);
 
   // Store the updated nursePatientsObject in local storage
   localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
+
+  // Retrieve the wardPatientsArray from local storage
+  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
+
+  // Update the wardPatientsArray
+  wardPatientsArray = wardPatientsArray.filter((nursePatientsObject, i) => i == index);
+
+  // Store the updated wardPatientsArray in local storage
+  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
 }
 
 const showPatientData = () => {
@@ -736,6 +634,12 @@ const showPatientData = () => {
   const nurseInfoDiv = document.querySelector('.nurse-info');
   nurseInfoDiv.insertAdjacentElement('afterend', table);
 };
+
+const handleEditBtn = (index) =>
+{
+  NursePopulateDeleteEdit(index);
+  PatientPopulateDeleteEdit(index);
+}
 
 // view-only display
 // Working as of 05/23 6:30PM
