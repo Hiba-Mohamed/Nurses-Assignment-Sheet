@@ -145,7 +145,7 @@ addPatientBtn.addEventListener('click', function handleAddPatientBtn(event)
 
 // a function to handle the html modification for dynamic patient input fields
 function dynamicPatientFields() {
-  const allPatientsDiv = document.getElementById("all-patients")
+  const allPatientsDiv = document.getElementById("all-patients");
   const current_patients = JSON.parse(localStorage.getItem('wardPatients')) || [];
   const patientCount = current_patients.length ?? 0;
 
@@ -170,16 +170,11 @@ function dynamicPatientFields() {
   allPatientsDiv.appendChild(patientDiv);
 }
 
-
-// creating a ward patient array from the user input fields
-function createWardPatientsArray() {
+// Validate the input fields and check for duplicates
+function validatePatientFields() {
   let inputDivs = document.getElementsByClassName('psingle-input');
-
-  // Retrieve the existing patients from local storage
   let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-  let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
 
-  // Check for duplicate patient assignments and add new patients
   for (let i = 0; i < inputDivs.length; i++) {
     let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
     let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
@@ -188,56 +183,80 @@ function createWardPatientsArray() {
     let newPatientName = newPatientInput.value.trim();
 
     // Check if both input fields are not empty
-    if (newRoomNumber !== '' && newPatientName !== '') {
-      // Check for duplicate patient assignments in existing patients
-      let isDuplicate = wardPatientsArray.some(function(existingPatient) {
-        return (
-          existingPatient.room_number === newRoomNumber ||
-          existingPatient.patient_name === newPatientName
-        );
-      });
+    if (newRoomNumber === '' || newPatientName === '') {
+      swal("All fields must be filled", " ", "error");
+      return false;
+    }
 
-      if (isDuplicate) {
-        swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
-        return;
-      } else {
-        let newPatientObject = {
-          room_number: newRoomNumber,
-          patient_name: newPatientName
-        };
+    // Check for duplicate patient assignments in existing patients
+    let isDuplicate = wardPatientsArray.some(function(existingPatient) {
+      return (
+        existingPatient.room_number === newRoomNumber ||
+        existingPatient.patient_name === newPatientName
+      );
+    });
 
-        wardPatientsArray.push(newPatientObject);
-      }
+    if (isDuplicate) {
+      swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
+      return false;
     }
   }
 
-  // Calculate the nursePatientsArray by subtracting the existing patients
-  let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
-
-  // Push the nursePatientsArray as an object into the nursePatientsObject array
-  nursePatientsObject.push({
-    nursePatientsArray
-  });
-
-  // Store the updated wardPatientsArray and nursePatientsObject in local storage
-  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
-  localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
-
-  console.log("wardPatientsArray: ", wardPatientsArray); // Display the updated ward patients array
-  console.log("nursePatientsObject: ", nursePatientsObject); // Display the nurse patients object
+  return true;
 }
-  
+
+// Attach event listener to the submit button
 const add_nursebtn = document.getElementById("submit");
 add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
-  createWardPatientsArray();
-  if (validateForm()) {
+
+  if (validateForm() && validatePatientFields()) {
+    createWardPatientsArray();
     addData();
     addPatientBtn.style.display = 'block';
     document.getElementById('info-card').reset();
     showPatientData();
   }
 });
+
+// Create the ward patients array and update local storage
+function createWardPatientsArray() {
+  let inputDivs = document.getElementsByClassName('psingle-input');
+
+  if (!validatePatientFields(inputDivs)) {
+    return;
+  }
+
+  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+  let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
+
+  for (let i = 0; i < inputDivs.length; i++) {
+    let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
+    let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
+
+    let newRoomNumber = newRoomInput.value.trim();
+    let newPatientName = newPatientInput.value.trim();
+
+    let newPatientObject = {
+      room_number: newRoomNumber,
+      patient_name: newPatientName
+    };
+
+    wardPatientsArray.push(newPatientObject);
+  }
+
+  let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
+  nursePatientsObject.push({
+    nursePatientsArray
+  });
+
+  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+  localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
+
+  console.log("wardPatientsArray: ", wardPatientsArray);
+  console.log("nursePatientsObject: ", nursePatientsObject);
+}
+  
 
 const validateForm = () => {
   let name = document.getElementById("nurse-name").value;
