@@ -189,11 +189,11 @@ function validatePatientFields() {
     let newRoomNumber = newRoomInput.value.trim();
     let newPatientName = newPatientInput.value.trim();
 
-    // Check if both input fields are not empty
-    if (newRoomNumber === '' || newPatientName === '') {
-      swal("All fields must be filled", " ", "error");
-      return false;
-    }
+    // // Check if both input fields are not empty
+    // if (newRoomNumber === '' || newPatientName === '') {
+    //   swal("All fields must be filled", " ", "error");
+    //   return false;
+    // }
 
     // Check for duplicate patient assignments in existing patients and newly entered fields
     let isDuplicate = wardPatientsArray.some(function(existingPatient) {
