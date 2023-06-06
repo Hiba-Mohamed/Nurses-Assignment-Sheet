@@ -178,7 +178,6 @@ function dynamicPatientFields() {
   allPatientsDiv.appendChild(patientDiv);
 }
 
-// Validate the input fields and check for duplicates
 function validatePatientFields() {
   let inputDivs = document.getElementsByClassName('psingle-input');
   let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
@@ -196,7 +195,7 @@ function validatePatientFields() {
       return false;
     }
 
-    // Check for duplicate patient assignments in existing patients
+    // Check for duplicate patient assignments in existing patients and newly entered fields
     let isDuplicate = wardPatientsArray.some(function(existingPatient) {
       return (
         existingPatient.room_number === newRoomNumber ||
@@ -205,6 +204,24 @@ function validatePatientFields() {
     });
 
     if (isDuplicate) {
+      swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
+      return false;
+    }
+
+    // Check for duplicate patient assignments in newly entered fields
+    let isDuplicateNew = Array.from(inputDivs).slice(0, i).some(function(existingDiv) {
+      let existingRoomInput = existingDiv.querySelector('input[id^="room"]');
+      let existingPatientInput = existingDiv.querySelector('input[id^="patient"]');
+      let existingRoomNumber = existingRoomInput.value.trim();
+      let existingPatientName = existingPatientInput.value.trim();
+
+      return (
+        existingRoomNumber === newRoomNumber ||
+        existingPatientName === newPatientName
+      );
+    });
+
+    if (isDuplicateNew) {
       swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
       return false;
     }
@@ -342,9 +359,9 @@ const addData = () => {
 
   }
 };
+
+
 // function to delete Data from local storage
-
-
 function deleteData(index) {
   let nurseList;
   if (localStorage.getItem("nurseList") == null) {
