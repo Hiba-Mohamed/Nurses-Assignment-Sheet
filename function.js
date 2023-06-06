@@ -666,8 +666,8 @@ const handleEditBtn = (index) =>
 // Working as of 05/23 6:30PM
 const final_submit1 = () => {
   const final_submit_btn = document.getElementById("submit-all-btn");
-  const form_card = document.querySelector(".info-card");
-  const buttons = document.querySelectorAll(".button-wrapper")
+  const form_card = document.querySelector("#info-card");
+  const buttons = document.querySelectorAll(".button-wrapper");
 
   form_card.style.display = "none";
   final_submit_btn.style.display = "none";
@@ -675,7 +675,7 @@ const final_submit1 = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].style.display = "none";
   }
-}
+};
 
 
 
