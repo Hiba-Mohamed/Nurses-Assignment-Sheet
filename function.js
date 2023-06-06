@@ -90,31 +90,39 @@ function displayFullDate() {
 }
 displayFullDate();
 
+
 // choosing a shift type
-let dayShiftButton = document.getElementById('dayShiftButton');
-let nightShiftButton = document.getElementById('nightShiftButton');
-let shiftHeading = document.querySelector('.shift-title');
+const dayShiftButton = document.getElementById('dayShiftButton');
+const nightShiftButton = document.getElementById('nightShiftButton');
+const shiftHeading = document.querySelector('.shift-title');
 
 function dayShift() {
-  dayShiftButton.addEventListener('click',  function(e)
-  {
+  dayShiftButton.addEventListener('click', function(e) {
     e.preventDefault();
     dayShiftButton.style.display = 'none';
     nightShiftButton.style.display = 'none';
-    shiftHeading.innerHTML = "Day Shift"
-  } )
+    shiftHeading.innerHTML = "Day Shift";
+
+    // Set the shiftType in local storage to "day"
+    localStorage.setItem('shiftType', 'day');
+  });
 }
 
 function nightShift() {
-  nightShiftButton.addEventListener('click',  function(e)
-  {
+  nightShiftButton.addEventListener('click', function(e) {
     e.preventDefault();
     dayShiftButton.style.display = 'none';
     nightShiftButton.style.display = 'none';
-    shiftHeading.innerHTML = "Night Shift"
-  } )
+    shiftHeading.innerHTML = "Night Shift";
+
+    // Set the shiftType in local storage to "night"
+    localStorage.setItem('shiftType', 'night');
+  });
 }
 
+// Call the shift functions to add event listeners
+dayShift();
+nightShift();
 
 // Clark's code for Patient's array
 
@@ -662,6 +670,8 @@ const handleEditBtn = (index) =>
   showPatientData();
 }
 
+
+
 // view-only display
 // Working as of 05/23 6:30PM
 const final_submit1 = () => {
@@ -669,11 +679,18 @@ const final_submit1 = () => {
   const form_card = document.querySelector("#info-card");
   const buttons = document.querySelectorAll(".button-wrapper");
 
-  form_card.style.display = "none";
-  final_submit_btn.style.display = "none";
+  // Check if neither shift type is selected in local storage
+  const shiftType = localStorage.getItem('shiftType');
+  if (shiftType !== 'day' && shiftType !== 'night') {
+    swal("Please select a shift type before final submission", " ", "error");
+    return;
+  } else {
+    form_card.style.display = "none";
+    final_submit_btn.style.display = "none";
 
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].style.display = "none";
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].style.display = "none";
+    }
   }
 };
 
