@@ -659,7 +659,7 @@ const showPatientData = () => {
 
   // Insert the table below the nurse-info div
   const nurseInfoDiv = document.querySelector('.nurse-info');
-  nurseInfoDiv.insertAdjacentElement('afterend', table);
+  nurseInfoDiv.appendChild(table);
 };
 
 const handleEditBtn = (index) =>

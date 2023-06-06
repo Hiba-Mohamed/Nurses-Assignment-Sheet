@@ -633,3 +633,8 @@ footer {
   background-color: rgb(227, 216, 194);
   color: white;
 }
+
+table
+{
+  text-align: center;
+}
