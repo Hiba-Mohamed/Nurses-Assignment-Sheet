@@ -684,7 +684,7 @@ const handleEditBtn = (index) =>
   NursePopulateDeleteEdit(index);
   PatientPopulateDeleteEdit(index);
   showNurseData();
-  showPatientData();
+  // showPatientData();
 }
 
 
