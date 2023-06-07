@@ -17,13 +17,12 @@ body {
 }
 
 
-/* #edit-sheet,   */
-/* #view-page, */
-/* #log-in,
-#create-account 
+#edit-sheet, 
+#view-page,
+#log-in
 {
   display: none;
-} */
+}
 
 #logo {
   width: 70px;
