@@ -4,6 +4,9 @@ loginBtn.onclick = (e) => {
   // catch the value which is type use login page
   const emailAddress = document.getElementById("email-login").value;
   const passWord = document.getElementById("pass-login").value;
+  const createAccountPage = document.getElementById("create-account");
+  const logInPage = document.getElementById("log-in");
+  const editSheetPage =  document.getElementById("edit-sheet");
 
   // getting the value in localstorage which stores user in registration form
   const emailstored = localStorage.getItem("Email");
@@ -15,6 +18,8 @@ loginBtn.onclick = (e) => {
   else {
     if (emailAddress == emailstored && passWord == passstored) {
       swal("Login successful", "", "success");
+      editSheetPage.style.display = "block";
+      logInPage.style.display = "none";
     }
     else {
       swal("Please check if the Email address and password are correct", "", "error");
@@ -36,6 +41,10 @@ create_direct.onclick = (e) => {
 const submit_button = document.getElementById("create-btn");
 submit_button.addEventListener('click', function (e) {
   e.preventDefault();
+
+  const createAccountPage = document.getElementById("create-account");
+  const logInPage = document.getElementById("log-in");
+
   // all input data receive these variables
   const fname = document.getElementById("fname").value;
   const lname = document.getElementById("lname").value;
@@ -60,6 +69,8 @@ submit_button.addEventListener('click', function (e) {
     }
     else {
       swal("Registration successful!", "You created a new account!", "success");
+      createAccountPage.style.display = 'none';
+      logInPage.style.display = 'block';
     }
   }
 });

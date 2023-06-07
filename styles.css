@@ -16,9 +16,8 @@ body {
   display: block;
 }
 
-
+/* create-account */
 #edit-sheet, 
-#view-page,
 #log-in
 {
   display: none;
