@@ -17,11 +17,11 @@ body {
 }
 
 /* create-account */
-#edit-sheet, 
+/* #edit-sheet, 
 #log-in
 {
   display: none;
-}
+} */
 
 #logo {
   width: 70px;

@@ -189,154 +189,119 @@ function dynamicPatientFields() {
   allPatientsDiv.appendChild(patientDiv);
 }
 
-function validatePatientFields() {
-  let inputDivs = document.getElementsByClassName('psingle-input');
-  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
 
-  for (let i = 0; i < inputDivs.length; i++) {
-    let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
-    let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
 
-    let newRoomNumber = newRoomInput.value.trim();
-    let newPatientName = newPatientInput.value.trim();
-
-    // // Check if both input fields are not empty
-    // if (newRoomNumber === '' || newPatientName === '') {
-    //   swal("All fields must be filled", " ", "error");
-    //   return false;
-    // }
-
-    // Check for duplicate patient assignments in existing patients and newly entered fields
-    let isDuplicate = wardPatientsArray.some(function(existingPatient) {
-      return (
-        existingPatient.room_number === newRoomNumber ||
-        existingPatient.patient_name === newPatientName
-      );
-    });
-
-    if (isDuplicate) {
-      swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
-      return false;
-    }
-
-    // Check for duplicate patient assignments in newly entered fields
-    let isDuplicateNew = Array.from(inputDivs).slice(0, i).some(function(existingDiv) {
-      let existingRoomInput = existingDiv.querySelector('input[id^="room"]');
-      let existingPatientInput = existingDiv.querySelector('input[id^="patient"]');
-      let existingRoomNumber = existingRoomInput.value.trim();
-      let existingPatientName = existingPatientInput.value.trim();
-
-      return (
-        existingRoomNumber === newRoomNumber ||
-        existingPatientName === newPatientName
-      );
-    });
-
-    if (isDuplicateNew) {
-      swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
-      return false;
-    }
-  }
-
-  return true;
-}
-
-// Attach event listener to the submit button
+// Attach event listener to the submit button 
 const add_nursebtn = document.getElementById("submit");
 add_nursebtn.addEventListener('click', (event) => {
   event.preventDefault();
 
-  if (validateForm() && validatePatientFields()) {
-    createWardPatientsArray();
-    addData();
-    addPatientBtn.style.display = 'block';
-    document.getElementById('info-card').reset();
-    showPatientData();
-  }
+  validateForm()
+    .then(() => validatePatientFields())
+    .then(() => nurseValidatePushStoreLS())
+    .then(() => createWardPatientsArray())
+    .then(() => showNurseData())
+    .then(() => showPatientData())
+    .then(() => resetForm())
+    .catch((error) => {
+      console.error(error);
+      // Handle the error here if needed
+    });
 });
 
-// Create the ward patients array and update local storage
-function createWardPatientsArray() {
-  let inputDivs = document.getElementsByClassName('psingle-input');
-
-  if (!validatePatientFields(inputDivs)) {
-    return;
-  }
-
-  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-  let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
-
-  for (let i = 0; i < inputDivs.length; i++) {
-    let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
-    let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
-
-    let newRoomNumber = newRoomInput.value.trim();
-    let newPatientName = newPatientInput.value.trim();
-
-    let newPatientObject = {
-      room_number: newRoomNumber,
-      patient_name: newPatientName
-    };
-
-    wardPatientsArray.push(newPatientObject);
-  }
-
-  let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
-  nursePatientsObject.push({
-    nursePatientsArray
-  });
-
-  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
-  localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
-
-  console.log("wardPatientsArray: ", wardPatientsArray);
-  console.log("nursePatientsObject: ", nursePatientsObject);
-}
-  
-
-const validateForm = () => {
-  let name = document.getElementById("nurse-name").value;
-  let break_time = document.getElementById("nurse-break").value;
-  let break_relief = document.getElementById("break-relief").value;
-  let fire_code = document.getElementById("fire-code").value;
-
-  switch (true) {
-    case (name === ""):
-      swal("Please fill-in nurse's name", " ", "error");
-      return false;
-    case (break_time === ""):
-      swal("Please fill-in nurse's break", " ", "error");
-      return false;
-    case (fire_code === ""):
-      swal("Please fill-in fire code", " ", "error");
-      return false;
-    case (break_relief === ""):
-      swal("Please fill-in nurse's relief", " ", "error");
-      return false;
-    default:
-      return true;
-  }
+const resetForm = () => {
+  // Replace 'formId' with the actual ID of your form
+  const form = document.getElementById('info-card');
+  form.reset();
 };
 
 
-// clear local storage when page loads
-window.addEventListener('load', function () {
-  // Clear the local storage
-  localStorage.clear();
-  console.log('Local storage has been reset.');
-});
+const validateForm = () => {
+  return new Promise((resolve, reject) => {
+    let name = document.getElementById("nurse-name").value;
+    let break_time = document.getElementById("nurse-break").value;
+    let break_relief = document.getElementById("break-relief").value;
+    let fire_code = document.getElementById("fire-code").value;
 
-// function to add data to local storage
+    switch (true) {
+      case (name === ""):
+        swal("Please fill-in nurse's name", " ", "error");
+        reject("Form validation error: Nurse's name is required");
+        break;
+      case (break_time === ""):
+        swal("Please fill-in nurse's break", " ", "error");
+        reject("Form validation error: Nurse's break time is required");
+        break;
+      case (fire_code === ""):
+        swal("Please fill-in fire code", " ", "error");
+        reject("Form validation error: Fire code is required");
+        break;
+      case (break_relief === ""):
+        swal("Please fill-in nurse's relief", " ", "error");
+        reject("Form validation error: Nurse's relief is required");
+        break;
+      default:
+        resolve();
+        break;
+    }
+  });
+};
 
-const addData = () => {
-  // if form is validated
-  if (validateForm() == true) {
+const validatePatientFields = () => {
+  return new Promise((resolve, reject) => {
+    let inputDivs = document.getElementsByClassName('psingle-input');
+    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+
+    for (let i = 0; i < inputDivs.length; i++) {
+      let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
+      let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
+
+      let newRoomNumber = newRoomInput.value.trim();
+      let newPatientName = newPatientInput.value.trim();
+
+      let isDuplicate = wardPatientsArray.some(function(existingPatient) {
+        return (
+          existingPatient.room_number === newRoomNumber ||
+          existingPatient.patient_name === newPatientName
+        );
+      });
+
+      if (isDuplicate) {
+        swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
+        reject("Patient fields validation error: Duplicate patient assignment");
+        break;
+      }
+
+      let isDuplicateNew = Array.from(inputDivs).slice(0, i).some(function(existingDiv) {
+        let existingRoomInput = existingDiv.querySelector('input[id^="room"]');
+        let existingPatientInput = existingDiv.querySelector('input[id^="patient"]');
+        let existingRoomNumber = existingRoomInput.value.trim();
+        let existingPatientName = existingPatientInput.value.trim();
+
+        return (
+          existingRoomNumber === newRoomNumber ||
+          existingPatientName === newPatientName
+        );
+      });
+
+      if (isDuplicateNew) {
+        swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
+        reject("Patient fields validation error: Duplicate patient assignment in newly entered fields");
+        break;
+      }
+    }
+
+    resolve();
+  });
+};
+
+const nurseValidatePushStoreLS = () => {
+  return new Promise((resolve, reject) => {
     let name = document.getElementById("nurse-name").value;
     let break_time = document.getElementById("nurse-break").value;
     let break_relief = document.getElementById("break-relief").value;
     let extra_duties = document.getElementById("extra-duties").value;
     let fire_code = document.getElementById("fire-code").value;
-
 
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
@@ -345,31 +310,167 @@ const addData = () => {
       nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
 
-    //  validating nurse name to ensure no duplicates
     if (nurseList.some(nurse => nurse.name === name)) {
       swal("Duplicate nurse name detected. Please enter a unique nurse name.", " ", "error");
-      return; // Exit the function if there's a duplicate nurse name
+      reject("Nurse validation error: Duplicate nurse name");
+    } else {
+      nurseList.push({
+        name,
+        break_time,
+        break_relief,
+        extra_duties,
+        fire_code,
+      });
+
+      localStorage.setItem("nurseList", JSON.stringify(nurseList));
+      resolve();
+    }
+  });
+};
+
+const createWardPatientsArray = () => {
+  return new Promise((resolve, reject) => {
+    let inputDivs = document.getElementsByClassName('psingle-input');
+
+    if (!validatePatientFields(inputDivs)) {
+      reject(new Error('Failed to validate patient fields.'));
+      return;
     }
 
-    nurseList.push({
-      name,
-      break_time,
-      break_relief,
-      extra_duties,
-      fire_code,
+    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+    let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
+
+    for (let i = 0; i < inputDivs.length; i++) {
+      let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
+      let newPatientInput = inputDivs[i].querySelector('input[id^="patient"]');
+
+      let newRoomNumber = newRoomInput.value.trim();
+      let newPatientName = newPatientInput.value.trim();
+
+      let newPatientObject = {
+        room_number: newRoomNumber,
+        patient_name: newPatientName
+      };
+
+      wardPatientsArray.push(newPatientObject);
+    }
+
+    let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
+    nursePatientsObject.push({
+      nursePatientsArray
     });
 
-    localStorage.setItem("nurseList", JSON.stringify(nurseList));
-    showNurseData();
+    localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+    localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 
-    document.getElementById("nurse-name").value = "";
-    document.getElementById("nurse-break").value = "";
-    document.getElementById("break-relief").value = "";
-    document.getElementById("extra-duties").value = "";
-    document.getElementById("fire-code").value = "";
+    console.log("wardPatientsArray: ", wardPatientsArray);
+    console.log("nursePatientsObject: ", nursePatientsObject);
 
-  }
+    resolve();
+  });
 };
+
+const showNurseData = () => {
+  return new Promise((resolve, reject) => {
+    let nurseList;
+    if (localStorage.getItem("nurseList") == null) {
+      nurseList = [];
+    } else {
+      nurseList = JSON.parse(localStorage.getItem("nurseList"));
+    }
+
+    // set references to card containers
+    const shiftCardsContainer = document.querySelector(".shift-cards");
+
+    // Resets the innerHTML of the card containers to remove old data
+    shiftCardsContainer.innerHTML = '';
+
+    // iterate through localStorage data to generate cards
+    nurseList.forEach((nurseElement, nurseIndex) => {
+      const nurseDiv = document.createElement('div');
+
+      nurseDiv.innerHTML =
+        '<div class=\'button-wrapper\'>' +
+        '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
+        '<button onclick="handleEditBtn(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+        '</div>' +
+        '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
+        '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
+        '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
+        '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>';
+
+      nurseDiv.classList.add('nurse-info');
+
+      shiftCardsContainer.appendChild(nurseDiv);
+    });
+
+    if (nurseList) {
+      resolve();
+    } else {
+      reject(new Error('Failed to retrieve nurse data.'));
+    }
+  });
+};
+
+
+const showPatientData = () => {
+  return new Promise((resolve, reject) => {
+    // Retrieve the wardPatientsArray from local storage
+    const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+
+    // Get the container element where the patient data will be rendered
+    const shiftCardsContainer = document.querySelector('.shift-cards');
+
+    // Create a table element
+    const table = document.createElement('table');
+    table.classList.add('patient-table');
+
+    // Create the table header
+    const tableHeader = document.createElement('tr');
+    tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
+    table.appendChild(tableHeader);
+
+    // Iterate over each patient in the wardPatientsArray
+    wardPatientsArray.forEach((patient) => {
+      // Create a table row for each patient
+      const tableRow = document.createElement('tr');
+
+      // Create table cells for the room number and patient name
+      const roomCell = document.createElement('td');
+      roomCell.textContent = patient.room_number;
+
+      const patientCell = document.createElement('td');
+      patientCell.textContent = patient.patient_name;
+
+      // Append the table cells to the table row
+      tableRow.appendChild(roomCell);
+      tableRow.appendChild(patientCell);
+
+      // Append the table row to the table
+      table.appendChild(tableRow);
+    });
+
+    // Insert the table below the nurse-info div
+    const nurseInfoDiv = document.querySelector('.nurse-info');
+    nurseInfoDiv.appendChild(table);
+
+    if (wardPatientsArray) {
+      resolve();
+    } else {
+      reject(new Error('Failed to retrieve patient data.'));
+    }
+  });
+};
+
+
+
+
+// clear local storage when page loads
+window.addEventListener('load', function () {
+  // Clear the local storage
+  localStorage.clear();
+  console.log('Local storage has been reset.');
+});
 
 
 // function to delete Data from local storage
@@ -546,61 +647,6 @@ const NursePopulateDeleteEdit = (index) =>
 
 
 
-const nurseValidatePushStoreLS = (index) =>
-{
-  // running a function to validate the nurse's info in the form
-  // if the input is valid, the validate form function will return true and then 
-  // the onject with the index number will be updated in the object(nurseList)
-  if (validateForm() == true) {
-    nurseList[index].name = document.getElementById("nurse-name").value;
-    nurseList[index].break_time = document.getElementById("nurse-break").value;
-    nurseList[index].break_relief = document.getElementById("break-relief").value;
-    nurseList[index].extra_duties = document.getElementById("extra-duties").value;
-    nurseList[index].fire_code = document.getElementById("fire-code").value;
-};
-
-// storing the newly edited properties for the object in the local storage
-localStorage.setItem("nurseList", JSON.stringify(nurseList));
-
-showNurseData();
-
-}
-
-const showNurseData = () => {
-  let nurseList;
-  if (localStorage.getItem("nurseList") == null) {
-    nurseList = [];
-  } else {
-    nurseList = JSON.parse(localStorage.getItem("nurseList"));
-  }
-
-  // set references to card containers
-  const shiftCardsContainer = document.querySelector(".shift-cards");
-
-  // Resets the innerHTML of the card containers to remove old data
-  shiftCardsContainer.innerHTML = '';
-
-  // iterate through localStorage data to generate cards
-  nurseList.forEach((nurseElement, nurseIndex) => {
-    const nurseDiv = document.createElement('div');
-
-    nurseDiv.innerHTML =
-    '<div class=\'button-wrapper\'>' +
-    '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-    '<button onclick="handleEditBtn(' + nurseIndex + ')" class="edit-button">Edit</button>' +
-    '</div>'+
-      '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
-      '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
-      '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
-      '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>' 
-
-    nurseDiv.classList.add('nurse-info');
-
-    shiftCardsContainer.appendChild(nurseDiv);
-  });
-}
-
-
 function PatientPopulateDeleteEdit(index) {
   // Retrieve the nursePatientsObject from local storage
   let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
@@ -649,46 +695,6 @@ function PatientPopulateDeleteEdit(index) {
   localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
 }
 
-const showPatientData = () => {
-  // Retrieve the wardPatientsArray from local storage
-  const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-
-  // Get the container element where the patient data will be rendered
-  const shiftCardsContainer = document.querySelector('.shift-cards');
-
-  // Create a table element
-  const table = document.createElement('table');
-  table.classList.add('patient-table');
-
-  // Create the table header
-  const tableHeader = document.createElement('tr');
-  tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
-  table.appendChild(tableHeader);
-
-  // Iterate over each patient in the wardPatientsArray
-  wardPatientsArray.forEach((patient) => {
-    // Create a table row for each patient
-    const tableRow = document.createElement('tr');
-
-    // Create table cells for the room number and patient name
-    const roomCell = document.createElement('td');
-    roomCell.textContent = patient.room_number;
-
-    const patientCell = document.createElement('td');
-    patientCell.textContent = patient.patient_name;
-
-    // Append the table cells to the table row
-    tableRow.appendChild(roomCell);
-    tableRow.appendChild(patientCell);
-
-    // Append the table row to the table
-    table.appendChild(tableRow);
-  });
-
-  // Insert the table below the nurse-info div
-  const nurseInfoDiv = document.querySelector('.nurse-info');
-  nurseInfoDiv.appendChild(table);
-};
 
 const handleEditBtn = (index) =>
 {
@@ -696,7 +702,6 @@ const handleEditBtn = (index) =>
   PatientPopulateDeleteEdit(index);
   showNurseData();
 }
-
 
 
 // view-only display
