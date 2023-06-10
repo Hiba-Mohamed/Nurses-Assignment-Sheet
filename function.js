@@ -357,6 +357,7 @@ const createWardPatientsArray = () => {
     nursePatientsObject.push({
       nursePatientsArray
     });
+    
 
     localStorage.setItem('wardPatientsArray', JSON.stringify(wardPatientsArray));
     localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
@@ -643,7 +644,7 @@ function PatientPopulateDeleteEdit(index) {
   // Find the nursePatientsArray at the specified index
   const nursePatientsArray = nursePatientsObject[index]?.nursePatientsArray || [];
 
-  // autopopulate the dynamic HTML setup
+  // Prepopulate the dynamic HTML setup
   const allPatientsDiv = document.getElementById('all-patients');
   allPatientsDiv.innerHTML = '';
 
@@ -668,20 +669,19 @@ function PatientPopulateDeleteEdit(index) {
     allPatientsDiv.appendChild(patientDiv);
   });
 
-  // Remove the nursePatientsObject at the specified index
+  // Update the wardPatientsArray
+  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
+
+  wardPatientsArray = wardPatientsArray.filter((patient, i) => i !== index);
+
+  // Store the updated wardPatientsArray in local storage
+  localStorage.setItem('wardPatientsArray', JSON.stringify(wardPatientsArray));
+
+  // Delete the nursePatientsArray from the nursePatientsObject
   nursePatientsObject.splice(index, 1);
 
   // Store the updated nursePatientsObject in local storage
   localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
-
-  // Retrieve the wardPatientsArray from local storage
-  let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
-
-  // Update the wardPatientsArray
-  wardPatientsArray = wardPatientsArray.filter((nursePatientsObject, i) => i == index);
-
-  // Store the updated wardPatientsArray in local storage
-  localStorage.setItem('wardPatientsArray', JSON.stringify(wardPatientsArray));
 }
 
 
