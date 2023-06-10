@@ -209,7 +209,6 @@ add_nursebtn.addEventListener('click', (event) => {
 });
 
 const resetForm = () => {
-  // Replace 'formId' with the actual ID of your form
   const form = document.getElementById('info-card');
   form.reset();
 };
@@ -368,6 +367,8 @@ const createWardPatientsArray = () => {
     resolve();
   });
 };
+
+
 const showNurseAndPatientData = () => {
   return new Promise((resolve, reject) => {
     let nurseList;
@@ -377,19 +378,28 @@ const showNurseAndPatientData = () => {
       nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
 
-    const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
+    let nursePatientsObject;
+    if (localStorage.getItem("nursePatientsObject") == null) {
+      nursePatientsObject = [];
+    } else {
+      nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
+    }
 
     const shiftCardsContainer = document.querySelector(".shift-cards");
 
     shiftCardsContainer.innerHTML = '';
 
-    nurseList.forEach((nurseElement, nurseIndex) => {
+    console.log("nurseList:", nurseList);
+
+    nurseList.forEach((nurseElement, index) => {
+      console.log("current nurse index:", index);
+
       const nurseDiv = document.createElement('div');
 
       nurseDiv.innerHTML =
         '<div class=\'button-wrapper\'>' +
-        '<button onclick="deleteData(' + nurseIndex + ')" class="delete-button">Delete</button>' +
-        '<button onclick="handleEditBtn(' + nurseIndex + ')" class="edit-button">Edit</button>' +
+        '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
+        '<button onclick="handleEditBtn(' + index + ')" class="edit-button">Edit</button>' +
         '</div>' +
         '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
         '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
@@ -398,9 +408,9 @@ const showNurseAndPatientData = () => {
 
       nurseDiv.classList.add('nurse-info');
 
-      const nursePatientsArray = wardPatientsArray.filter((patient) => patient.nurseIndex === nurseIndex);
+      const nursePatients = nursePatientsObject[index];
 
-      if (nursePatientsArray.length > 0) {
+      if (nursePatients && nursePatients.nursePatientsArray.length > 0) {
         const table = document.createElement('table');
         table.classList.add('patient-table');
 
@@ -408,7 +418,7 @@ const showNurseAndPatientData = () => {
         tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
         table.appendChild(tableHeader);
 
-        nursePatientsArray.forEach((patient) => {
+        nursePatients.nursePatientsArray.forEach((patient) => {
           const tableRow = document.createElement('tr');
 
           const roomCell = document.createElement('td');
@@ -429,15 +439,13 @@ const showNurseAndPatientData = () => {
       shiftCardsContainer.appendChild(nurseDiv);
     });
 
-    if (nurseList && wardPatientsArray) {
+    if (nurseList && nursePatientsObject) {
       resolve();
     } else {
       reject(new Error('Failed to retrieve nurse and patient data.'));
     }
   });
 };
-
-
 
 // clear local storage when page loads
 window.addEventListener('load', function () {
