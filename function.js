@@ -148,7 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // Listen for the custom event to log updates
 document.addEventListener('update_patient_list', function() {
   // Retrieve the patient data from local storage
-  const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+  const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
   let patientCount = wardPatientsArray.length;
 
   console.log(`There are ${patientCount} patients`, wardPatientsArray);
@@ -165,7 +165,7 @@ addPatientBtn.addEventListener('click', function handleAddPatientBtn(event)
 // a function to handle the html modification for dynamic patient input fields
 function dynamicPatientFields() {
   const allPatientsDiv = document.getElementById("all-patients");
-  const current_patients = JSON.parse(localStorage.getItem('wardPatients')) || [];
+  const current_patients = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
   const patientCount = current_patients.length ?? 0;
 
   // Handle the required HTML Modifications
@@ -200,8 +200,7 @@ add_nursebtn.addEventListener('click', (event) => {
     .then(() => validatePatientFields())
     .then(() => nurseValidatePushStoreLS())
     .then(() => createWardPatientsArray())
-    .then(() => showNurseData())
-    .then(() => showPatientData())
+    .then(() => showNurseAndPatientData())
     .then(() => resetForm())
     .catch((error) => {
       console.error(error);
@@ -250,7 +249,7 @@ const validateForm = () => {
 const validatePatientFields = () => {
   return new Promise((resolve, reject) => {
     let inputDivs = document.getElementsByClassName('psingle-input');
-    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
 
     for (let i = 0; i < inputDivs.length; i++) {
       let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
@@ -337,7 +336,7 @@ const createWardPatientsArray = () => {
       return;
     }
 
-    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
+    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
     let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
 
     for (let i = 0; i < inputDivs.length; i++) {
@@ -360,7 +359,7 @@ const createWardPatientsArray = () => {
       nursePatientsArray
     });
 
-    localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+    localStorage.setItem('wardPatientsArray', JSON.stringify(wardPatientsArray));
     localStorage.setItem('nursePatientsObject', JSON.stringify(nursePatientsObject));
 
     console.log("wardPatientsArray: ", wardPatientsArray);
@@ -369,8 +368,7 @@ const createWardPatientsArray = () => {
     resolve();
   });
 };
-
-const showNurseData = () => {
+const showNurseAndPatientData = () => {
   return new Promise((resolve, reject) => {
     let nurseList;
     if (localStorage.getItem("nurseList") == null) {
@@ -379,13 +377,12 @@ const showNurseData = () => {
       nurseList = JSON.parse(localStorage.getItem("nurseList"));
     }
 
-    // set references to card containers
+    const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
+
     const shiftCardsContainer = document.querySelector(".shift-cards");
 
-    // Resets the innerHTML of the card containers to remove old data
     shiftCardsContainer.innerHTML = '';
 
-    // iterate through localStorage data to generate cards
     nurseList.forEach((nurseElement, nurseIndex) => {
       const nurseDiv = document.createElement('div');
 
@@ -401,67 +398,44 @@ const showNurseData = () => {
 
       nurseDiv.classList.add('nurse-info');
 
+      const nursePatientsArray = wardPatientsArray.filter((patient) => patient.nurseIndex === nurseIndex);
+
+      if (nursePatientsArray.length > 0) {
+        const table = document.createElement('table');
+        table.classList.add('patient-table');
+
+        const tableHeader = document.createElement('tr');
+        tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
+        table.appendChild(tableHeader);
+
+        nursePatientsArray.forEach((patient) => {
+          const tableRow = document.createElement('tr');
+
+          const roomCell = document.createElement('td');
+          roomCell.textContent = patient.room_number;
+
+          const patientCell = document.createElement('td');
+          patientCell.textContent = patient.patient_name;
+
+          tableRow.appendChild(roomCell);
+          tableRow.appendChild(patientCell);
+
+          table.appendChild(tableRow);
+        });
+
+        nurseDiv.appendChild(table);
+      }
+
       shiftCardsContainer.appendChild(nurseDiv);
     });
 
-    if (nurseList) {
+    if (nurseList && wardPatientsArray) {
       resolve();
     } else {
-      reject(new Error('Failed to retrieve nurse data.'));
+      reject(new Error('Failed to retrieve nurse and patient data.'));
     }
   });
 };
-
-
-const showPatientData = () => {
-  return new Promise((resolve, reject) => {
-    // Retrieve the wardPatientsArray from local storage
-    const wardPatientsArray = JSON.parse(localStorage.getItem('wardPatients')) || [];
-
-    // Get the container element where the patient data will be rendered
-    const shiftCardsContainer = document.querySelector('.shift-cards');
-
-    // Create a table element
-    const table = document.createElement('table');
-    table.classList.add('patient-table');
-
-    // Create the table header
-    const tableHeader = document.createElement('tr');
-    tableHeader.innerHTML = '<th>Room</th><th>Patient</th>';
-    table.appendChild(tableHeader);
-
-    // Iterate over each patient in the wardPatientsArray
-    wardPatientsArray.forEach((patient) => {
-      // Create a table row for each patient
-      const tableRow = document.createElement('tr');
-
-      // Create table cells for the room number and patient name
-      const roomCell = document.createElement('td');
-      roomCell.textContent = patient.room_number;
-
-      const patientCell = document.createElement('td');
-      patientCell.textContent = patient.patient_name;
-
-      // Append the table cells to the table row
-      tableRow.appendChild(roomCell);
-      tableRow.appendChild(patientCell);
-
-      // Append the table row to the table
-      table.appendChild(tableRow);
-    });
-
-    // Insert the table below the nurse-info div
-    const nurseInfoDiv = document.querySelector('.nurse-info');
-    nurseInfoDiv.appendChild(table);
-
-    if (wardPatientsArray) {
-      resolve();
-    } else {
-      reject(new Error('Failed to retrieve patient data.'));
-    }
-  });
-};
-
 
 
 
@@ -474,34 +448,24 @@ window.addEventListener('load', function () {
 
 
 // function to delete Data from local storage
+// function to delete data from local storage
 function deleteData(index) {
-  let nurseList;
-  if (localStorage.getItem("nurseList") == null) {
-    nurseList = [];
-  }
-  else {
-    nurseList = JSON.parse(localStorage.getItem("nurseList"));
-  }
-
-  let nursePatientsObject;
-  if (localStorage.getItem("nursePatientsObject") == null) {
-    nursePatientsObject = [];
-  }
-  else {
-    nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject"));
-  }
-
+  let nurseList = JSON.parse(localStorage.getItem("nurseList")) || [];
+  let nursePatientsObject = JSON.parse(localStorage.getItem("nursePatientsObject")) || [];
+  let wardPatientsArray = JSON.parse(localStorage.getItem("wardPatientsArray")) || [];
 
   nurseList.splice(index, 1);
-  localStorage.setItem("nurseList", JSON.stringify(nurseList));
-   
   nursePatientsObject.splice(index, 1);
-  localStorage.setItem("nursePatientsObject", JSON.stringify(nursePatientsObject));
-  
-  // update the html after deleting that data from local storage
-  showNurseData();
-}
 
+  const updatedWardPatientsArray = wardPatientsArray.filter(patient => patient.nursePatientObjectIndex == index);
+
+  localStorage.setItem("nurseList", JSON.stringify(nurseList));
+  localStorage.setItem("nursePatientsObject", JSON.stringify(nursePatientsObject));
+  localStorage.setItem("wardPatientsArray", JSON.stringify(updatedWardPatientsArray));
+
+  // Update the HTML after deleting the data from local storage
+  showNurseAndPatientData();
+}
 
 
 function uupdateNurseData(index) {
@@ -592,7 +556,7 @@ function uupdateNurseData(index) {
       nursePatientsObject[index].nursePatientsArray = updatedNursePatientsArray;
 
       // Render the data in the HTML
-      showNurseData();
+      showNurseAndPatientData();
 
       // Store the data in local storage
       localStorage.setItem("nurseList", JSON.stringify(nurseList));
@@ -692,7 +656,7 @@ function PatientPopulateDeleteEdit(index) {
   wardPatientsArray = wardPatientsArray.filter((nursePatientsObject, i) => i == index);
 
   // Store the updated wardPatientsArray in local storage
-  localStorage.setItem('wardPatients', JSON.stringify(wardPatientsArray));
+  localStorage.setItem('wardPatientsArray', JSON.stringify(wardPatientsArray));
 }
 
 
@@ -700,7 +664,7 @@ const handleEditBtn = (index) =>
 {
   NursePopulateDeleteEdit(index);
   PatientPopulateDeleteEdit(index);
-  showNurseData();
+  showNurseAndPatientData();
 }
 
 
