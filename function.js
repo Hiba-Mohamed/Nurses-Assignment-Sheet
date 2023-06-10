@@ -397,15 +397,32 @@ const showNurseAndPatientData = () => {
       const nurseDiv = document.createElement('div');
 
       nurseDiv.innerHTML =
-        '<div class=\'button-wrapper\'>' +
-        '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
-        '<button onclick="handleEditBtn(' + index + ')" class="edit-button">Edit</button>' +
-        '</div>' +
-        '<p><strong>Name:</strong> ' + nurseElement.name + '</p>' +
-        '<p><strong>Break:</strong> ' + nurseElement.break_time + '</p><p><strong>Relief:</strong> ' + nurseElement.break_relief + '</p>' +
-        '<p><strong>Extra Duties:</strong> <span style="color:red">' + nurseElement.extra_duties + '</span></p>' +
-        '<p><strong>Fire Code:</strong> <span style="color:red">' + nurseElement.fire_code + '</span></p>';
-
+      '<div class=\'button-wrapper\'>' +
+      '<button onclick="deleteData(' + index + ')" class="delete-button">Delete</button>' +
+      '<button onclick="handleEditBtn(' + index + ')" class="edit-button">Edit</button>' +
+    '</div>' +
+    '<table>' +
+      '<tr>' +
+        '<td><strong>Name:</strong></td>' +
+        '<td>' + nurseElement.name + '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td><strong>Break:</strong></td>' +
+        '<td>' + nurseElement.break_time + '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td><strong>Relief:</strong></td>' +
+        '<td>' + nurseElement.break_relief + '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td><strong>Extra Duties:</strong></td>' +
+        '<td><span style="color:red">' + nurseElement.extra_duties + '</span></td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td><strong>Fire Code:</strong></td>' +
+        '<td><span style="color:red">' + nurseElement.fire_code + '</span></td>' +
+      '</tr>' +
+    '</table>';
       nurseDiv.classList.add('nurse-info');
 
       const nursePatients = nursePatientsObject[index];
