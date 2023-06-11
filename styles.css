@@ -645,7 +645,32 @@ footer {
   color: white;
 }
 
-table
-{
-  text-align: center;
+.nurse-info table {
+  margin: 0 auto; /* Center the table horizontally */
+  width: 80%; /* Set the width of the table */
+  border-collapse: collapse; /* Collapse the table borders */
+}
+
+.nurse-info th,
+.nurse-info td {
+  padding: 3px; /* Add padding to table cells */
+  text-align: left; /* Align the content to the left */
+}
+
+.nurse-info th {
+  background-color: #fffcfc; /* Set background color for table headers */
+}
+
+.patient-table {
+  margin: 0 auto; /* Center the table horizontally */
+  width: 80%; /* Set the width of the table */
+  border-collapse: collapse; /* Collapse the table borders */
+}
+
+.patient-table th,
+.patient-table td {
+  padding: 3px; /* Add padding to table cells */
+  text-align: center; /* Align the content to the center horizontally */
+  vertical-align: middle; /* Align the content vertically in the middle */
+  border: 1px solid #ddd; /* Add borders to table cells */
 }
