@@ -18,10 +18,15 @@ body {
 
 /* create-account */
 /* #edit-sheet, 
-#log-in
+#log-in, form
 {
   display: none;
 } */
+
+#info-card 
+{
+  display: none;
+}
 
 #logo {
   width: 70px;
@@ -545,6 +550,8 @@ hr {
   margin: 0;
 }
 
+
+
 #submit-all-btn {
   padding: 12px 16px;
   border: 3px solid rgb(29, 130, 45);
@@ -561,10 +568,17 @@ hr {
   justify-self: flex-end;
 }
 
+
+
 #submit-all-btn:hover {
   cursor: pointer;
   background-color: rgb(29, 130, 45);
   color: white;
+}
+
+#submit-all-btn
+{
+  display: none;
 }
 
 footer {
