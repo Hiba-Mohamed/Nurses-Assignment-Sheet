@@ -255,7 +255,7 @@ const validateForm = () => {
 const validatePatientFields = () => {
   return new Promise((resolve, reject) => {
     let inputDivs = document.getElementsByClassName('psingle-input');
-    let wardPatientsArray = JSON.parse(localStorage.getItem('wardPatientsArray')) || [];
+    let nursePatientsObject = JSON.parse(localStorage.getItem('nursePatientsObject')) || [];
 
     for (let i = 0; i < inputDivs.length; i++) {
       let newRoomInput = inputDivs[i].querySelector('input[id^="room"]');
@@ -264,17 +264,19 @@ const validatePatientFields = () => {
       let newRoomNumber = newRoomInput.value.trim();
       let newPatientName = newPatientInput.value.trim();
 
-      let isDuplicate = wardPatientsArray.some(function(existingPatient) {
-        return (
-          existingPatient.room_number === newRoomNumber ||
-          existingPatient.patient_name === newPatientName
-        );
+      let isDuplicate = nursePatientsObject.some(function(nursePatientObject) {
+        return nursePatientObject.nursePatientsArray.some(function(existingPatient) {
+          return (
+            existingPatient.room_number === newRoomNumber ||
+            existingPatient.patient_name === newPatientName
+          );
+        });
       });
 
       if (isDuplicate) {
         swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
         reject("Patient fields validation error: Duplicate patient assignment");
-        break;
+        return;
       }
 
       let isDuplicateNew = Array.from(inputDivs).slice(0, i).some(function(existingDiv) {
@@ -292,13 +294,13 @@ const validatePatientFields = () => {
       if (isDuplicateNew) {
         swal("Duplicate patient assignment! Please ensure using a new patient name and room number", " ", "error");
         reject("Patient fields validation error: Duplicate patient assignment in newly entered fields");
-        break;
+        return;
       }
     }
 
     resolve();
   });
-};
+};;
 
 const nurseValidatePushStoreLS = () => {
   return new Promise((resolve, reject) => {
