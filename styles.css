@@ -33,6 +33,7 @@ body {
   margin: 3%;
 }
 
+
 #form-top {
   padding-top: 5%;
   display: flex;
@@ -187,6 +188,8 @@ h2 {
   background: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
+
 
 
 .edit-input input {
@@ -531,6 +534,7 @@ p {
 #btns-day-night {
   display: flex;
   justify-content: center;
+  margin-bottom: 10%;
 }
 
 hr {
@@ -626,7 +630,8 @@ footer {
 .shift-buttons
 {
   display: flex;
-  justify-content:space-evenly
+  justify-content:space-evenly;
+  margin-bottom: 10%;
 }
 
 .shiftButton {
@@ -646,31 +651,79 @@ footer {
 }
 
 .nurse-info table {
-  margin: 0 auto; /* Center the table horizontally */
-  width: 80%; /* Set the width of the table */
-  border-collapse: collapse; /* Collapse the table borders */
+  margin: 0 auto; 
+  width: 80%; 
+  border-collapse: collapse; 
 }
 
 .nurse-info th,
 .nurse-info td {
-  padding: 3px; /* Add padding to table cells */
-  text-align: left; /* Align the content to the left */
+  padding: 3px;
+  text-align: left; 
 }
 
 .nurse-info th {
-  background-color: #fffcfc; /* Set background color for table headers */
+  background-color: #fffcfc;
 }
 
 .patient-table {
-  margin: 0 auto; /* Center the table horizontally */
-  width: 80%; /* Set the width of the table */
-  border-collapse: collapse; /* Collapse the table borders */
+  margin: 0 auto; 
+  width: 80%; 
+  border-collapse: collapse; 
 }
 
 .patient-table th,
 .patient-table td {
-  padding: 3px; /* Add padding to table cells */
-  text-align: center; /* Align the content to the center horizontally */
-  vertical-align: middle; /* Align the content vertically in the middle */
-  border: 1px solid #ddd; /* Add borders to table cells */
+  padding: 3px; 
+  text-align: center; 
+  vertical-align: middle;
+  border: 1px solid #ddd; 
+}
+
+.day-night-shift
+{
+  display:flex;
+  justify-content: center;
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 768px) {
+  .card
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+
+  #info-card {
+    margin: 0;
+    padding: 20px;
+
+  }
+
+  #info-card input[type="text"],
+  #info-card select {
+    width: 100%;
+  }
+
+  #nurse-name,
+  #nurse-break {
+    margin-bottom: 10px;
+  }
+
+  #break-relief {
+    margin-top: 10px;
+  }
+
+  #extra-duties,
+  #fire-code {
+    margin-bottom: 10px;
+  }
+
+  .form-btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 }

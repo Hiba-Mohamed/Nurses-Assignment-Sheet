@@ -105,7 +105,8 @@ displayFullDate();
 // choosing a shift type
 const dayShiftButton = document.getElementById('dayShiftButton');
 const nightShiftButton = document.getElementById('nightShiftButton');
-const shiftHeading = document.querySelector('.shift-title');
+const shiftHeading = document.querySelector('#day-night-text');
+const shiftChoosetext = document.querySelector('.shift-title');
 const nurseForm = document.getElementById("info-card");
 const final_submit_btn = document.getElementById("submit-all-btn");
 
@@ -117,8 +118,7 @@ function dayShift() {
     shiftHeading.innerHTML = "Day Shift";
     nurseForm.style.display = 'block';
     final_submit_btn.style.display = 'block';
-
-
+    shiftChoosetext.style.display = 'none';
     // Set the shiftType in local storage to "day"
     localStorage.setItem('shiftType', 'day');
   });
@@ -132,7 +132,7 @@ function nightShift() {
     shiftHeading.innerHTML = "Night Shift";
     nurseForm.style.display = 'block';
     final_submit_btn.style.display = 'block';
-
+    shiftChoosetext.style.display = 'none';
     // Set the shiftType in local storage to "night"
     localStorage.setItem('shiftType', 'night');
   });
