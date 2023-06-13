@@ -687,9 +687,13 @@ footer {
 }
 
 /* Media query for mobile devices */
-@media only screen and (min-width: 481px) and (max-width: 768px)
+@media only screen and (min-width: 400px) and (max-width: 768px)
 
  {
+  h1
+  {
+    font-size:xx-large;
+  }
   .card
   {
     width: 100%;
@@ -709,19 +713,6 @@ footer {
     width: 100%;
   }
 
-  #nurse-name,
-  #nurse-break {
-    margin-bottom: 10px;
-  }
-
-  #break-relief {
-    margin-top: 10px;
-  }
-
-  #extra-duties,
-  #fire-code {
-    margin-bottom: 10px;
-  }
 
   .form-btns{
   display: flex;
