@@ -687,12 +687,12 @@ footer {
 }
 
 /* Media query for mobile devices */
-@media only screen and (min-width: 400px) and (max-width: 768px)
+@media only screen and (min-width: 300px) and (max-width: 768px)
 
  {
   h1
   {
-    font-size:xx-large;
+    font-size: x-large;
   }
   .card
   {
@@ -705,7 +705,6 @@ footer {
   #info-card {
     margin: 0;
     padding: 20px;
-
   }
 
   #info-card input[type="text"],
