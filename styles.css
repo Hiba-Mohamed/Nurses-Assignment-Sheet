@@ -687,7 +687,9 @@ footer {
 }
 
 /* Media query for mobile devices */
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 481px) and (max-width: 768px)
+
+ {
   .card
   {
     width: 100%;
