@@ -8,6 +8,9 @@
 <h2>Motivation:</h2>
 <p>As a student of the Get Coding program and a registered nurse (RN), I was inspired to create the NAS to apply my knowledge in HTML, CSS, and JavaScript. The NAS project allowed me to combine my passion for healthcare innovation and efficiency and my passion to learn coding. I believe that by transitioning from a paper-based system to an electronic one, we can reduce errors, enhance nurse and patient satisfaction with care, and ultimately achieve better outcomes.</p>
 
+<h2>Credits</h2>
+I created this project with the guidance and support of my Get Coding coach Clark Oake.
+
 <h2>Built with:</h2>
 <ul>
 <li>HTML</li>
