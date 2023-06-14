@@ -16,12 +16,11 @@ body {
   display: block;
 }
 
-/* create-account */
-/* #edit-sheet, 
-#log-in, form
+#create-account,
+#edit-sheet 
 {
   display: none;
-} */
+}
 
 #info-card 
 {
@@ -77,14 +76,33 @@ h2 {
 .login-button {
   text-align: center;
 }
+#login-guest-btn
+{
+  padding: 12px 10px;
+  border: 3px solid rgba(187, 63, 129, 0.975);
+  border-radius: 20px;
+  background-color: rgba(187, 63, 129, 0.975);
+  outline: none;
+  color: white;
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10%;
+}
+
+#login-guest-btn:hover {
+  cursor: pointer;
+  background-color: white ;
+  color:rgba(187, 63, 129, 0.975);
+}
 
 #login-button {
   padding: 12px 10px;
-  border: 3px solid rgb(187, 63, 104);
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
-  background-color: transparent;
+  background-color: rgba(187, 63, 129, 0.975);
   outline: none;
-  color: rgb(187, 63, 104);
+  color: white;
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -93,8 +111,8 @@ h2 {
 
 #login-button:hover {
   cursor: pointer;
-  background-color: rgb(187, 63, 104);
-  color: white;
+  background-color: white ;
+  color:rgba(187, 63, 129, 0.975);
 }
 
 .account-have {
@@ -158,13 +176,14 @@ h2 {
   font-family: sans-serif;
 }
 
+
 #create-button button {
-  padding: 12px 10px;
-  border: 3px solid rgb(187, 63, 104);
+  padding: 12px 19px;
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
-  background-color: transparent;
+  background-color:rgba(187, 63, 129, 0.975);
   outline: none;
-  color: rgb(187, 63, 104);
+  color: white;
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -173,8 +192,8 @@ h2 {
 
 #create-button button:hover {
   cursor: pointer;
-  background-color: rgb(187, 63, 104);
-  color: white;
+  background-color:white;
+  color: rgba(187, 63, 129, 0.975);
 }
 
 /* editing page */
@@ -183,20 +202,29 @@ h2 {
   position: relative;
   padding: 40px;
   margin: 40px 0 0 40px;
-  border-radius: 30px;
+  border-radius: 20px;
   box-sizing: border-box;
   background: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+.edit-input
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-
+.edit-input p
+{
+  width: 30%;
+}
 
 .edit-input input {
   width: 300px;
   padding: 14px 10px;
-  border: 1px solid rgb(0, 0, 0, 0.352);
-  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.034);
+  border-radius: 20px;
   outline: none;
   background-color: transparent;
   margin-bottom: 10px;
@@ -204,13 +232,20 @@ h2 {
   font-family: sans-serif;
 }
 
+
+label
+{
+  width: 30%;
+font-size: 1.2rem;
+}
+
 #nurse-break,
 #extra-duties,
 #fire-code {
-  width: 300px;
+  width: 70%;
   padding: 14px 10px;
   border: 1px solid rgb(0, 0, 0, 0.352);
-  border-radius: 3px;
+  border-radius: 15px;
   outline: none;
   background-color: transparent;
   margin-bottom: 10px;
@@ -224,11 +259,11 @@ h2 {
 
 #edit-button {
   padding: 12px 10px;
-  border: 3px solid rgb(187, 63, 104);
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
   background-color: transparent;
   outline: none;
-  color: rgb(187, 63, 104);
+  color: rgba(187, 63, 129, 0.975);
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -237,7 +272,7 @@ h2 {
 
 #edit-button:hover {
   cursor: pointer;
-  background-color: rgb(187, 63, 104);
+  background-color: rgba(187, 63, 129, 0.975);
   color: white;
 }
 
@@ -280,10 +315,10 @@ h2 {
 }
 
 #all-cards form .edit-input input {
-  width: 300px;
+  width: 70%;
   padding: 14px 10px;
   border: 1px solid rgb(0, 0, 0, 0.352);
-  border-radius: 3px;
+  border-radius: 15px;
   outline: none;
   background-color: transparent;
   margin-bottom: 10px;
@@ -295,13 +330,30 @@ h2 {
   width: 300px;
   padding: 14px 10px;
   border: 1px solid rgb(0, 0, 0, 0.352);
-  border-radius: 3px;
+  border-radius: 15px;
   outline: none;
   background-color: transparent;
   margin-bottom: 10px;
   font-size: 15px;
   font-family: sans-serif;
   display: flex;
+}
+
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
 }
 
 .psingle-input input {
@@ -330,7 +382,7 @@ h2 {
   padding: 20px;
   margin: 20px;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 19px;
   background: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
@@ -348,12 +400,10 @@ h2 {
 }
 
 p {
-  width: 100%;
   outline: none;
   background-color: transparent;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  text-align: center;
   font-size: 1.2rem;
+  font-family: 'Outfit', sans-serif;
   border-color: transparent;
 }
 
@@ -379,11 +429,11 @@ p {
 #add-patient-btn
 {
   padding: 12px 16px;
-  border: 3px solid rgb(214, 195, 159);
+  border: 3px solid grey;
   border-radius: 20px;
   background-color: transparent;
   outline: none;
-  color: rgb(214, 195, 159);
+  color: grey;
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -393,18 +443,18 @@ p {
 
 #add-patient-btn:hover {
   cursor: pointer;
-  background-color: rgb(214, 195, 159);
+  background-color: grey;
   color: white;
 }
 
 #finalize-patient-btn
 {
   padding: 12px 16px;
-  border: 3px solid rgb(187, 63, 104);
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
   background-color: transparent;
   outline: none;
-  color: rgb(187, 63, 104);
+  color: rgba(187, 63, 129, 0.975);
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -414,7 +464,7 @@ p {
 
 #finalize-patient-btn:hover {
   cursor: pointer;
-  background-color: rgb(187, 63, 104);
+  background-color: rgba(187, 63, 129, 0.975);
   color: white;
 }
 
@@ -425,12 +475,12 @@ p {
 }
 
 #submit {
-  padding: 12px 10px;
-  border: 3px solid rgb(187, 63, 104);
+  padding: 12px 19px;
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
-  background-color: transparent;
+  background-color:rgba(187, 63, 129, 0.975);
   outline: none;
-  color: rgb(187, 63, 104);
+  color: white;
   font-family: sans-serif;
   font-size: 16px;
   cursor: pointer;
@@ -439,8 +489,8 @@ p {
 
 #submit:hover {
   cursor: pointer;
-  background-color: rgb(187, 63, 104);
-  color: white;
+  background-color:white;
+  color: rgba(187, 63, 129, 0.975);
 }
 
 
@@ -548,6 +598,15 @@ hr {
   border-color: rgb(187, 63, 129, 0.975);
 }
 
+
+#all-patients p
+{
+  width: 100%;
+  text-align: center;
+  padding: 15px 5px 5px 5px;
+}
+
+
 .finalize {
   display: flex;
   justify-content: center;
@@ -558,11 +617,11 @@ hr {
 
 #submit-all-btn {
   padding: 12px 16px;
-  border: 3px solid rgb(29, 130, 45);
+  border: 3px solid rgba(187, 63, 129, 0.975);
   border-radius: 20px;
-  background-color: transparent;
+  background-color: rgba(187, 63, 129, 0.975);
   outline: none;
-  color: rgb(29, 130, 45);
+  color: white;
   font-family: sans-serif;
   font-size: 16px;
   margin: 5% 0 5% 0;
@@ -576,8 +635,8 @@ hr {
 
 #submit-all-btn:hover {
   cursor: pointer;
-  background-color: rgb(29, 130, 45);
-  color: white;
+  background-color: white;
+  color: rgba(187, 63, 129, 0.975);
 }
 
 #submit-all-btn
@@ -612,6 +671,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: start;
+
 }
 
 .shift-title
@@ -663,7 +723,7 @@ footer {
 }
 
 .nurse-info th {
-  background-color: #fffcfc;
+  background-color: rgb(0 0 0 / 3%);
 }
 
 .patient-table {
@@ -686,10 +746,28 @@ footer {
   justify-content: center;
 }
 
+#day-night-text
+{
+  padding: 0;
+  font-size: xx-large;
+}
+
+.form-btns
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
 /* Media query for mobile devices */
 @media only screen and (min-width: 300px) and (max-width: 768px)
 
  {
+  #day-night-text
+  {
+    padding: 0;
+    font-size: x-large;}
   h1
   {
     font-size: x-large;
@@ -704,12 +782,9 @@ footer {
 
   #info-card {
     margin: 0;
+    width: 80%;
     padding: 20px;
-  }
-
-  #info-card input[type="text"],
-  #info-card select {
-    width: 100%;
+    margin-top: 12px;
   }
 
 
@@ -718,4 +793,29 @@ footer {
   flex-direction: row;
   justify-content: center;
 }
+
+#nurse-break,
+#extra-duties,
+#fire-code {
+  width: 70%;
+  padding: 14px 10px;
+  border: 1px solid rgb(0, 0, 0, 0.352);
+  border-radius: 15px;
+  outline: none;
+  background-color: transparent;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-family: sans-serif;
+}
+
+label
+{
+  width: 30%;
+font-size: 1.2rem;
+}
+.psingle-input
+{
+  width: 100%;
+}
+
 }

@@ -35,6 +35,7 @@
                         </div>
                         <div class="login-button">
                             <button id="login-button">Login</button>
+                            <button id="login-guest-btn">Login as a guest</button>
                         </div>
                         <div class="account-have">
                             <a href="#">Forgot password</a>
@@ -116,37 +117,39 @@
             <div class="card card1">
                 <form id="info-card" action="">
                     <div class="edit-input">
-                        <input type="text" id="nurse-name" placeholder="Nurse's name">
+                        <p>Nurse name</p>
+                        <input type="text" id="nurse-name">
                     </div>
                     <div >
                         <div class="edit-input">
-                            <label for="nurse-break">Break:</label>
-
+                            <label for="nurse-break">Break</label>
                             <select id="nurse-break">
+                                <option value="none"></option>
                                 <option value="1">First</option>
                                 <option value="2">Second</option>
                                 <option value="3">Third</option>
                             </select>
                         </div>
                         <div class="edit-input">
-                            <input type="text" id="break-relief" placeholder="Break relief">
+                            <p>Break relief</p>
+                            <input type="text" id="break-relief"">
                         </div>
                     </div>
                     <div>
                         <div class="edit-input">
-                            <label for="extra duties">Extra Duties:</label>
-
+                            <label for="extra duties">Extra Duties</label>
                             <select id="extra-duties">
+                                <option value="none"></option>
                                 <option value="In-charge">In-charge</option>
                                 <option value="Shift Count">Shift Count</option>
                                 <option value="Safety Round">Safety Round</option>
                                 <option value="Crash Cart">Crash Cart</option>
-                                <option value="none"></option>
                             </select>
                         </div>
                         <div class="edit-input">
-                            <label for="fire code">Fire Code:</label>
+                            <label for="fire code">Fire Code</label>
                             <select id="fire-code">
+                              <option value="none"></option>
                               <option value="R">R</option>
                               <option value="A">A</option>
                               <option value="C">C</option>
@@ -154,10 +157,11 @@
                             </select>                        </div>
                     </div>
                         <div id="all-patients">
-                            <div class="psingle-input">
-                                <input type="text" id="room" placeholder="Room">
-                                <input type="text" id="patient" placeholder="Patient">
-                            </div>
+                            <p>Patients Info</p>
+                                <div class="psingle-input">
+                                    <input type="text" id="room" placeholder="Room">
+                                    <input type="text" id="patient" placeholder="Patient">
+                                </div>
                         </div>
                         <div class="form-btns">
                             <div class="patient-btn">

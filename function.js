@@ -4,7 +4,6 @@ loginBtn.onclick = (e) => {
   // catch the value which is type use login page
   const emailAddress = document.getElementById("email-login").value;
   const passWord = document.getElementById("pass-login").value;
-  const createAccountPage = document.getElementById("create-account");
   const logInPage = document.getElementById("log-in");
   const editSheetPage =  document.getElementById("edit-sheet");
 
@@ -37,6 +36,17 @@ create_direct.onclick = (e) => {
   login_page.style.display = 'none';
   create_page.style.display = 'block';
 }
+
+const logInPage = document.getElementById("log-in");
+const editSheetPage = document.getElementById("edit-sheet");
+const guestLoginBtn = document.querySelector('#login-guest-btn');
+
+function loginGuest() {
+  editSheetPage.style.display = "block";
+  logInPage.style.display = "none";
+}
+
+guestLoginBtn.addEventListener('click', loginGuest);
 
 const submit_button = document.getElementById("create-btn");
 submit_button.addEventListener('click', function (e) {
@@ -103,8 +113,7 @@ displayFullDate();
 
 
 // choosing a shift type
-const dayShiftButton = document.getElementById('dayShiftButton');
-const nightShiftButton = document.getElementById('nightShiftButton');
+const ShiftButtons = document.querySelector('.shift-buttons');
 const shiftHeading = document.querySelector('#day-night-text');
 const shiftChoosetext = document.querySelector('.shift-title');
 const nurseForm = document.getElementById("info-card");
@@ -113,8 +122,7 @@ const final_submit_btn = document.getElementById("submit-all-btn");
 function dayShift() {
   dayShiftButton.addEventListener('click', function(e) {
     e.preventDefault();
-    dayShiftButton.style.display = 'none';
-    nightShiftButton.style.display = 'none';
+    ShiftButtons.style.display = 'none';;
     shiftHeading.innerHTML = "Day Shift";
     nurseForm.style.display = 'block';
     final_submit_btn.style.display = 'block';
@@ -127,8 +135,7 @@ function dayShift() {
 function nightShift() {
   nightShiftButton.addEventListener('click', function(e) {
     e.preventDefault();
-    dayShiftButton.style.display = 'none';
-    nightShiftButton.style.display = 'none';
+    ShiftButtons.style.display = 'none';;
     shiftHeading.innerHTML = "Night Shift";
     nurseForm.style.display = 'block';
     final_submit_btn.style.display = 'block';
@@ -263,6 +270,10 @@ const validatePatientFields = () => {
 
       let newRoomNumber = newRoomInput.value.trim();
       let newPatientName = newPatientInput.value.trim();
+      if (newRoomNumber === '' && newPatientName === '') {
+        // Skip validating empty fields
+        continue;
+      }
 
       let isDuplicate = nursePatientsObject.some(function(nursePatientObject) {
         return nursePatientObject.nursePatientsArray.some(function(existingPatient) {
@@ -354,12 +365,14 @@ const createWardPatientsArray = () => {
       let newRoomNumber = newRoomInput.value.trim();
       let newPatientName = newPatientInput.value.trim();
 
-      let newPatientObject = {
-        room_number: newRoomNumber,
-        patient_name: newPatientName
-      };
+      if (newRoomNumber !== '' && newPatientName !== '') {
+        let newPatientObject = {
+          room_number: newRoomNumber,
+          patient_name: newPatientName
+        };
 
-      wardPatientsArray.push(newPatientObject);
+        wardPatientsArray.push(newPatientObject);
+      }
     }
 
     let nursePatientsArray = wardPatientsArray.slice(-inputDivs.length);
